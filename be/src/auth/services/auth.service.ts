@@ -19,8 +19,7 @@ export class AuthService {
          @InjectModel("RefreshToken") private readonly refreshTokenModel: Model<RefreshToken>,
          private readonly jwtService: JwtService
      ) {
-         // this.cryptr = new Cryptr(process.env.ENCRYPT_JWT_SECRET)
-         this.cryptr = new Cryptr("secretKey");
+         this.cryptr = new Cryptr(process.env.ENCRYPT_JWT_SECRET)
      }
 
      async createAccessToken(userId: String) {
