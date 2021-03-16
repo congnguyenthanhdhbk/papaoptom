@@ -3,7 +3,7 @@ import {IsEmail, IsNotEmpty, IsString, MaxLength, MinLength} from "class-validat
 
 export class CreateForgotPasswordDto {
     @ApiModelProperty({
-        example: 'pejman@gmail.com',
+        example: 'papaoptom@gmail.com',
         description: 'The email of the User',
         format: 'email',
         uniqueItems: true,

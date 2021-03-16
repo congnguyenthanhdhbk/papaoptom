@@ -3,7 +3,7 @@ import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-prop
 
 export class ResetPasswordDto {
     @ApiModelProperty({
-        example: 'pejman@gmail.com',
+        example: 'papaoptom@gmail.com',
         description: 'The email of the User',
         format: 'email',
         uniqueItems: true,

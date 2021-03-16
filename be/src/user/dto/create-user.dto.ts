@@ -5,7 +5,7 @@ export class CreateUserDto {
 
     // fullName
     @ApiModelProperty({
-        example: 'pejman hadavi',
+        example: 'papaoptom',
         description: 'The name of the User',
         format: 'string',
         minLength: 6,
@@ -19,7 +19,7 @@ export class CreateUserDto {
 
     // Email
     @ApiModelProperty({
-        example: 'pejman@gmail.com',
+        example: 'papaoptom@gmail.com',
         description: 'The email of the User',
         format: 'email',
         uniqueItems: true,
