@@ -18,7 +18,7 @@ export class ProductService {
         private readonly forsageService: ForsageService
     ) {}
 
-    @Cron("* 10 * * * *")
+    @Cron("0 */5 * * * *")
     async getProducts(): Promise<Product> {
         this.logger.debug("*******Start get product*********")
         const now = moment();
