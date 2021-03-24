@@ -6,4 +6,7 @@ export interface Product extends Document {
     name: string;
     quantity: number;
     characteristics: object;
+    category: object;
+    supplier: object;
+    brand: object;
 }

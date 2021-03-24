@@ -6,6 +6,7 @@ import 'dotenv/config';
 import { warn } from 'console';
 
 import {UserModule} from "./user/user.module";
+import {ProductModule} from "./product/product.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +25,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options, {
     include: [
       UserModule,
+      ProductModule,
     ],
   });
   SwaggerModule.setup('api', app, document);
