@@ -8,6 +8,7 @@ import {ConfigModule} from "@nestjs/config";
 import { ProductModule } from './product/product.module';
 import { ForsageModule } from './forsage/forsage.module';
 import {ScheduleModule} from "@nestjs/schedule";
+import {CsvModule} from "nest-csv-parser";
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import {ScheduleModule} from "@nestjs/schedule";
       AuthModule,
       UserModule,
       ProductModule,
-      ForsageModule
+      ForsageModule,
+      CsvModule,
   ],
   controllers: [AppController],
   providers: [AppService],

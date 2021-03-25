@@ -17,7 +17,7 @@ export class ForsageService {
     }
 
     async getProducts(startDate: number, endDate: number, quantity: number): Promise<any> {
-        return await this.axiosInstance.get(`/get_products?start_date=${startDate}&end_date=${endDate}&token=${process.env.FORSAGE_TOKEN}&quantity=${quantity}`);
+        return await this.axiosInstance.get(`/get_products?start_date=${startDate}&token=${process.env.FORSAGE_TOKEN}&quantity=${quantity}`);
     }
 
     async getChanges({ startDate, endDate, quantity}): Promise<any> {

@@ -16,6 +16,15 @@ export const ProductSchema = new mongoose.Schema({
     },
     characteristics: {
         type: Object // { id: Number, name: String, value: String, type: [text, image, refbook]}
+    },
+    category: {
+        type: Object
+    },
+    supplier: {
+        type: Object
+    },
+    brand: {
+        type: Object
     }
 }, {
     versionKey: false,
