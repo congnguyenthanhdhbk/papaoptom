@@ -15,7 +15,9 @@ import { GraphQLModule } from '@nestjs/graphql';
   imports: [
     ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
-    GraphQLModule.forRoot(),
+    GraphQLModule.forRoot({
+      autoSchemaFile: "schema.gql"
+    }),
     MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     UserModule,

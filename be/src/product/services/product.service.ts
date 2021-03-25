@@ -1,22 +1,17 @@
 import {HttpService, Injectable, Logger} from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
-import {Product} from "../interfaces/product.interface";
 import {RefBookCharacteristics} from "../interfaces/ref-book-characteristics.interface";
 import {ForsageService} from "../../forsage/services/forsage.service";
-import * as moment from "moment";
 import * as momentTz from "moment-timezone";
 import * as _ from "lodash";
 import {Cron} from "@nestjs/schedule";
 import * as fs from "fs";
 import {Sku} from "../interfaces/Sku";
-import {Observable} from "rxjs";
-import {AxiosResponse} from "axios";
-import {map} from "rxjs/operators";
-import {response} from "express";
-import {CronJob} from "../interfaces/CronJob";
 import axios from "axios";
+import {CronJob} from "../interfaces/CronJob";
 import {NotFoundProduct} from "../interfaces/NotFoundProduct";
+import {Product} from "../interfaces/product.interface";
 
 @Injectable()
 export class ProductService {

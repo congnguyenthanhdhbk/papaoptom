@@ -2,13 +2,14 @@ import {HttpModule, Module} from '@nestjs/common';
 import { ProductService } from './services/product.service';
 import { ProductController } from './controllers/product.controller';
 import {MongooseModule} from "@nestjs/mongoose";
-import {ProductSchema} from "./schemas/product.schema";
 import {RefBookCharacteristics} from "./schemas/ref-book-characteristics";
 import {ForsageModule} from "../forsage/forsage.module";
 import {SkuSchema} from "./schemas/SkuSchema";
 import * as mongoosePaginate from "mongoose-paginate-v2";
 import {CronJobSchema} from "./schemas/CronJobSchema";
 import {NotFoundProductSchema} from "./schemas/NotFoundProduct";
+import {ProductSchema} from "./schemas/product.schema";
+import {ProductResolver} from "./resolvers/product/product.resolver";
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import {NotFoundProductSchema} from "./schemas/NotFoundProduct";
       ForsageModule,
       HttpModule,
   ],
-  providers: [ProductService],
+  providers: [ProductService, ProductResolver],
   controllers: [ProductController]
 })
 export class ProductModule {}
