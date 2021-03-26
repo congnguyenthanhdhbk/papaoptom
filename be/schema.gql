@@ -2,6 +2,58 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CategoryChildrenRes {
+  id: Int!
+  name: String!
+}
+
+type CategoryRes {
+  id: Int!
+  name: String!
+  child: CategoryChildrenRes!
+}
+
+type SupplierRes {
+  id: Int!
+  address: String!
+  phone: String!
+  email: String!
+  company: String!
+  exchangeRate: Int!
+}
+
+type BrandRes {
+  id: Int!
+  name: String!
+}
+
+type ProductFilterRes {
+  id: String!
+  vcode: String!
+  name: String!
+  quantity: Int!
+  category: CategoryRes!
+  supplier: SupplierRes!
+  brand: BrandRes!
+}
+
+type ProductRes {
+  code: Int!
+  message: String!
+  data: ProductFilterRes!
+}
+
 type Query {
   hello: String!
+  filterProduct(filter: ProductFilterReq!): ProductRes!
+}
+
+input ProductFilterReq {
+  id: String!
+  supplier: String!
+  category: String!
+  brand: String!
+  name: String!
+  pageSize: Int!
+  pageNumber: Int!
 }
