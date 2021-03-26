@@ -7,6 +7,6 @@ export class ProductRes {
   readonly code: number;
   @Field(() => String)
   readonly message: string;
-  @Field(() => ProductFilterRes)
+  @Field(() => ProductFilterRes, { nullable: true})
   data?: ProductFilterRes;
 }

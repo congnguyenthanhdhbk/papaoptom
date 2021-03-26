@@ -8,11 +8,6 @@ import { ProductService } from '../../services/product.service';
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
-  @Query(() => String)
-  async hello() {
-    return 'Hello';
-  }
-
   @Query(() => ProductRes)
   async filterProduct(
     @Args({ name: 'filter', type: () => ProductFilterReq })

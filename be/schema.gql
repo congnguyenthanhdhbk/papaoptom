@@ -44,16 +44,15 @@ type ProductRes {
 }
 
 type Query {
-  hello: String!
   filterProduct(filter: ProductFilterReq!): ProductRes!
 }
 
 input ProductFilterReq {
   id: String!
-  supplier: String!
-  category: String!
-  brand: String!
-  name: String!
-  pageSize: Int!
-  pageNumber: Int!
+  supplier: String
+  category: String
+  brand: String
+  name: String
+  pageSize: Int
+  pageNumber: Int
 }
