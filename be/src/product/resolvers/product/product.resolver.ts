@@ -13,20 +13,21 @@ export class ProductResolver {
     @Args({ name: 'filter', type: () => ProductFilterReq })
     filter?: ProductFilterReq,
   ) {
-    const { id, supplier, category, brand, name } = filter;
-    if (!id) {
-      return {
-        code: HttpStatus.BAD_REQUEST,
-        message: 'Id требуется',
-      };
-    }
-
-    const product = await this.productService.findProductById(id);
+    // @ts-ignore
+    const product = await this.productService.filterProduct(filter);
     if (product !== null) {
       return {
         code: HttpStatus.OK,
-        message: '1 результат найден',
-        data: this.productService.findProductById(id),
+        message: `${product?.totalDocs ?? 0} результат найден`,
+        data: product?.docs ?? {},
+        totalDocs: product?.totalDocs ?? 0,
+        hasPrevPage: product?.hasPrevPage ?? false,
+        hasNextPage: product?.hasNextPage ?? false,
+        totalPages: product?.totalPages ?? 0,
+        prevPage: product?.prevPage ?? 0,
+        nextPage: product?.nextPage ?? 0,
+        pageNumber: product?.page ?? 0,
+        pageSize: product?.limit ?? 0,
       };
     }
     return {

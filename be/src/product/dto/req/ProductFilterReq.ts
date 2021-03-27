@@ -2,8 +2,8 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class ProductFilterReq {
-  @Field(() => String)
-  readonly id: string;
+  @Field(() => String, { nullable: true })
+  readonly id?: string;
   @Field(() => String, { nullable: true })
   readonly supplier?: string;
   @Field(() => String, { nullable: true })

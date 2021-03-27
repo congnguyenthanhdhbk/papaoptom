@@ -3,10 +3,10 @@ import { CategoryChildrenRes } from './CategoryChildrenRes';
 
 @ObjectType()
 export class CategoryRes {
-  @Field(() => Int)
-  id: number;
-  @Field(() => String)
-  name: string;
-  @Field(() => CategoryChildrenRes)
-  child: CategoryChildrenRes;
+  @Field(() => Int, { nullable: true })
+  id?: number;
+  @Field(() => String, { nullable: true })
+  name?: string;
+  @Field(() => CategoryChildrenRes, { nullable: true })
+  child?: CategoryChildrenRes;
 }

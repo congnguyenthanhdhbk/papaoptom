@@ -5,18 +5,22 @@ import { BrandRes } from './BrandRes';
 
 @ObjectType()
 export class ProductFilterRes {
-  @Field(() => String)
-  id: string;
+  @Field(() => String, { nullable: true })
+  id?: string;
   @Field(() => String, { nullable: true })
   vcode?: string;
-  @Field(() => String)
-  name: string;
-  @Field(() => Int)
-  quantity: number;
+  @Field(() => String, { nullable: true })
+  name?: string;
+  @Field(() => Int, { nullable: true })
+  quantity?: number;
   @Field(() => CategoryRes, { nullable: true })
   category?: CategoryRes;
   @Field(() => SupplierRes, { nullable: true })
   supplier?: SupplierRes;
   @Field(() => BrandRes, { nullable: true })
   brand?: BrandRes;
+  @Field(() => Date, { nullable: true})
+  createdAt?: Date;
+  @Field(() => Date, { nullable: true })
+  updatedAt?: Date;
 }

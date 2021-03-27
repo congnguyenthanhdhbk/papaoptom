@@ -1,6 +1,6 @@
 import {HttpModule, Module} from '@nestjs/common';
-import { ProductService } from './services/product.service';
-import { ProductController } from './controllers/product.controller';
+import {ProductService} from './services/product.service';
+import {ProductController} from './controllers/product.controller';
 import {MongooseModule} from "@nestjs/mongoose";
 import {RefBookCharacteristics} from "./schemas/ref-book-characteristics";
 import {ForsageModule} from "../forsage/forsage.module";
