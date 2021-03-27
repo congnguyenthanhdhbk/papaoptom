@@ -2,6 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { CategoryRes } from './CategoryRes';
 import { SupplierRes } from './SupplierRes';
 import { BrandRes } from './BrandRes';
+import {CharacteristicRes} from "./CharacteristicRes";
 
 @ObjectType()
 export class ProductFilterRes {
@@ -23,4 +24,6 @@ export class ProductFilterRes {
   createdAt?: Date;
   @Field(() => Date, { nullable: true })
   updatedAt?: Date;
+  @Field(() => [CharacteristicRes], { nullable: true })
+  characteristics?: CharacteristicRes[];
 }

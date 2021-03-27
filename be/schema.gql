@@ -27,6 +27,13 @@ type BrandRes {
   name: String
 }
 
+type CharacteristicRes {
+  id: Int
+  name: String
+  value: String
+  type: String
+}
+
 type ProductFilterRes {
   id: String
   vcode: String
@@ -37,6 +44,7 @@ type ProductFilterRes {
   brand: BrandRes
   createdAt: DateTime
   updatedAt: DateTime
+  characteristics: [CharacteristicRes!]
 }
 
 """
