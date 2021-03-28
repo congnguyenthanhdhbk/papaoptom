@@ -195,7 +195,7 @@ export class ProductSchedule {
     }
 
     // @Cron("0 */2 * * * *")
-    async importProducts(): Promise<void> {
+    /*async importProducts(): Promise<void> {
         const fileName = 'export_product.json';
         fs.readFile(fileName, async (error, data) => {
             this.logger.debug('Read file: starting...');
@@ -231,7 +231,7 @@ export class ProductSchedule {
                 }
             }
         });
-    }
+    }*/
 
     // @Cron("*/3 * * * * *")
     async loadAllProductById(): Promise<void> {

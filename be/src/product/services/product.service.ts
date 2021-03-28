@@ -2,6 +2,8 @@ import {Injectable, Logger} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {Product} from '../interfaces/product.interface';
+import * as fs from "fs";
+import {Sku} from "../interfaces/Sku";
 
 @Injectable()
 export class ProductService {
@@ -11,8 +13,48 @@ export class ProductService {
     @InjectModel('ForsageProduct')
     private readonly productModel: Model<Product>,
     @InjectModel('Product')
-    private readonly product: Model<Product>
+    private readonly product: Model<Product>,
+    @InjectModel('sku')
+    private readonly sku: Model<Sku>
   ) {}
+
+  async importProducts(): Promise<void> {
+    const fileName = 'export_product.json';
+    fs.readFile(fileName, async (error, data) => {
+      this.logger.debug('Read file: starting...');
+      if (error) {
+        this.logger.debug('Read: Not successful!');
+        this.logger.error(error);
+      } else {
+        try {
+          // @ts-ignore
+          const ids = JSON.parse(data);
+          // const product = await this.forsageService.getProductById(452838);
+
+          const productIds = await Promise.all(
+              ids.map((id) => ({
+                sku: id.id,
+                uri: `${process.env.FORSAGE_URI}/get_product/${id.id}?token=${process.env.FORSAGE_TOKEN}`,
+              })),
+          );
+          // @ts-ignore
+          await this.sku.insertMany(productIds);
+
+          // const importedProducts = await Promise.all(ids.map(async (id) => {
+          //     this.logger.debug(`Product Id: ${id}`);
+          //     const product = await this.forsageService.getProductById(id.id);
+          //     this.logger.debug(`Get Product Id ${id} and result ${product}`);
+          //     return product;
+          // }));
+          // // @ts-ignore
+          // await this.productModel.insertMany(importedProducts);
+          this.logger.debug('Successful {}', ids.length);
+        } catch (e) {
+          this.logger.error(e);
+        }
+      }
+    });
+  }
 
   async findProductById(id: string): Promise<any> {
     return this.productModel.findOne({ id });

@@ -11,11 +11,11 @@ export class ProductController {
         private productService: ProductService
     ) {}
 
-    // @Get()
-    // @HttpCode(HttpStatus.OK)
-    // @ApiOperation({summary: "Get all products in forsage"})
-    // @ApiCreatedResponse({})
-    // async getProducts() {
-    //     return this.productService.importProducts();
-    // }
+    @Get()
+    @HttpCode(HttpStatus.OK)
+    @ApiOperation({summary: "Get all products in forsage"})
+    @ApiCreatedResponse({})
+    async getProducts() {
+        return this.productService.importProducts();
+    }
 }
