@@ -12,6 +12,7 @@ import {ProductSchema} from "./schemas/product.schema";
 import {ProductResolver} from "./resolvers/product/product.resolver";
 import {NormalizeProductSchema} from "./schemas/NormalizeProductSchema";
 import {ProductSchedule} from "./schedules/ProductSchedule";
+import {CurrencyRate} from "../shared/CurrencyRate";
 
 @Module({
   imports: [
@@ -46,7 +47,7 @@ import {ProductSchedule} from "./schedules/ProductSchedule";
       ForsageModule,
       HttpModule,
   ],
-  providers: [ProductService, ProductResolver, ProductSchedule],
+  providers: [ProductService, ProductResolver, ProductSchedule, CurrencyRate],
   controllers: [ProductController]
 })
 export class ProductModule {}

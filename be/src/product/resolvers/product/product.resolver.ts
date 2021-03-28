@@ -4,10 +4,14 @@ import { ProductRes } from '../../dto/res/ProductRes';
 import { HttpStatus } from '@nestjs/common';
 import { ProductService } from '../../services/product.service';
 import * as _ from "lodash";
+import {CurrencyRate} from "../../../shared/CurrencyRate";
 
 @Resolver()
 export class ProductResolver {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+      private readonly productService: ProductService,
+      private readonly currency: CurrencyRate,
+  ) {}
 
   @Query(() => ProductRes)
   async filterProduct(
