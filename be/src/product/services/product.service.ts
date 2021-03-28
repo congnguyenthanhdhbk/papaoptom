@@ -10,6 +10,8 @@ export class ProductService {
   constructor(
     @InjectModel('ForsageProduct')
     private readonly productModel: Model<Product>,
+    @InjectModel('Product')
+    private readonly product: Model<Product>
   ) {}
 
   async findProductById(id: string): Promise<any> {
@@ -20,7 +22,7 @@ export class ProductService {
     const page = pageNumber ? pageNumber : 1;
     const limit = pageSize ? pageSize : 999999;
     // @ts-ignore
-    return this.productModel.paginate({}, {page, limit});
+    return this.product.paginate({}, {page, limit});
   }
 
   async filterProduct({id, name, pageSize, pageNumber, category, supplier, brand}) {
@@ -29,7 +31,7 @@ export class ProductService {
 
     if (!id && !name && !category && supplier && brand) {
       // @ts-ignore
-      return this.productModel.paginate({}, { page, limit });
+      return this.product.paginate({}, { page, limit });
     }
 
     const criteria = {
@@ -37,7 +39,7 @@ export class ProductService {
     };
 
     if (id) {
-      criteria.$and.push({id});
+      criteria.$and.push({sku: id});
     }
 
     if (name) {
@@ -57,6 +59,6 @@ export class ProductService {
     }
 
     // @ts-ignore
-    return this.productModel.paginate(criteria, {page, limit});
+    return this.product.paginate(criteria, {page, limit});
   }
 }

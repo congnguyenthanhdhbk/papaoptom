@@ -11,6 +11,8 @@ import * as momentTz from "moment-timezone";
 import fs from "fs";
 import axios from "axios";
 import * as _ from "lodash";
+import {ProductConstant} from "../constants/ProductConstant";
+import {Cron} from "@nestjs/schedule";
 
 @Injectable()
 export class ProductSchedule {
@@ -20,12 +22,144 @@ export class ProductSchedule {
         private readonly notFoundModel: Model<NotFoundProduct>,
         @InjectModel('ForsageProduct')
         private readonly productModel: Model<Product>,
+        @InjectModel('Product')
+        private readonly product: Model<Product>,
         @InjectModel('RefbookCharacteristics')
         private readonly refbookCharacteristics: Model<RefBookCharacteristics>,
         @InjectModel('sku') private readonly sku: Model<Sku>,
         @InjectModel('CronJob') private readonly cronJob: Model<CronJob>,
         private readonly forsageService: ForsageService,
     ) {}
+
+    // @Cron("*/10 * * * * *")
+    async normalizeProducts(): Promise<void> {
+        this.logger.debug("++++++++++++++++++start build+++++++++++++++++++");
+        const forsageProducts = await this.productModel.find({});
+        this.logger.debug("Finished load forsage data");
+        if (forsageProducts !== null) {
+            // @ts-ignore
+            const products = forsageProducts.map(product => {
+                let obj = {
+                    sku: product?.id ?? null,
+                    vcode: product?.vcode ?? null,
+                    name: product?.name ?? null,
+                    quantity: product?.quantity ?? null,
+                    category: product?.category ?? {},
+                    supplier: product?.supplier ?? {},
+                    brand: product?.brand ?? {},
+                };
+                const characteristics = _.values(product?.characteristics ?? []);
+                let mappedObj = {};
+                const mappedCharacteristics = characteristics.map((characteristic) => {
+                    const { name, value } = characteristic;
+                    if (_.isEqual(name, ProductConstant.description)) {
+                        mappedObj = {...mappedObj, description: value};
+                    }
+                    if (_.isEqual(name, ProductConstant.photo1)) {
+                        mappedObj = {...mappedObj, photo1: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.productMaterial)) {
+                        mappedObj = {...mappedObj, productMaterial: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.sizeChart)) {
+                        mappedObj = {...mappedObj, sizeChart: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.repeatedDimensions)) {
+                        mappedObj = {...mappedObj, repeatedDimensions: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.steamInBox)) {
+                        mappedObj = {...mappedObj, steamInBox: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.liningMaterial)) {
+                        mappedObj = {...mappedObj, liningMaterial: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.outsoleMaterial)) {
+                        mappedObj = {...mappedObj, outsoleMaterial: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.country)) {
+                        mappedObj = {...mappedObj, country: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.heelHeight)) {
+                        mappedObj = {...mappedObj, heelHeight: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.platformHeight)) {
+                        mappedObj = {...mappedObj, platformHeight: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.picturedSize)) {
+                        mappedObj = {...mappedObj, picturedSize: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.purchasePrice)) {
+                        mappedObj = {...mappedObj, purchasePrice: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.sellingPrice)) {
+                        mappedObj = {...mappedObj, sellingPrice: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.season)) {
+                        mappedObj = {...mappedObj, season: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.shootingDate)) {
+                        mappedObj = {...mappedObj, shootingDate: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.purchaseCurrency)) {
+                        mappedObj = {...mappedObj, purchaseCurrency: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.saleCurrency)) {
+                        mappedObj = {...mappedObj, saleCurrency: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.floor)) {
+                        mappedObj = {...mappedObj, floor: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.type)) {
+                        mappedObj = {...mappedObj, type: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.oldPurchasePrice)) {
+                        mappedObj = {...mappedObj, oldPurchasePrice: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.oldSellingPrice)) {
+                        mappedObj = {...mappedObj, oldSellingPrice: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.insoleMaterial)) {
+                        mappedObj = {...mappedObj, insoleMaterial: value};
+                    }
+
+                    if (_.isEqual(name, ProductConstant.videoReview)) {
+                        mappedObj = {...mappedObj, videoReview: value};
+                    }
+                    return mappedObj;
+                });
+                // @ts-ignore
+                obj = {...obj, characteristics: mappedCharacteristics[mappedCharacteristics.length - 1]};
+                return obj;
+            });
+            this.logger.debug("proceed success");
+
+            // @ts-ignore
+            await this.product.insertMany(products);
+            this.logger.debug("Finished");
+        }
+
+    }
 
     // @Cron("0 */60 * * * *")
     async getProducts(): Promise<void> {

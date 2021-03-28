@@ -26,7 +26,7 @@ export class ProductResolver {
       brand: product?.brand ?? {},
       createdAt: product?.createdAt ?? new Date(),
       updatedAt: product?.updatedAt ?? new Date(),
-      characteristics: _.values(product?.characteristics) ?? []
+      characteristics: product?.characteristics ?? {}
     }))
     if (product !== null) {
       return {

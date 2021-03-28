@@ -10,6 +10,8 @@ import {CronJobSchema} from "./schemas/CronJobSchema";
 import {NotFoundProductSchema} from "./schemas/NotFoundProduct";
 import {ProductSchema} from "./schemas/product.schema";
 import {ProductResolver} from "./resolvers/product/product.resolver";
+import {NormalizeProductSchema} from "./schemas/NormalizeProductSchema";
+import {ProductSchedule} from "./schedules/ProductSchedule";
 
 @Module({
   imports: [
@@ -20,6 +22,16 @@ import {ProductResolver} from "./resolvers/product/product.resolver";
           return schema;
       } }]),
       MongooseModule.forFeature([{ name: "CronJob", schema: CronJobSchema }]),
+      MongooseModule.forFeatureAsync([
+          {
+              name: "Product",
+              useFactory: () => {
+                  const schema = NormalizeProductSchema;
+                  schema.plugin(mongoosePaginate);
+                  return schema;
+              }
+          }
+      ]),
       MongooseModule.forFeatureAsync([
           {
               name: "ForsageProduct",
@@ -34,7 +46,7 @@ import {ProductResolver} from "./resolvers/product/product.resolver";
       ForsageModule,
       HttpModule,
   ],
-  providers: [ProductService, ProductResolver],
+  providers: [ProductService, ProductResolver, ProductSchedule],
   controllers: [ProductController]
 })
 export class ProductModule {}

@@ -24,6 +24,6 @@ export class ProductFilterRes {
   createdAt?: Date;
   @Field(() => Date, { nullable: true })
   updatedAt?: Date;
-  @Field(() => [CharacteristicRes], { nullable: true })
-  characteristics?: CharacteristicRes[];
+  @Field(() => CharacteristicRes, { nullable: true })
+  characteristics?: CharacteristicRes;
 }

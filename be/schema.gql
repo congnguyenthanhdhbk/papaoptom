@@ -28,10 +28,30 @@ type BrandRes {
 }
 
 type CharacteristicRes {
-  id: Int
-  name: String
-  value: String
+  description: String
+  photo1: String
+  productMaterial: String
+  sizeChart: String
+  repeatedDimensions: String
+  steamInBox: String
+  liningMaterial: String
+  outsoleMaterial: String
+  country: String
+  heelHeight: String
+  platformHeight: String
+  picturedSize: String
+  purchasePrice: String
+  sellingPrice: String
+  season: String
+  shootingDate: String
+  purchaseCurrency: String
+  saleCurrency: String
+  floor: String
   type: String
+  oldPurchasePrice: String
+  oldSellingPrice: String
+  insoleMaterial: String
+  videoReview: String
 }
 
 type ProductFilterRes {
@@ -44,7 +64,7 @@ type ProductFilterRes {
   brand: BrandRes
   createdAt: DateTime
   updatedAt: DateTime
-  characteristics: [CharacteristicRes!]
+  characteristics: CharacteristicRes
 }
 
 """
