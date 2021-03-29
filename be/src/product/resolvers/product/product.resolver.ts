@@ -45,14 +45,10 @@ export class ProductResolver {
       });
       const steamInBox = product?.characteristics?.steamInBox ?? 1;
 
-      const totalPurchasePrice =
-        parseInt(purchasePrice, 2) * parseInt(steamInBox, 0);
-      const totalSellingPrice =
-        parseInt(sellingPrice, 2) * parseInt(steamInBox, 0);
-      const totalOldPurchasePrice =
-        parseInt(oldPurchasePrice, 2) * parseInt(steamInBox, 0);
-      const totalOldSellingPrice =
-        parseInt(oldSellingPrice, 2) * parseInt(steamInBox, 0);
+      const totalPurchasePrice = Number(purchasePrice) * Number(steamInBox);
+      const totalSellingPrice = Number(sellingPrice) * Number(steamInBox);
+      const totalOldPurchasePrice = Number(oldPurchasePrice) * Number(steamInBox);
+      const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
 
       const characteristics = {
         ...characteristic,

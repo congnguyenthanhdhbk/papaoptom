@@ -9,6 +9,6 @@ export class CurrencyRate {
   convertCurrency({ type, value }): string {
     return _.isEqual(type, this.CURRENCY_RHA)
       ? value
-      : parseInt(value, 2) * parseInt(process.env.CURRENCY_RATE, 2);
+      : Number(value) * Number(process.env.CURRENCY_RATE);
   }
 }

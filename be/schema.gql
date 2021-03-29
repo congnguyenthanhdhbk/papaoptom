@@ -52,6 +52,10 @@ type CharacteristicRes {
   oldSellingPrice: String
   insoleMaterial: String
   videoReview: String
+  totalOldPurchasePrice: String
+  totalOldSellingPrice: String
+  totalPurchasePrice: String
+  totalSellingPrice: String
 }
 
 type ProductFilterRes {
