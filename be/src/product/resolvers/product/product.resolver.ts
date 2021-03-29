@@ -3,14 +3,14 @@ import { ProductFilterReq } from '../../dto/req/ProductFilterReq';
 import { ProductRes } from '../../dto/res/ProductRes';
 import { HttpStatus } from '@nestjs/common';
 import { ProductService } from '../../services/product.service';
-import * as _ from "lodash";
-import {CurrencyRate} from "../../../shared/CurrencyRate";
+import * as _ from 'lodash';
+import { CurrencyRate } from '../../../shared/CurrencyRate';
 
 @Resolver()
 export class ProductResolver {
   constructor(
-      private readonly productService: ProductService,
-      private readonly currency: CurrencyRate,
+    private readonly productService: ProductService,
+    private readonly currency: CurrencyRate,
   ) {}
 
   @Query(() => ProductRes)
@@ -18,20 +18,66 @@ export class ProductResolver {
     @Args({ name: 'filter', type: () => ProductFilterReq })
     filter?: ProductFilterReq,
   ) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const product = await this.productService.filterProduct(filter);
-    const data = product?.docs.map((product) => ({
-      id: product?.id ?? 0,
-      vcode: product?.vcode ?? null,
-      name: product?.name ?? null,
-      quantity: product?.quantity ?? 0,
-      category: product?.category ?? {},
-      supplier: product?.supplier ?? {},
-      brand: product?.brand ?? {},
-      createdAt: product?.createdAt ?? new Date(),
-      updatedAt: product?.updatedAt ?? new Date(),
-      characteristics: product?.characteristics ?? {}
-    }))
+    const data = product?.docs.map((product) => {
+      const characteristic = product?.characteristics ?? {};
+      const type =
+        product?.characteristics?.purchaseCurrency ??
+        this.currency.CURRENCY_RHA;
+
+      const purchasePrice = this.currency.convertCurrency({
+        type,
+        value: product?.characteristics?.purchasePrice ?? 0,
+      });
+      const sellingPrice = this.currency.convertCurrency({
+        type,
+        value: product?.characteristics?.sellingPrice ?? 0,
+      });
+      const oldPurchasePrice = this.currency.convertCurrency({
+        type,
+        value: product?.characteristics?.oldPurchasePrice ?? 0,
+      });
+      const oldSellingPrice = this.currency.convertCurrency({
+        type,
+        value: product?.characteristics?.oldSellingPrice ?? 0,
+      });
+      const steamInBox = product?.characteristics?.steamInBox ?? 1;
+
+      const totalPurchasePrice =
+        parseInt(purchasePrice, 2) * parseInt(steamInBox, 0);
+      const totalSellingPrice =
+        parseInt(sellingPrice, 2) * parseInt(steamInBox, 0);
+      const totalOldPurchasePrice =
+        parseInt(oldPurchasePrice, 2) * parseInt(steamInBox, 0);
+      const totalOldSellingPrice =
+        parseInt(oldSellingPrice, 2) * parseInt(steamInBox, 0);
+
+      const characteristics = {
+        ...characteristic,
+        purchasePrice,
+        sellingPrice,
+        oldPurchasePrice,
+        oldSellingPrice,
+        totalOldPurchasePrice,
+        totalOldSellingPrice,
+        totalPurchasePrice,
+        totalSellingPrice,
+      };
+      return {
+        id: product?.id ?? 0,
+        vcode: product?.vcode ?? null,
+        name: product?.name ?? null,
+        quantity: product?.quantity ?? 0,
+        category: product?.category ?? {},
+        supplier: product?.supplier ?? {},
+        brand: product?.brand ?? {},
+        createdAt: product?.createdAt ?? new Date(),
+        updatedAt: product?.updatedAt ?? new Date(),
+        characteristics,
+      };
+    });
     if (product !== null) {
       return {
         code: HttpStatus.OK,
