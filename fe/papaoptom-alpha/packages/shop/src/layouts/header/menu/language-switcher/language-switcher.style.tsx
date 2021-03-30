@@ -23,7 +23,7 @@ export const SelectedItem = styled.button`
   height: 38px;
   display: flex;
   align-items: center;
-  background-color: ${themeGet('colors.white', '#ffffff')};
+  background-color: ${themeGet('colors.primary.regular', '#009e7f')};
   border: 1px solid ${themeGet('colors.gray.500', '#f1f1f1')};
   padding-top: 0;
   padding-bottom: 0;
@@ -44,7 +44,7 @@ export const SelectedItem = styled.button`
     font-family: ${themeGet('fonts.body', 'Lato')};
     font-size: ${themeGet('fontSizes.base', '15')}px;
     font-weight: ${themeGet('fontWeights.bold', '700')};
-    color: ${themeGet('colors.primary.regular', '#009e7f')};
+    color: ${themeGet('colors.white', '#ffffff')};
     text-decoration: none;
 
     /* @media (max-width: 990px) {

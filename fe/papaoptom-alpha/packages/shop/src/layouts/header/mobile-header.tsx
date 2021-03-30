@@ -12,7 +12,8 @@ import {
   SearchModalClose,
 } from './header.style';
 import Search from 'features/search/search';
-import LogoImage from 'assets/images/logo.svg';
+// import LogoImage from 'assets/images/logo.svg';
+import LogoImage from 'assets/images/logo.png';
 
 import { SearchIcon } from 'assets/icons/SearchIcon';
 import { LongArrowLeft } from 'assets/icons/LongArrowLeft';
@@ -64,7 +65,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ className }) => {
       closeComponent: () => <div />,
     });
   };
-  const type = pathname === '/restaurant' ? 'restaurant' : query.type;
+  const type = query.type;
 
   const isHomePage = isCategoryPage(type);
 

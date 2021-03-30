@@ -49,7 +49,7 @@ const HeaderWrapper = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: ${themeGet('colors.white', '#ffffff')};
+  background-color: ${themeGet('colors.green', '#009E7F')};
   box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
   transition: all 0.3s ease;
   &.home {
@@ -91,7 +91,7 @@ const HeaderWrapper = styled.header`
   }
 
   &.sticky {
-    background-color: ${themeGet('colors.white', '#ffffff')};
+    background-color: ${themeGet('colors.green', '#009E7F')};
     position: fixed;
     box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
     padding-top: 20px;
@@ -307,13 +307,13 @@ export const MobileHeaderInnerWrapper = styled.div`
   }
 
   &.unSticky:not(.home) {
-    background-color: ${themeGet('colors.white', '#ffffff')};
+    background-color: ${themeGet('colors.green', '#009e7f')};
     box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
   }
 
   &.sticky {
     position: fixed;
-    background-color: ${themeGet('colors.white', '#ffffff')};
+    background-color: ${themeGet('colors.green', '#009e7f')};
     box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
 
     @media only screen and (min-width: 991px) and (max-width: 1366px) {

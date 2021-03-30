@@ -6,6 +6,7 @@ import { useAppState } from 'contexts/app/app.provider';
 import Header from './header/header';
 import { LayoutWrapper } from './layout.style';
 import { isCategoryPage } from './is-home-page';
+import Footer from './footer';
 const MobileHeader = dynamic(() => import('./header/mobile-header'), {
   ssr: false,
 });
@@ -22,28 +23,22 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
   token,
 }) => {
   const { pathname, query } = useRouter();
-  const isSticky =
-    useAppState('isSticky') ||
-    pathname === '/furniture-two' ||
-    pathname === '/grocery-two';
+  const isSticky = useAppState('isSticky');
 
   const isHomePage = isCategoryPage(query.type) || pathname === '/bakery';
   return (
     <LayoutWrapper className={`layoutWrapper ${className}`}>
       <Sticky enabled={isSticky} innerZ={1001}>
         <MobileHeader
-          className={`${isSticky ? 'sticky' : 'unSticky'} ${
-            isHomePage ? 'home' : ''
-          } desktop`}
+          className={`${isSticky ? 'sticky' : 'sticky'} ${isHomePage ? 'home' : ''} desktop`}
         />
 
         <Header
-          className={`${isSticky ? 'sticky' : 'unSticky'} ${
-            isHomePage ? 'home' : ''
-          }`}
+          className={`${isSticky ? 'sticky' : 'sticky'} ${isHomePage ? 'home' : ''}`}
         />
       </Sticky>
       {children}
+      <Footer />
     </LayoutWrapper>
   );
 };

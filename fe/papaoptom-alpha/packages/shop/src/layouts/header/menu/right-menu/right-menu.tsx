@@ -22,7 +22,7 @@ export const RightMenu: React.FC<Props> = ({
 }) => {
   return (
     <RightMenuBox>
-      <NavLink
+      {/* <NavLink
         className="menu-item"
         href={OFFER_MENU_ITEM.href}
         label={OFFER_MENU_ITEM.defaultMessage}
@@ -35,15 +35,15 @@ export const RightMenu: React.FC<Props> = ({
         intlId={HELP_MENU_ITEM.id}
         iconClass="menu-icon"
         icon={<HelpIcon />}
-      />
+      /> */}
       <LanguageSwitcher />
 
-      <AuthMenu
+      {/* <AuthMenu
         avatar={avatar}
         onJoin={onJoin}
         onLogout={onLogout}
         isAuthenticated={isAuthenticated}
-      />
+      /> */}
     </RightMenuBox>
   );
 };

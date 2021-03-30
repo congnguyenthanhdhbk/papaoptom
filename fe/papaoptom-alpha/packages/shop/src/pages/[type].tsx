@@ -23,6 +23,7 @@ import { initializeApollo } from 'utils/apollo';
 import { GET_PRODUCTS } from 'graphql/query/products.query';
 import { GET_CATEGORIES } from 'graphql/query/category.query';
 import { ModalProvider } from 'contexts/modal/modal.provider';
+import { GET_SHOES } from 'graphql/query/shoes.query';
 const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
 const Products = dynamic(() =>
   import('components/product-grid/product-list/product-list')
@@ -33,6 +34,7 @@ const CartPopUp = dynamic(() => import('features/carts/cart-popup'), {
 
 const CategoryPage: React.FC<any> = ({ deviceType }) => {
   const { query } = useRouter();
+
   const { elRef: targetRef, scroll } = useRefScroll({
     percentOfElement: 0,
     percentOfContainer: 0,
@@ -51,12 +53,13 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
       <SEO title={page?.page_title} description={page?.page_description} />
       <ModalProvider>
         <Modal>
-          <MobileBanner intlTitleId={page?.banner_title_id} type={PAGE_TYPE} />
-          <Banner
+          {/* <MobileBanner intlTitleId={page?.banner_title_id} type={PAGE_TYPE} /> */}
+          {/* <Banner
             intlTitleId={page?.banner_title_id}
             intlDescriptionId={page?.banner_description_id}
             imageUrl={page?.banner_image_url}
-          />
+          /> */}
+
           <OfferSection>
             <div style={{ margin: '0 -10px' }}>
               <Carousel deviceType={deviceType} data={siteOffers} />
@@ -88,20 +91,32 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const apolloClient = initializeApollo();
 
-  await apolloClient.query({
-    query: GET_PRODUCTS,
-    variables: {
-      type: params.type,
-      offset: 0,
-      limit: 20,
-    },
-  });
-  await apolloClient.query({
-    query: GET_CATEGORIES,
-    variables: {
-      type: params.type,
-    },
-  });
+  // await apolloClient.query({
+  //   query: GET_PRODUCTS,
+  //   variables: {
+  //     type: params.type,
+  //     offset: 0,
+  //     limit: 20,
+  //   },
+  // });
+
+  // await apolloClient.query({
+  //   query: GET_CATEGORIES,
+  //   variables: {
+  //     type: params.type,
+  //   },
+  // });
+
+  // await apolloClient.query({
+  //   query: GET_SHOES,
+  //   variables: {
+  //     supplier: "Raffelli",
+  //     pageSize: 10,
+  //     pageNumber: 1,
+  //   },
+  // });
+  // console.log(apolloClient.cache.extract());
+
 
   return {
     props: {
@@ -114,13 +129,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { type: 'grocery' } },
-      { params: { type: 'makeup' } },
+      { params: { type: 'shoes' } },
       { params: { type: 'bags' } },
-      { params: { type: 'book' } },
-      { params: { type: 'medicine' } },
-      { params: { type: 'furniture' } },
-      { params: { type: 'clothing' } },
     ],
     fallback: false,
   };

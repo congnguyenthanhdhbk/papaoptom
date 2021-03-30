@@ -88,7 +88,7 @@
   "savedCardsId": "Saved Cards",
   "savedContactId": "Save Contact",
   "savedAddressId": "Save Address",
-  "siteFooter": "Pickbazar is a product by",
+  "siteFooter": "Papaoptom is a product by",
   "subTotal": "Sub Total",
   "itemsText": "items",
   "shippinFeeText": "Shipping Fee",
@@ -186,5 +186,7 @@
   "deliveryText": "Delivery",
   "cuisineText": "Cuisine",
   "minOrderText": "Min Order",
-  "fromText": "From"
+  "fromText": "From",
+
+  "nav.shoe": "Shoes"
 }

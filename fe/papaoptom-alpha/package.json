@@ -1,6 +1,6 @@
 {
   "name": "papaoptom",
-  "version": "5.0.0",
+  "version": "0.1.0",
   "private": true,
   "author": "Papaoptom",
   "workspaces": [
@@ -37,5 +37,6 @@
     "*.{js,md,css}": [
       "prettier --trailing-comma es5 --single-quote --write"
     ]
-  }
+  },
+  "dependencies": {}
 }

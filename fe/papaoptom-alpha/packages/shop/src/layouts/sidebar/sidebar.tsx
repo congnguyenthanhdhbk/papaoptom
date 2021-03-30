@@ -1,28 +1,21 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { FormattedMessage } from 'react-intl';
 import { useQuery } from '@apollo/client';
-import Sticky from 'react-stickynode';
-import { Scrollbar } from 'components/scrollbar/scrollbar';
-import { useAppState } from 'contexts/app/app.provider';
+import CategoryWalker from 'components/category-walker/category-walker';
 import {
-  SidebarMobileLoader,
-  SidebarLoader,
+  SidebarLoader, SidebarMobileLoader
 } from 'components/placeholder/placeholder';
+import { Scrollbar } from 'components/scrollbar/scrollbar';
+import { TreeMenu } from 'components/tree-menu/tree-menu';
+import { useAppState } from 'contexts/app/app.provider';
+import { GET_CATEGORIES } from 'graphql/query/category.query';
+import { useRouter } from 'next/router';
+import React from 'react';
+import Sticky from 'react-stickynode';
 import {
   CategoryWrapper,
-  TreeWrapper,
+
   PopoverWrapper,
-  SidebarWrapper,
-  RequestMedicine,
+  SidebarWrapper, TreeWrapper
 } from './sidebar.style';
-
-import { TreeMenu } from 'components/tree-menu/tree-menu';
-import { GET_CATEGORIES } from 'graphql/query/category.query';
-
-import { REQUEST_MEDICINE_MENU_ITEM } from 'site-settings/site-navigation';
-import CategoryWalker from 'components/category-walker/category-walker';
 
 type SidebarCategoryProps = {
   deviceType: {
@@ -38,9 +31,33 @@ const SidebarCategory: React.FC<SidebarCategoryProps> = ({
   type,
 }) => {
   const router = useRouter();
-  const { data, loading } = useQuery(GET_CATEGORIES, {
+  // const { data, loading } = useQuery(GET_CATEGORIES, {
+  const { loading } = useQuery(GET_CATEGORIES, {
     variables: { type },
   });
+  // TODO: hardcode categories
+  const data = {
+    "categories": [
+      {
+        "__typename": "Category",
+        "id": 14,
+        "title": "Men",
+        "slug": "men",
+        "icon": "HandBags",
+        "children": []
+      },
+      {
+        "__typename": "Category",
+        "id": 15,
+        "title": "Women",
+        "slug": "women",
+        "icon": "ShoulderBags",
+        "children": []
+      },
+
+    ]
+  }
+
   const { pathname, query } = router;
   const selectedQueries = query.category;
 
@@ -76,16 +93,6 @@ const SidebarCategory: React.FC<SidebarCategoryProps> = ({
     <CategoryWrapper>
       <PopoverWrapper>
         <CategoryWalker>
-          {type === 'medicine' && (
-            <Link href={REQUEST_MEDICINE_MENU_ITEM.href}>
-              <RequestMedicine>
-                <FormattedMessage
-                  id={REQUEST_MEDICINE_MENU_ITEM.id}
-                  defaultMessage={REQUEST_MEDICINE_MENU_ITEM.defaultMessage}
-                />
-              </RequestMedicine>
-            </Link>
-          )}
           <TreeMenu
             data={data.categories}
             onClick={onCategoryClick}
@@ -94,19 +101,8 @@ const SidebarCategory: React.FC<SidebarCategoryProps> = ({
         </CategoryWalker>
       </PopoverWrapper>
 
-      <SidebarWrapper style={{ paddingTop: type === 'medicine' ? 0 : 45 }}>
-        <Sticky enabled={isSidebarSticky} top={type === 'medicine' ? 89 : 110}>
-          {type === 'medicine' && (
-            <Link href={REQUEST_MEDICINE_MENU_ITEM.href}>
-              <RequestMedicine>
-                <FormattedMessage
-                  id={REQUEST_MEDICINE_MENU_ITEM.id}
-                  defaultMessage={REQUEST_MEDICINE_MENU_ITEM.defaultMessage}
-                />
-              </RequestMedicine>
-            </Link>
-          )}
-
+      <SidebarWrapper style={{ paddingTop: 45 }}>
+        <Sticky enabled={isSidebarSticky} top={110}>
           <Scrollbar className="sidebar-scrollbar">
             <TreeWrapper>
               <TreeMenu

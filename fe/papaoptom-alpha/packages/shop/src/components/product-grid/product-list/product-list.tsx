@@ -17,6 +17,7 @@ import NoResultFound from 'components/no-result/no-result';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'components/button/loadmore-button';
 import { GET_PRODUCTS } from 'graphql/query/products.query';
+import { GET_SHOES } from 'graphql/query/shoes.query';
 
 const ErrorMessage = dynamic(() =>
   import('components/error-message/error-message')
@@ -24,15 +25,6 @@ const ErrorMessage = dynamic(() =>
 
 const GeneralCard = dynamic(
   import('components/product-card/product-card-one/product-card-one')
-);
-const BookCard = dynamic(
-  import('components/product-card/product-card-two/product-card-two')
-);
-const FurnitureCard = dynamic(
-  import('components/product-card/product-card-three/product-card-three')
-);
-const MedicineCard = dynamic(
-  import('components/product-card/product-card-five/product-card-five')
 );
 
 type ProductsProps = {
@@ -52,19 +44,35 @@ export const Products: React.FC<ProductsProps> = ({
   type,
 }) => {
   const router = useRouter();
-  const { data, error, loading, fetchMore, networkStatus } = useQuery(
-    GET_PRODUCTS,
+  // const queryResult = useQuery(
+  //   GET_PRODUCTS,
+  //   {
+  //     variables: {
+  //       type: type,
+  //       text: router.query.text,
+  //       category: router.query.category,
+  //       offset: 0,
+  //       limit: fetchLimit,
+  //     },
+  //     notifyOnNetworkStatusChange: true,
+  //   }
+  // );
+  // console.log(queryResult);
+  // const { data, error, loading, fetchMore, networkStatus } = queryResult;
+  // const loadingMore = networkStatus === NetworkStatus.fetchMore;
+
+  const queryResult = useQuery(
+    GET_SHOES,
     {
       variables: {
-        type: type,
-        text: router.query.text,
-        category: router.query.category,
-        offset: 0,
-        limit: fetchLimit,
-      },
-      notifyOnNetworkStatusChange: true,
+        supplier: "Raffelli",
+        pageSize: 10,
+        pageNumber: 1,
+      }
     }
   );
+  // console.log(queryResult);
+  const { data, error, loading, fetchMore, networkStatus } = queryResult;
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
 
   if (error) return <ErrorMessage message={error.message} />;
@@ -84,81 +92,56 @@ export const Products: React.FC<ProductsProps> = ({
     );
   }
 
-  if (!data || !data.products || data.products.items.length === 0) {
+  if (!data || !data.filterProduct || data.filterProduct.data.length === 0) {
     return <NoResultFound />;
   }
   const handleLoadMore = () => {
     fetchMore({
       variables: {
-        offset: Number(data.products.items.length),
+        offset: Number(data.filterProduct.data.length),
         limit: fetchLimit,
       },
     });
   };
 
   const renderCard = (productType, props) => {
-    switch (productType) {
-      case 'book':
-        return (
-          <BookCard
-            title={props.title}
-            image={props.image}
-            name={props?.author?.name}
-            data={props}
-            deviceType={deviceType}
-            onClick={() => {
-              router.push('/product/[slug]', `/product/${props.slug}`);
-              if (typeof window !== 'undefined') {
-                window.scrollTo(0, 0);
-              }
-            }}
-          />
-        );
-      case 'medicine':
-        return (
-          <MedicineCard
-            title={props.title}
-            currency={CURRENCY}
-            image={props.image}
-            price={props.price}
-            weight={props.unit}
-            data={props}
-          />
-        );
-      case 'furniture':
-        return (
-          <FurnitureCard
-            title={props.title}
-            image={props.gallery[0].url}
-            discountInPercent={props.discountInPercent}
-            data={props}
-            deviceType={deviceType}
-          />
-        );
-      default:
-        return (
-          <GeneralCard
-            title={props.title}
-            description={props.description}
-            image={props.image}
-            weight={props.unit}
-            currency={CURRENCY}
-            price={props.price}
-            salePrice={props.salePrice}
-            discountInPercent={props.discountInPercent}
-            data={props}
-            deviceType={deviceType}
-          />
-        );
-    }
+    console.log(props);
+    const {name, characteristics} = props;
+    const {description, photo1, saleCurrency , sizeChart, sellingPrice, oldSellingPrice} = characteristics;
+
+    return (
+      // <GeneralCard
+      //   title={props.title}
+      //   description={props.description}
+      //   image={props.image}
+      //   weight={props.unit}
+      //   currency={CURRENCY}
+      //   price={props.price}
+      //   salePrice={props.salePrice}
+      //   discountInPercent={props.discountInPercent}
+      //   data={props}
+      //   deviceType={deviceType}
+      // />
+      <GeneralCard
+        title={name}
+        description={description}
+        image={photo1}
+        weight={sizeChart}
+        currency={CURRENCY}
+        price={oldSellingPrice}
+        salePrice={sellingPrice}
+        discountInPercent={10}
+        data={props}
+        deviceType={deviceType}
+      />
+    );
   };
   return (
     <>
       <ProductsRow>
-        {data.products.items.map((item: any, index: number) => (
+        {data.filterProduct.data.map((item: any, index: number) => (
           <ProductsCol
             key={index}
-            style={type === 'book' ? { paddingLeft: 0, paddingRight: 1 } : {}}
           >
             <ProductCardWrapper>
               <Fade
@@ -172,7 +155,7 @@ export const Products: React.FC<ProductsProps> = ({
           </ProductsCol>
         ))}
       </ProductsRow>
-      {loadMore && data.products.hasMore && (
+      {loadMore && (
         <ButtonWrapper>
           <Button
             onClick={handleLoadMore}
