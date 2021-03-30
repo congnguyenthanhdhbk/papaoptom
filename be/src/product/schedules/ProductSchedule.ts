@@ -188,6 +188,7 @@ export class ProductSchedule {
           })
           .filter((filter) => !_.isEqual(filter, null)),
       );
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       await this.productModel.insertMany(pds);
       this.logger.debug(`import successfully ${pds.length} records`);
@@ -275,6 +276,7 @@ export class ProductSchedule {
             category: product?.category ?? {},
             supplier: product?.supplier ?? {},
             brand: product?.brand ?? {},
+            characteristics: {},
           };
           const characteristics = _.values(product?.characteristics ?? []);
           let mappedObj = {};
@@ -378,12 +380,6 @@ export class ProductSchedule {
               return mappedObj;
             },
           );
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           obj = {
             ...obj,
             characteristics:
