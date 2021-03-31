@@ -99,8 +99,8 @@ export const Products: React.FC<ProductsProps> = ({
     const fetchLimit = data.filterProduct.data.pageSize;
     fetchMore({
       variables: {
-        offset: Number(data.filterProduct.data.length),
-        limit: fetchLimit,
+        pageNumber: Number(data.filterProduct.data.nextPage),
+        pageSize: fetchLimit,
       },
     });
   };
