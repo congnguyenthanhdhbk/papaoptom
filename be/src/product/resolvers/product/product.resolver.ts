@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product.service';
 import * as _ from 'lodash';
 import { CurrencyRate } from '../../../shared/CurrencyRate';
 import { ProductDetailRes } from '../../dto/res/ProductDetailRes';
+import {Product} from "../../interfaces/product.interface";
 
 @Resolver()
 export class ProductResolver {
@@ -31,10 +32,15 @@ export class ProductResolver {
       };
     }
 
+    const characteristics = this.convertPrice(product);
+
     return {
       code: HttpStatus.OK,
       message: '1 результат найден',
-      data: product,
+      data: {
+        ...product,
+        characteristics,
+      },
     };
   }
 
@@ -47,54 +53,7 @@ export class ProductResolver {
     // @ts-ignore
     const product = await this.productService.filterProduct(filter);
     const data = product?.docs.map((product) => {
-      const characteristic = product?.characteristics ?? {};
-      const type =
-        product?.characteristics?.purchaseCurrency ??
-        this.currency.CURRENCY_RHA;
-
-      const purchasePrice = this.currency.convertCurrency({
-        type,
-        value: product?.characteristics?.purchasePrice ?? 0,
-      });
-      const sellingPrice = this.currency.convertCurrency({
-        type,
-        value: product?.characteristics?.sellingPrice ?? 0,
-      });
-      const oldPurchasePrice = this.currency.convertCurrency({
-        type,
-        value: product?.characteristics?.oldPurchasePrice ?? 0,
-      });
-      const oldSellingPrice = this.currency.convertCurrency({
-        type,
-        value: product?.characteristics?.oldSellingPrice ?? 0,
-      });
-      const steamInBox = product?.characteristics?.steamInBox ?? 1;
-
-      const totalPurchasePrice = Number(purchasePrice) * Number(steamInBox);
-      const totalSellingPrice = Number(sellingPrice) * Number(steamInBox);
-      const totalOldPurchasePrice =
-        Number(oldPurchasePrice) * Number(steamInBox);
-      const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
-      // TODO: Add percent
-      const subtractSellingPrice = _.subtract(
-        totalOldSellingPrice,
-        totalSellingPrice,
-      );
-      const discountInPercent =
-        _.divide(subtractSellingPrice, totalSellingPrice) * 100;
-
-      const characteristics = {
-        ...characteristic,
-        purchasePrice,
-        sellingPrice,
-        oldPurchasePrice,
-        oldSellingPrice,
-        totalOldPurchasePrice,
-        totalOldSellingPrice,
-        totalPurchasePrice,
-        totalSellingPrice,
-        discountInPercent,
-      };
+      const characteristics = this.convertPrice(product);
       return {
         id: product?.id ?? 0,
         vcode: product?.vcode ?? null,
@@ -127,6 +86,57 @@ export class ProductResolver {
     return {
       code: HttpStatus.NOT_FOUND,
       message: 'результатов не найдено',
+    };
+  }
+
+  convertPrice(product: any): any {
+    const characteristic = product?.characteristics ?? {};
+    const type =
+        product?.characteristics?.purchaseCurrency ??
+        this.currency.CURRENCY_RHA;
+
+    const purchasePrice = this.currency.convertCurrency({
+      type,
+      value: product?.characteristics?.purchasePrice ?? 0,
+    });
+    const sellingPrice = this.currency.convertCurrency({
+      type,
+      value: product?.characteristics?.sellingPrice ?? 0,
+    });
+    const oldPurchasePrice = this.currency.convertCurrency({
+      type,
+      value: product?.characteristics?.oldPurchasePrice ?? 0,
+    });
+    const oldSellingPrice = this.currency.convertCurrency({
+      type,
+      value: product?.characteristics?.oldSellingPrice ?? 0,
+    });
+    const steamInBox = product?.characteristics?.steamInBox ?? 1;
+
+    const totalPurchasePrice = Number(purchasePrice) * Number(steamInBox);
+    const totalSellingPrice = Number(sellingPrice) * Number(steamInBox);
+    const totalOldPurchasePrice =
+        Number(oldPurchasePrice) * Number(steamInBox);
+    const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
+    // TODO: Add percent
+    const subtractSellingPrice = _.subtract(
+        totalOldSellingPrice,
+        totalSellingPrice,
+    );
+    const discountInPercent =
+        _.divide(subtractSellingPrice, totalSellingPrice) * 100;
+
+    return {
+      ...characteristic,
+      purchasePrice,
+      sellingPrice,
+      oldPurchasePrice,
+      oldSellingPrice,
+      totalOldPurchasePrice,
+      totalOldSellingPrice,
+      totalPurchasePrice,
+      totalSellingPrice,
+      discountInPercent,
     };
   }
 }

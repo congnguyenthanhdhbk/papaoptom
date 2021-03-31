@@ -57,7 +57,7 @@ export class ProductService {
   }
 
   async findProductById(id: string): Promise<any> {
-    return this.productModel.findOne({ id });
+    return this.product.findOne({ sku: id });
   }
 
   async findAllProduct(pageNumber: number, pageSize: number): Promise<Product> {
