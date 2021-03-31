@@ -1,10 +1,11 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { ProductFilterReq } from '../../dto/req/ProductFilterReq';
 import { ProductRes } from '../../dto/res/ProductRes';
 import { HttpStatus } from '@nestjs/common';
 import { ProductService } from '../../services/product.service';
 import * as _ from 'lodash';
 import { CurrencyRate } from '../../../shared/CurrencyRate';
+import { ProductDetailRes } from '../../dto/res/ProductDetailRes';
 
 @Resolver()
 export class ProductResolver {
@@ -12,6 +13,30 @@ export class ProductResolver {
     private readonly productService: ProductService,
     private readonly currency: CurrencyRate,
   ) {}
+
+  @Query(() => ProductDetailRes)
+  async getProduct(@Args({ name: 'slug', type: () => String }) slug: string) {
+    if (!slug) {
+      return {
+        code: HttpStatus.BAD_REQUEST,
+        message: 'требуется пуля',
+      };
+    }
+    const product = await this.productService.findProductById(slug);
+
+    if (_.isEmpty(product)) {
+      return {
+        code: HttpStatus.NOT_FOUND,
+        message: 'никаких записей не найдено',
+      };
+    }
+
+    return {
+      code: HttpStatus.OK,
+      message: '1 результат найден',
+      data: product,
+    };
+  }
 
   @Query(() => ProductRes)
   async filterProduct(
@@ -80,7 +105,7 @@ export class ProductResolver {
         brand: product?.brand ?? {},
         createdAt: product?.createdAt ?? new Date(),
         updatedAt: product?.updatedAt ?? new Date(),
-        slug: product?.name ?? null,
+        slug: product?.id ?? null,
         characteristics,
       };
     });

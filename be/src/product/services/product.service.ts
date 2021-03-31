@@ -1,9 +1,9 @@
-import {Injectable, Logger} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
-import {Product} from '../interfaces/product.interface';
-import * as fs from "fs";
-import {Sku} from "../interfaces/Sku";
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Product } from '../interfaces/product.interface';
+import * as fs from 'fs';
+import { Sku } from '../interfaces/Sku';
 
 @Injectable()
 export class ProductService {
@@ -15,7 +15,7 @@ export class ProductService {
     @InjectModel('Product')
     private readonly product: Model<Product>,
     @InjectModel('sku')
-    private readonly sku: Model<Sku>
+    private readonly sku: Model<Sku>,
   ) {}
 
   async importProducts(): Promise<void> {
@@ -32,10 +32,10 @@ export class ProductService {
           // const product = await this.forsageService.getProductById(452838);
 
           const productIds = await Promise.all(
-              ids.map((id) => ({
-                sku: id.id,
-                uri: `${process.env.FORSAGE_URI}/get_product/${id.id}?token=${process.env.FORSAGE_TOKEN}`,
-              })),
+            ids.map((id) => ({
+              sku: id.id,
+              uri: `${process.env.FORSAGE_URI}/get_product/${id.id}?token=${process.env.FORSAGE_TOKEN}`,
+            })),
           );
           // @ts-ignore
           await this.sku.insertMany(productIds);
@@ -63,11 +63,20 @@ export class ProductService {
   async findAllProduct(pageNumber: number, pageSize: number): Promise<Product> {
     const page = pageNumber ? pageNumber : 1;
     const limit = pageSize ? pageSize : 999999;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return this.product.paginate({}, {page, limit});
+    return this.product.paginate({}, { page, limit });
   }
 
-  async filterProduct({id, name, pageSize, pageNumber, category, supplier, brand}) {
+  async filterProduct({
+    id,
+    name,
+    pageSize,
+    pageNumber,
+    category,
+    supplier,
+    brand,
+  }) {
     const page = pageNumber ? pageNumber : 1;
     const limit = pageSize ? pageSize : 999999;
 
@@ -77,30 +86,32 @@ export class ProductService {
     }
 
     const criteria = {
-      $and: []
+      $and: [],
     };
 
     if (id) {
-      criteria.$and.push({sku: id});
+      criteria.$and.push({ sku: id });
     }
 
     if (name) {
-      criteria.$and.push({name: new RegExp(`^${name}$`, "i")});
+      criteria.$and.push({ name: new RegExp(`^${name}$`, 'i') });
     }
 
     if (category) {
-      criteria.$and.push({'category.name': new RegExp(`^${category}$`, "i")});
+      criteria.$and.push({ 'category.name': new RegExp(`^${category}$`, 'i') });
     }
 
     if (supplier) {
-      criteria.$and.push({'supplier.company': new RegExp(`^${supplier}$`, "i")});
+      criteria.$and.push({
+        'supplier.company': new RegExp(`^${supplier}$`, 'i'),
+      });
     }
 
     if (brand) {
-      criteria.$and.push({'brand.name': new RegExp(`^${brand}$`, "i")});
+      criteria.$and.push({ 'brand.name': new RegExp(`^${brand}$`, 'i') });
     }
 
     // @ts-ignore
-    return this.product.paginate(criteria, {page, limit});
+    return this.product.paginate(criteria, { page, limit });
   }
 }
