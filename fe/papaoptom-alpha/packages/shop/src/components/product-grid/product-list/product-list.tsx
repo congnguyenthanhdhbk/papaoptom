@@ -108,12 +108,14 @@ export const Products: React.FC<ProductsProps> = ({
         }
         console.log("Fetch more result::", JSON.stringify(fetchMoreResult));
         console.log("previous result::", JSON.stringify(previousResult));
-        const newData = [...previousResult.data.filterProduct.data, ...fetchMoreResult.data.filterProduct.data];
+        const newData = [...previousResult?.filterProduct?.data, ...fetchMoreResult?.filterProduct?.data];
         return {
           ...previousResult,
           data: newData,
-          pageNumber: fetchMoreResult?.data?.filterProduct?.pageNumber,
-          pageSize: fetchMoreResult?.data?.filterProduct?.pageSize,
+          pageNumber: fetchMoreResult?.filterProduct?.pageNumber,
+          pageSize: fetchMoreResult?.filterProduct?.pageSize,
+          message: fetchMoreResult?.filterProduct?.message,
+          code: fetchMoreResult?.filterProduct?.code
         }
       }
     });
