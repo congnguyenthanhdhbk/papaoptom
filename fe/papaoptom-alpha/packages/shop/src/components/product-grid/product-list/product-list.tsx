@@ -102,6 +102,18 @@ export const Products: React.FC<ProductsProps> = ({
         pageNumber: Number(data.filterProduct.nextPage),
         pageSize: fetchLimit,
       },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const newData = [...previousResult.data, ...fetchMoreResult.data];
+        return {
+          ...previousResult,
+          data: newData,
+          pageNumber: fetchMoreResult?.pageNumber,
+          pageSize: fetchMoreResult?.pageSize,
+        }
+      }
     });
   };
 
