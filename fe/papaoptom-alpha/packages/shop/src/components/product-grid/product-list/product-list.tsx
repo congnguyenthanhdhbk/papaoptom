@@ -115,7 +115,13 @@ export const Products: React.FC<ProductsProps> = ({
             pageNumber: fetchMoreResult?.filterProduct?.pageNumber,
             pageSize: fetchMoreResult?.filterProduct?.pageSize,
             message: fetchMoreResult?.filterProduct?.message,
-            code: fetchMoreResult?.filterProduct?.code
+            code: fetchMoreResult?.filterProduct?.code,
+            totalDocs: fetchMoreResult?.filterProduct?.totalDocs,
+            totalPages: fetchMoreResult?.filterProduct?.totalPages,
+            hasPrevPage: fetchMoreResult?.filterProduct?.hasPrevPage,
+            hasNextPage: fetchMoreResult?.filterProduct?.hasNextPage,
+            prevPage: fetchMoreResult?.filterProduct?.prevPage,
+            nextPage: fetchMoreResult?.filterProduct?.nextPage,
           }
         }
       }
