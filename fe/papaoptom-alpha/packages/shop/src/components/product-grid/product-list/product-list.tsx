@@ -106,9 +106,8 @@ export const Products: React.FC<ProductsProps> = ({
         if (!fetchMoreResult) {
           return previousResult;
         }
-        console.log("Fetch more result::", JSON.stringify(fetchMoreResult));
-        console.log("previous result::", JSON.stringify(previousResult));
         const newData = [...previousResult?.filterProduct?.data, ...fetchMoreResult?.filterProduct?.data];
+        console.log("Array after::", JSON.stringify(newData));
         return {
           ...previousResult,
           data: newData,
