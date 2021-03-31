@@ -74,7 +74,7 @@ export const Products: React.FC<ProductsProps> = ({
   // console.log(queryResult);
   const { data, error, loading, fetchMore, networkStatus } = queryResult;
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
-  let products = data.filterProduct.data;
+  let products = data?.filterProduct?.data || [];
 
   if (error) return <ErrorMessage message={error.message} />;
   if (loading && !loadingMore) {
