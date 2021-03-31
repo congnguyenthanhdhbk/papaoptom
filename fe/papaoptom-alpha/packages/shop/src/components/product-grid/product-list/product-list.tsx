@@ -9,7 +9,7 @@ import {
   LoaderItem,
   ProductCardWrapper,
 } from './product-list.style';
-import { CURRENCY } from 'utils/constant';
+import { CURRENCY, CURRENCY_UAH } from 'utils/constant';
 import { useQuery, NetworkStatus } from '@apollo/client';
 import Placeholder from 'components/placeholder/placeholder';
 import Fade from 'react-reveal/Fade';
@@ -108,10 +108,16 @@ export const Products: React.FC<ProductsProps> = ({
     console.log(props);
     const {name, characteristics} = props;
     const {
-      description, photo1,
-      saleCurrency , sizeChart,
-      sellingPrice, oldSellingPrice,
-      totalSellingPrice, totalOldSellingPrice } = characteristics;
+      description,
+      photo1,
+      saleCurrency,
+      sizeChart,
+      sellingPrice,
+      oldSellingPrice,
+      totalSellingPrice,
+      totalOldSellingPrice,
+      discountInPercent,
+    } = characteristics;
 
     return (
       // <GeneralCard
@@ -131,10 +137,10 @@ export const Products: React.FC<ProductsProps> = ({
         description={description}
         image={photo1}
         weight={sizeChart}
-        currency={CURRENCY}
+        currency={CURRENCY_UAH}
         price={totalOldSellingPrice}
-        salePrice={sellingPrice}
-        discountInPercent={10}
+        salePrice={totalSellingPrice}
+        discountInPercent={discountInPercent}
         data={props}
         deviceType={deviceType}
       />

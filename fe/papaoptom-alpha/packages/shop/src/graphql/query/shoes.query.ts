@@ -56,7 +56,9 @@ export const GET_SHOES = gql`
           totalOldSellingPrice
           totalPurchasePrice
           totalSellingPrice
+          discountInPercent
         }
+        slug
       }
       totalDocs
       totalPages
