@@ -58,6 +58,8 @@ export class CharacteristicRes {
   totalPurchasePrice?: string;
   @Field(() => String, { nullable: true })
   totalSellingPrice?: string;
+  @Field(() => String, { nullable: true })
+  discountInPercent?: string;
   // @Field(() => Int, { nullable: true })
   // id?: number;
   // @Field(() => String, { nullable: true })

@@ -107,7 +107,11 @@ export const Products: React.FC<ProductsProps> = ({
   const renderCard = (productType, props) => {
     console.log(props);
     const {name, characteristics} = props;
-    const {description, photo1, saleCurrency , sizeChart, sellingPrice, oldSellingPrice} = characteristics;
+    const {
+      description, photo1,
+      saleCurrency , sizeChart,
+      sellingPrice, oldSellingPrice,
+      totalSellingPrice, totalOldSellingPrice } = characteristics;
 
     return (
       // <GeneralCard
@@ -128,7 +132,7 @@ export const Products: React.FC<ProductsProps> = ({
         image={photo1}
         weight={sizeChart}
         currency={CURRENCY}
-        price={oldSellingPrice}
+        price={totalOldSellingPrice}
         salePrice={sellingPrice}
         discountInPercent={10}
         data={props}

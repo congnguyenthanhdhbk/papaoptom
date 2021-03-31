@@ -1,5 +1,5 @@
-import {Field, Int, ObjectType} from '@nestjs/graphql';
-import {ProductFilterRes} from "./ProductFilterRes";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { ProductFilterRes } from './ProductFilterRes';
 
 @ObjectType()
 export class ProductRes {
@@ -7,11 +7,11 @@ export class ProductRes {
   readonly code: number;
   @Field(() => String)
   readonly message: string;
-  @Field(() => [ProductFilterRes], { nullable: true})
+  @Field(() => [ProductFilterRes], { nullable: true })
   data?: ProductFilterRes[];
-  @Field(() => Int, { nullable: true})
+  @Field(() => Int, { nullable: true })
   totalDocs?: number;
-  @Field(() => Boolean, { nullable: true})
+  @Field(() => Boolean, { nullable: true })
   hasPrevPage?: boolean;
   @Field(() => Boolean, { nullable: true })
   hasNextPage?: boolean;

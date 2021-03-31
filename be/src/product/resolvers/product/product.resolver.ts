@@ -47,8 +47,16 @@ export class ProductResolver {
 
       const totalPurchasePrice = Number(purchasePrice) * Number(steamInBox);
       const totalSellingPrice = Number(sellingPrice) * Number(steamInBox);
-      const totalOldPurchasePrice = Number(oldPurchasePrice) * Number(steamInBox);
+      const totalOldPurchasePrice =
+        Number(oldPurchasePrice) * Number(steamInBox);
       const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
+      // TODO: Add percent
+      const subtractSellingPrice = _.subtract(
+        totalOldSellingPrice,
+        sellingPrice,
+      );
+      const discountInPercent =
+        _.divide(subtractSellingPrice, sellingPrice) * 100;
 
       const characteristics = {
         ...characteristic,
@@ -60,6 +68,7 @@ export class ProductResolver {
         totalOldSellingPrice,
         totalPurchasePrice,
         totalSellingPrice,
+        discountInPercent,
       };
       return {
         id: product?.id ?? 0,
@@ -71,6 +80,7 @@ export class ProductResolver {
         brand: product?.brand ?? {},
         createdAt: product?.createdAt ?? new Date(),
         updatedAt: product?.updatedAt ?? new Date(),
+        slug: product?.name ?? null,
         characteristics,
       };
     });
