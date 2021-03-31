@@ -65,7 +65,7 @@ export const Products: React.FC<ProductsProps> = ({
     GET_SHOES,
     {
       variables: {
-        // supplier: "Raffelli",
+        supplier: "Raffelli",
         pageSize: 25,
         pageNumber: 1,
       }
@@ -106,7 +106,7 @@ export const Products: React.FC<ProductsProps> = ({
 
   const renderCard = (productType, props) => {
     console.log(props);
-    const {name, characteristics} = props;
+    const {name, characteristics, category, brand} = props;
     const {
       description,
       photo1,
@@ -133,7 +133,7 @@ export const Products: React.FC<ProductsProps> = ({
       //   deviceType={deviceType}
       // />
       <GeneralCard
-        title={name}
+        title={`${name} ${category?.name ?? ""} ${brand?.name ?? ""}`}
         description={description}
         image={photo1}
         weight={sizeChart}
