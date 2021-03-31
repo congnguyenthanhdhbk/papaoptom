@@ -96,10 +96,11 @@ export const Products: React.FC<ProductsProps> = ({
     return <NoResultFound />;
   }
   const handleLoadMore = () => {
+    const fetchLimit = data.filterProduct.data.pageSize;
     fetchMore({
       variables: {
-        offset: Number(data.filterProduct.data.pageNumber),
-        limit: Number(data.filterProduct.data.pageSize),
+        offset: Number(data.filterProduct.data.length),
+        limit: fetchLimit,
       },
     });
   };
