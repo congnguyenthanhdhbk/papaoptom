@@ -130,11 +130,11 @@ export class ProductResolver {
     const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
     // TODO: Add percent
     const subtractSellingPrice = _.subtract(
-        totalOldSellingPrice,
         totalSellingPrice,
+        totalOldSellingPrice,
     );
     const discountInPercent =
-        _.round(_.divide(subtractSellingPrice, totalSellingPrice) * 100, 2).toFixed(2);
+        _.round(_.divide(subtractSellingPrice, totalSellingPrice) * 100, 0).toFixed(0);
 
     return {
       ...characteristic,
