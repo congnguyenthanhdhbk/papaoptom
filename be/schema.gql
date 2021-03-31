@@ -56,6 +56,7 @@ type CharacteristicRes {
   totalOldSellingPrice: String
   totalPurchasePrice: String
   totalSellingPrice: String
+  discountInPercent: String
 }
 
 type ProductFilterRes {
@@ -69,6 +70,7 @@ type ProductFilterRes {
   createdAt: DateTime
   updatedAt: DateTime
   characteristics: CharacteristicRes
+  slug: String
 }
 
 """
@@ -90,7 +92,14 @@ type ProductRes {
   pageSize: Int
 }
 
+type ProductDetailRes {
+  code: Int
+  message: String
+  data: ProductFilterRes
+}
+
 type Query {
+  getProduct(slug: String!): ProductDetailRes!
   filterProduct(filter: ProductFilterReq!): ProductRes!
 }
 

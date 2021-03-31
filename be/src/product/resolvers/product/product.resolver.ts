@@ -78,10 +78,10 @@ export class ProductResolver {
       // TODO: Add percent
       const subtractSellingPrice = _.subtract(
         totalOldSellingPrice,
-        sellingPrice,
+        totalSellingPrice,
       );
       const discountInPercent =
-        _.divide(subtractSellingPrice, sellingPrice) * 100;
+        _.divide(subtractSellingPrice, totalSellingPrice) * 100;
 
       const characteristics = {
         ...characteristic,

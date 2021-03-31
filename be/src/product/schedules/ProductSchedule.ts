@@ -247,7 +247,7 @@ export class ProductSchedule {
     }
   }
 
-  @Cron('*/3 * * * * *')
+  // @Cron('*/3 * * * * *')
   async loadAllProduct(): Promise<void> {
     const cronJob = await this.cronJob.findOne({ domain: 'PRODUCT' });
     let skuOption = 0;
