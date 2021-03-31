@@ -65,7 +65,7 @@ export const Products: React.FC<ProductsProps> = ({
     GET_SHOES,
     {
       variables: {
-        supplier: "Raffelli",
+        // supplier: "Raffelli",
         pageSize: 10,
         pageNumber: 1,
       }
