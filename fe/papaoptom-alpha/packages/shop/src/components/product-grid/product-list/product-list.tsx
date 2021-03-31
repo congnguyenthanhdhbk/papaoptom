@@ -74,6 +74,7 @@ export const Products: React.FC<ProductsProps> = ({
   // console.log(queryResult);
   const { data, error, loading, fetchMore, networkStatus } = queryResult;
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
+  let products = data.filterProduct.data;
 
   if (error) return <ErrorMessage message={error.message} />;
   if (loading && !loadingMore) {
@@ -108,7 +109,7 @@ export const Products: React.FC<ProductsProps> = ({
         }
         const newData = [...previousResult?.filterProduct?.data, ...fetchMoreResult?.filterProduct?.data];
         console.log("Array after::", JSON.stringify(newData));
-        queryResult.data.filterProduct.data = [...newData];
+        products = [...newData];
         return {
           ...previousResult,
           data: newData,
@@ -166,7 +167,7 @@ export const Products: React.FC<ProductsProps> = ({
   return (
     <>
       <ProductsRow>
-        {data.filterProduct.data.map((item: any, index: number) => (
+        {products.map((item: any, index: number) => (
           <ProductsCol
             key={index}
           >
