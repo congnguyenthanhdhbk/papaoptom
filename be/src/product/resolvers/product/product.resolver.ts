@@ -134,7 +134,7 @@ export class ProductResolver {
         totalSellingPrice,
     );
     const discountInPercent =
-        _.divide(subtractSellingPrice, totalSellingPrice) * 100;
+        _.round(_.divide(subtractSellingPrice, totalSellingPrice) * 100, 2).toFixed(2);
 
     return {
       ...characteristic,
