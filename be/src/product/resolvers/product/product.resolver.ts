@@ -39,7 +39,17 @@ export class ProductResolver {
       message: '1 результат найден',
       data: {
         ...product,
+        id: product?.id ?? 0,
+        vcode: product?.vcode ?? null,
+        name: product?.name ?? null,
+        quantity: product?.quantity ?? 0,
+        category: product?.category ?? {},
+        supplier: product?.supplier ?? {},
+        brand: product?.brand ?? {},
+        createdAt: product?.createdAt ?? new Date(),
+        updatedAt: product?.updatedAt ?? new Date(),
         characteristics,
+        slug: product?.sku
       },
     };
   }
@@ -64,7 +74,7 @@ export class ProductResolver {
         brand: product?.brand ?? {},
         createdAt: product?.createdAt ?? new Date(),
         updatedAt: product?.updatedAt ?? new Date(),
-        slug: product?.id ?? null,
+        slug: product?.sku ?? null,
         characteristics,
       };
     });
