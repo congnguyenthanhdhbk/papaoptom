@@ -88,7 +88,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
             </BackButton>
 
             <CarouselWithCustomDots
-              items={product.gallery}
+              items={product?.characteristics?.gallery ?? []}
               deviceType={deviceType}
             />
           </ProductPreview>
@@ -99,7 +99,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
             {/*<ProductTitle>{product.title}</ProductTitle>*/}
             <ProductTitle>{`${product.name} ${product?.category?.name ?? ""} ${product?.brand?.name}`}</ProductTitle>
             <ProductPriceWrapper>
-              {product.discountInPercent ? (
+              {product?.characteristics.discountInPercent ? (
                 <SalePrice>
                   {CURRENCY_UAH}
                   {product?.characteristics?.totalSellingPrice ?? 0}
@@ -180,7 +180,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
             </BackButton>
 
             <CarouselWithCustomDots
-              items={product.gallery}
+              items={product?.characteristics?.gallery ?? []}
               deviceType={deviceType}
             />
           </ProductPreview>
