@@ -6,7 +6,7 @@ import { ProductService } from '../../services/product.service';
 import * as _ from 'lodash';
 import { CurrencyRate } from '../../../shared/CurrencyRate';
 import { ProductDetailRes } from '../../dto/res/ProductDetailRes';
-import {Product} from "../../interfaces/product.interface";
+import { Product } from '../../interfaces/product.interface';
 
 @Resolver()
 export class ProductResolver {
@@ -49,7 +49,7 @@ export class ProductResolver {
         createdAt: product?.createdAt ?? new Date(),
         updatedAt: product?.updatedAt ?? new Date(),
         characteristics,
-        slug: product?.sku
+        slug: product?.sku,
       },
     };
   }
@@ -102,8 +102,7 @@ export class ProductResolver {
   convertPrice(product: any): any {
     const characteristic = product?.characteristics ?? {};
     const type =
-        product?.characteristics?.purchaseCurrency ??
-        this.currency.CURRENCY_RHA;
+      product?.characteristics?.purchaseCurrency ?? this.currency.CURRENCY_RHA;
 
     const purchasePrice = this.currency.convertCurrency({
       type,
@@ -125,16 +124,23 @@ export class ProductResolver {
 
     const totalPurchasePrice = Number(purchasePrice) * Number(steamInBox);
     const totalSellingPrice = Number(sellingPrice) * Number(steamInBox);
-    const totalOldPurchasePrice =
-        Number(oldPurchasePrice) * Number(steamInBox);
+    const totalOldPurchasePrice = Number(oldPurchasePrice) * Number(steamInBox);
     const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
     // TODO: Add percent
     const subtractSellingPrice = _.subtract(
-        totalSellingPrice,
-        totalOldSellingPrice,
+      totalSellingPrice,
+      totalOldSellingPrice,
     );
-    const discountInPercent =
-        _.round(_.divide(subtractSellingPrice, totalSellingPrice) * 100, 0).toFixed(0);
+    const discountInPercent = _.round(
+      _.divide(subtractSellingPrice, totalSellingPrice) * 100,
+      0,
+    ).toFixed(0);
+    const gallery = [];
+    const url = { url: product?.characteristics?.photo1 ?? null };
+    gallery.push(url);
+    gallery.push(url);
+    gallery.push(url);
+    gallery.push(url);
 
     return {
       ...characteristic,
@@ -147,6 +153,7 @@ export class ProductResolver {
       totalPurchasePrice,
       totalSellingPrice,
       discountInPercent,
+      gallery,
     };
   }
 }

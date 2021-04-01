@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GalleryRes } from "./GalleryRes";
 
 @ObjectType()
 export class CharacteristicRes {
@@ -60,6 +61,8 @@ export class CharacteristicRes {
   totalSellingPrice?: string;
   @Field(() => String, { nullable: true })
   discountInPercent?: string;
+  @Field(() => [GalleryRes], { nullable: true })
+  gallery?: GalleryRes[];
   // @Field(() => Int, { nullable: true })
   // id?: number;
   // @Field(() => String, { nullable: true })
