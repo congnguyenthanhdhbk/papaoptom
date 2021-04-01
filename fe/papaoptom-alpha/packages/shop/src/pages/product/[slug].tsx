@@ -6,7 +6,7 @@ import { Modal } from '@redq/reuse-modal';
 import ProductSingleWrapper, {
   ProductSingleContainer,
 } from 'assets/styles/product-single.style';
-import { GET_PRODUCT_DETAILS } from 'graphql/query/product.query';
+import {GET_PRODUCT_DETAILS, GET_PRODUCT_DETAILS_SHOES} from 'graphql/query/product.query';
 import { initializeApollo } from 'utils/apollo';
 
 const ProductDetails = dynamic(() =>
@@ -29,13 +29,16 @@ type Props = {
 
 const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
   let content = (
-    <ProductDetails product={data.product} deviceType={deviceType} />
+    // <ProductDetails product={data.product} deviceType={deviceType} />
+    <ProductDetails product={data.getProduct.data} deviceType={deviceType} />
   );
   return (
     <>
       <SEO
-        title={`${data.product.title} - Papaoptom`}
-        description={`${data.product.title} Details`}
+        title={`${data.getProduct.data.name} - Papaoptom`}
+        // title={`${data.product.title} - Papaoptom`}
+        // description={`${data.product.title} Details`}
+        description={`${data.getProduct.data.description} Details`}
       />
 
       <Modal>
@@ -52,8 +55,14 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
 export async function getServerSideProps({ params }) {
   const apolloClient = initializeApollo();
 
-  const { data } = await apolloClient.query({
+  /*const { data } = await apolloClient.query({
     query: GET_PRODUCT_DETAILS,
+    variables: {
+      slug: params.slug,
+    },
+  });*/
+  const { data } = await apolloClient.query({
+    query: GET_PRODUCT_DETAILS_SHOES,
     variables: {
       slug: params.slug,
     },

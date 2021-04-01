@@ -64,6 +64,70 @@ export const GET_PRODUCT = gql`
     }
   }
 `;
+
+export const GET_PRODUCT_DETAILS_SHOES = gql`
+  query getProduct($slug: String!) {
+    getProduct(slug: $slug) {
+      message
+      code
+      data {
+        id
+        vcode
+        name
+        quantity
+        category {
+          id
+          name
+        }
+        supplier {
+          id
+          email
+          phone
+          address
+          company
+        }
+        brand {
+          id
+          name
+        }
+        createdAt
+        updatedAt
+        characteristics {
+          description
+          photo1
+          productMaterial
+          sizeChart
+          repeatedDimensions
+          steamInBox
+          liningMaterial
+          outsoleMaterial
+          country
+          heelHeight
+          platformHeight
+          picturedSize
+          purchasePrice
+          sellingPrice
+          season
+          shootingDate
+          purchaseCurrency
+          saleCurrency
+          floor
+          type
+          oldPurchasePrice
+          oldSellingPrice
+          insoleMaterial
+          videoReview
+          totalOldPurchasePrice
+          totalOldSellingPrice
+          totalPurchasePrice
+          totalSellingPrice
+          discountInPercent
+        }
+        slug
+      }
+    }
+  }
+`
 export const GET_PRODUCT_DETAILS = gql`
   query getProduct($slug: String!) {
     product(slug: $slug) {

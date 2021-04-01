@@ -27,7 +27,7 @@ import { CartIcon } from 'assets/icons/CartIcon';
 import ReadMore from 'components/truncate/truncate';
 import CarouselWithCustomDots from 'components/multi-carousel/multi-carousel';
 import Products from 'components/product-grid/product-list/product-list';
-import { CURRENCY } from 'utils/constant';
+import {CURRENCY, CURRENCY_UAH} from 'utils/constant';
 import { FormattedMessage } from 'react-intl';
 import { useLocale } from 'contexts/language/language.provider';
 import { useCart } from 'contexts/cart/use-cart';
@@ -96,11 +96,12 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
 
         <ProductInfo dir={isRtl ? 'rtl' : 'ltr'}>
           <ProductTitlePriceWrapper>
-            <ProductTitle>{product.title}</ProductTitle>
+            {/*<ProductTitle>{product.title}</ProductTitle>*/}
+            <ProductTitle>{product.name}</ProductTitle>
             <ProductPriceWrapper>
               {product.discountInPercent ? (
                 <SalePrice>
-                  {CURRENCY}
+                  {CURRENCY_UAH}
                   {product.price}
                 </SalePrice>
               ) : null}
