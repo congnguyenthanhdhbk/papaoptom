@@ -121,7 +121,8 @@ export const GET_PRODUCT_DETAILS_SHOES = gql`
           totalOldSellingPrice
           totalPurchasePrice
           totalSellingPrice
-          discountInPercent
+          discountInPercent,
+          gallery
         }
         slug
       }
