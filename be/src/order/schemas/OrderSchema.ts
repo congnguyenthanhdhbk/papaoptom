@@ -17,9 +17,11 @@ export const OrderSchema = new mongoose.Schema(
       methods: String,
       securityCode: String,
     },
-    bill: {
+    bill: [{
       sku: String,
+      image: String,
       quantity: Number,
+      supplier: String,
       discountAmount: {
         type: Number,
         default: 0,
@@ -29,7 +31,7 @@ export const OrderSchema = new mongoose.Schema(
         type: Number,
         default: 0,
       },
-    },
+    }],
     shipping: [
       {
         address: String,

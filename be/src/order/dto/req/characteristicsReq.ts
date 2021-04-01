@@ -1,6 +1,8 @@
-import { Field } from '@nestjs/graphql';
+import {Field, InputType} from '@nestjs/graphql';
 import { GalleryRes } from '../../../product/dto/res/GalleryRes';
+import {GalleryReq} from "./GalleryReq";
 
+@InputType()
 export class CharacteristicsReq {
   @Field(() => String, { nullable: true })
   description?: string;
@@ -60,6 +62,6 @@ export class CharacteristicsReq {
   totalSellingPrice?: string;
   @Field(() => String, { nullable: true })
   discountInPercent?: string;
-  @Field(() => [GalleryRes], { nullable: true })
-  gallery?: GalleryRes[];
+  @Field(() => [GalleryReq], { nullable: true })
+  gallery?: GalleryReq[];
 }

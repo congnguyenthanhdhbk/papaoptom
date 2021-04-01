@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
 import { OrderSchema } from './schemas/OrderSchema';
 import { OrderService } from './services/OrderService';
+import {OrderResolver} from "./resolvers/order.resolver";
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { OrderService } from './services/OrderService';
       },
     ]),
   ],
-  providers: [OrderService],
+  providers: [OrderService, OrderResolver],
 })
 export class OrderModule {}
