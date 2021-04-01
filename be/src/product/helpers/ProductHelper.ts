@@ -51,11 +51,11 @@ export class ProductHelper {
     const totalOldSellingPrice = Number(oldSellingPrice) * Number(steamInBox);
     // TODO: Add percent
     const subtractSellingPrice = _.subtract(
-      totalSellingPrice,
-      totalOldSellingPrice,
+      sellingPrice,
+      oldSellingPrice,
     );
     const discountInPercent = _.round(
-      _.divide(subtractSellingPrice, totalSellingPrice) * 100,
+      _.divide(subtractSellingPrice, sellingPrice) * 100,
       0,
     ).toFixed(0);
     const gallery = [];
