@@ -195,7 +195,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
           />
         </h2>
         <Products
-          type={product.type.toLowerCase()}
+          type={product?.type?.toLowerCase() ?? null}
           deviceType={deviceType}
           loadMore={false}
           fetchLimit={10}
