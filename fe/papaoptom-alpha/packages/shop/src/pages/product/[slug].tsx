@@ -67,6 +67,8 @@ export async function getServerSideProps({ params }) {
       slug: params.slug,
     },
   });
+
+  console.log("Query data::", JSON.stringify(data));
   return {
     props: {
       data,
