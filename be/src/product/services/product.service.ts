@@ -80,7 +80,7 @@ export class ProductService {
     const page = pageNumber ? pageNumber : 1;
     const limit = pageSize ? pageSize : 999999;
 
-    if (!id && !name && !category && supplier && brand) {
+    if (!id && !name && !category && !supplier && !brand) {
       // @ts-ignore
       return this.product.paginate({}, { page, limit });
     }
