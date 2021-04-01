@@ -97,23 +97,23 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
         <ProductInfo dir={isRtl ? 'rtl' : 'ltr'}>
           <ProductTitlePriceWrapper>
             {/*<ProductTitle>{product.title}</ProductTitle>*/}
-            <ProductTitle>{product.name}</ProductTitle>
+            <ProductTitle>{`${product.name} ${product?.category?.name ?? ""} ${product?.brand?.name}`}</ProductTitle>
             <ProductPriceWrapper>
               {product.discountInPercent ? (
                 <SalePrice>
                   {CURRENCY_UAH}
-                  {product.price}
+                  {product?.characteristics?.totalSellingPrice ?? 0}
                 </SalePrice>
               ) : null}
 
               <ProductPrice>
                 {CURRENCY}
-                {product.salePrice ? product.salePrice : product.price}
+                {product.characteristics.totalSellingPrice ? product.characteristics.totalSellingPrice : 0}
               </ProductPrice>
             </ProductPriceWrapper>
           </ProductTitlePriceWrapper>
 
-          <ProductWeight>{product.unit}</ProductWeight>
+          <ProductWeight>{product?.characteristics?.sizeChart ?? "30 - 40"}</ProductWeight>
           <ProductDescription>
             <ReadMore character={600}>{product.description}</ReadMore>
           </ProductDescription>
