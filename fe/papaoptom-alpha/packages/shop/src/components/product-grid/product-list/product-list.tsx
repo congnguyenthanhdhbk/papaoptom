@@ -1,6 +1,6 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
+import React from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import {
   ProductsRow,
   ProductsCol,
@@ -8,23 +8,23 @@ import {
   LoaderWrapper,
   LoaderItem,
   ProductCardWrapper,
-} from './product-list.style';
-import { CURRENCY, CURRENCY_UAH } from 'utils/constant';
-import { useQuery, NetworkStatus } from '@apollo/client';
-import Placeholder from 'components/placeholder/placeholder';
-import Fade from 'react-reveal/Fade';
-import NoResultFound from 'components/no-result/no-result';
-import { FormattedMessage } from 'react-intl';
-import { Button } from 'components/button/loadmore-button';
-import { GET_PRODUCTS } from 'graphql/query/products.query';
-import { GET_SHOES } from 'graphql/query/shoes.query';
+} from "./product-list.style";
+import { CURRENCY, CURRENCY_UAH } from "utils/constant";
+import { useQuery, NetworkStatus } from "@apollo/client";
+import Placeholder from "components/placeholder/placeholder";
+import Fade from "react-reveal/Fade";
+import NoResultFound from "components/no-result/no-result";
+import { FormattedMessage } from "react-intl";
+import { Button } from "components/button/loadmore-button";
+import { GET_PRODUCTS } from "graphql/query/products.query";
+import { GET_SHOES } from "graphql/query/shoes.query";
 
-const ErrorMessage = dynamic(() =>
-  import('components/error-message/error-message')
+const ErrorMessage = dynamic(
+  () => import("components/error-message/error-message")
 );
 
 const GeneralCard = dynamic(
-  import('components/product-card/product-card-one/product-card-one')
+  import("components/product-card/product-card-one/product-card-one")
 );
 
 type ProductsProps = {
@@ -61,16 +61,12 @@ export const Products: React.FC<ProductsProps> = ({
   // const { data, error, loading, fetchMore, networkStatus } = queryResult;
   // const loadingMore = networkStatus === NetworkStatus.fetchMore;
 
-  const queryResult = useQuery(
-    GET_SHOES,
-    {
-      variables: {
-        supplier: "Raffelli",
-        pageSize: 25,
-        pageNumber: 1,
-      }
-    }
-  );
+  const queryResult = useQuery(GET_SHOES, {
+    variables: {
+      pageSize: fetchLimit,
+      pageNumber: 1,
+    },
+  });
   // console.log(queryResult);
   const { data, error, loading, fetchMore, networkStatus } = queryResult;
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
@@ -106,31 +102,45 @@ export const Products: React.FC<ProductsProps> = ({
         if (!fetchMoreResult) {
           return previousResult;
         }
-        const newData = [...previousResult?.filterProduct?.data, ...fetchMoreResult?.filterProduct?.data];
+        const {
+          pageNumber,
+          pageSize,
+          message,
+          code,
+          totalDocs,
+          totalPages,
+          hasPrevPage,
+          hasNextPage,
+          prevPage,
+          nextPage,
+          data,
+        } = fetchMoreResult?.filterProduct;
+        const newData = [...previousResult?.filterProduct?.data, ...data];
         console.log("Array after::", JSON.stringify(newData));
+
         return {
           ...previousResult,
           filterProduct: {
             data: newData,
-            pageNumber: fetchMoreResult?.filterProduct?.pageNumber,
-            pageSize: fetchMoreResult?.filterProduct?.pageSize,
-            message: fetchMoreResult?.filterProduct?.message,
-            code: fetchMoreResult?.filterProduct?.code,
-            totalDocs: fetchMoreResult?.filterProduct?.totalDocs,
-            totalPages: fetchMoreResult?.filterProduct?.totalPages,
-            hasPrevPage: fetchMoreResult?.filterProduct?.hasPrevPage,
-            hasNextPage: fetchMoreResult?.filterProduct?.hasNextPage,
-            prevPage: fetchMoreResult?.filterProduct?.prevPage,
-            nextPage: fetchMoreResult?.filterProduct?.nextPage,
-          }
-        }
-      }
+            pageNumber,
+            pageSize,
+            message,
+            code,
+            totalDocs,
+            totalPages,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+          },
+        };
+      },
     });
   };
 
   const renderCard = (productType, props) => {
     console.log(props);
-    const {name, characteristics, category, brand} = props;
+    const { name, characteristics, category, brand } = props;
     const {
       description,
       photo1,
@@ -144,18 +154,6 @@ export const Products: React.FC<ProductsProps> = ({
     } = characteristics;
 
     return (
-      // <GeneralCard
-      //   title={props.title}
-      //   description={props.description}
-      //   image={props.image}
-      //   weight={props.unit}
-      //   currency={CURRENCY}
-      //   price={props.price}
-      //   salePrice={props.salePrice}
-      //   discountInPercent={props.discountInPercent}
-      //   data={props}
-      //   deviceType={deviceType}
-      // />
       <GeneralCard
         title={`${name} ${category?.name ?? ""} ${brand?.name ?? ""}`}
         description={description}
@@ -174,14 +172,12 @@ export const Products: React.FC<ProductsProps> = ({
     <>
       <ProductsRow>
         {data?.filterProduct?.data.map((item: any, index: number) => (
-          <ProductsCol
-            key={index}
-          >
+          <ProductsCol key={index}>
             <ProductCardWrapper>
               <Fade
                 duration={800}
                 delay={index * 10}
-                style={{ height: '100%' }}
+                style={{ height: "100%" }}
               >
                 {renderCard(type, item)}
               </Fade>

@@ -107,16 +107,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   //   },
   // });
 
-  // await apolloClient.query({
-  //   query: GET_SHOES,
-  //   variables: {
-  //     supplier: "Raffelli",
-  //     pageSize: 10,
-  //     pageNumber: 1,
-  //   },
-  // });
+  await apolloClient.query({
+    query: GET_SHOES,
+    variables: {
+      pageSize: 25,
+      pageNumber: 1,
+    },
+  });
   // console.log(apolloClient.cache.extract());
-
 
   return {
     props: {
@@ -130,7 +128,6 @@ export async function getStaticPaths() {
   return {
     paths: [
       { params: { type: 'shoes' } },
-      { params: { type: 'bags' } },
     ],
     fallback: false,
   };
