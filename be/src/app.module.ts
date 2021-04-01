@@ -10,6 +10,7 @@ import { ForsageModule } from './forsage/forsage.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CsvModule } from 'nest-csv-parser';
 import { GraphQLModule } from '@nestjs/graphql';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { GraphQLModule } from '@nestjs/graphql';
     ProductModule,
     ForsageModule,
     CsvModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

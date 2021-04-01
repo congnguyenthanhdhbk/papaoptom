@@ -1,20 +1,21 @@
 import * as mongoose from 'mongoose';
 
-export const NormalizeProductSchema = new mongoose.Schema({
+export const NormalizeProductSchema = new mongoose.Schema(
+  {
     sku: {
-        type: String,
+      type: String,
     },
     vcode: {
-        type: String
+      type: String,
     },
     name: {
-        type: String
+      type: String,
     },
     quantity: {
-        type: Number
+      type: Number,
     },
     characteristics: {
-        type: Object
+      type: Object,
     },
     // characteristics: {
     //     description: String,
@@ -43,29 +44,31 @@ export const NormalizeProductSchema = new mongoose.Schema({
     //     videoReview: String
     // },
     category: {
+      id: Number,
+      name: String,
+      child: {
         id: Number,
         name: String,
-        child: {
-            id: Number,
-            name: String
-        }
+      },
     },
     supplier: {
-        id: Number,
-        address: String,
-        phone: String,
-        email: String,
-        company: String,
-        exchangeRate: {
-            type: Number,
-            default: 0
-        }
+      id: Number,
+      address: String,
+      phone: String,
+      email: String,
+      company: String,
+      exchangeRate: {
+        type: Number,
+        default: 0,
+      },
     },
     brand: {
-        id: Number,
-        name: String
-    }
-}, {
+      id: Number,
+      name: String,
+    },
+  },
+  {
     versionKey: false,
-    timestamps: true
-});
+    timestamps: true,
+  },
+);
