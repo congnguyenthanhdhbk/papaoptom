@@ -74,6 +74,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     brand,
     id,
   } = modalProps;
+  console.log("model props::", JSON.stringify(modalProps));
   const {
     steamInBox,
     sizeChart,
