@@ -145,16 +145,16 @@ const ProductCard: React.FC<ProductCardProps> = (
                 <div className="product-meta">
                     <div className="productPriceWrapper">
                         {discountInPercent ? (
-                            <span className="discountedPrice">
+                            <div> Цена за пару <span className="discountedPrice">
                 {currency}
                                 {price}
-              </span>
+                            </span></div>
                         ) : null}
 
-                        <span className="product-price">
+                        <div>Цена за ящ. <span className="product-price">
               {currency}
                             {salePrice ? salePrice : price}
-            </span>
+                        </span></div>
                     </div>
 
                     {!isInCart(data.id) ? (

@@ -44,22 +44,6 @@ export const Products: React.FC<ProductsProps> = ({
   type,
 }) => {
   const router = useRouter();
-  // const queryResult = useQuery(
-  //   GET_PRODUCTS,
-  //   {
-  //     variables: {
-  //       type: type,
-  //       text: router.query.text,
-  //       category: router.query.category,
-  //       offset: 0,
-  //       limit: fetchLimit,
-  //     },
-  //     notifyOnNetworkStatusChange: true,
-  //   }
-  // );
-  // console.log(queryResult);
-  // const { data, error, loading, fetchMore, networkStatus } = queryResult;
-  // const loadingMore = networkStatus === NetworkStatus.fetchMore;
 
   const queryResult = useQuery(GET_SHOES, {
     variables: {
@@ -116,7 +100,6 @@ export const Products: React.FC<ProductsProps> = ({
           data,
         } = fetchMoreResult?.filterProduct;
         const newData = [...previousResult?.filterProduct?.data, ...data];
-        console.log("Array after::", JSON.stringify(newData));
 
         return {
           ...previousResult,
@@ -140,7 +123,7 @@ export const Products: React.FC<ProductsProps> = ({
 
   const renderCard = (productType, props) => {
     console.log(props);
-    const { name, characteristics, category, brand } = props;
+    const { name, characteristics, category, brand, vcode, type, supplier } = props;
     const {
       description,
       photo1,
@@ -151,14 +134,16 @@ export const Products: React.FC<ProductsProps> = ({
       totalSellingPrice,
       totalOldSellingPrice,
       discountInPercent,
+      color,
+      steamInBox
     } = characteristics;
 
     return (
       <GeneralCard
-        title={`${name} ${category?.name ?? ""} ${brand?.name ?? ""}`}
+        title={`${name} ${category?.type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color}`}
         description={description}
         image={photo1}
-        weight={sizeChart}
+        weight={`P.${sizeChart} / ${steamInBox} Пар`}
         currency={CURRENCY_UAH}
         price={totalOldSellingPrice}
         salePrice={totalSellingPrice}
