@@ -34,6 +34,7 @@ import { useLocale } from 'contexts/language/language.provider';
 import { useCart } from 'contexts/cart/use-cart';
 import { Counter } from 'components/counter/counter';
 import { FormattedMessage } from 'react-intl';
+import {ProductsRow} from "../../assets/styles/pages.style";
 
 type QuickViewProps = {
   modalProps: any;
@@ -148,7 +149,25 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                     : ''}
                 </MetaSingle>
               </ProductMeta>
-
+              <ProductsRow>
+                <b>Пар в ящике</b>: {steamInBox ?? 'обновление'}
+              </ProductsRow>
+              <ProductsRow>
+                Размерная сетка: {sizeChart ?? 'обновление'}
+              </ProductsRow>
+              <ProductsRow>
+                Сезон: {season ?? 'обновление'}
+              </ProductsRow>
+              <ProductsRow>
+                Бренд: {brand?.name ?? "обновление"}
+              </ProductsRow>
+              <ProductsRow>
+                Материал подошвы: {outsoleMaterial ?? "обновление"}
+              </ProductsRow>
+              <ProductsRow>
+                Материал изделия: {productMaterial ?? "обновление"}
+              </ProductsRow>
+              <hr/>
               <ProductCartWrapper>
                 <ProductPriceWrapper>
                   <ProductPrice>
