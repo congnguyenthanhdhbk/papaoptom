@@ -1,38 +1,38 @@
-import styled from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
-import css from '@styled-system/css';
+import styled from "styled-components";
+import { themeGet } from "@styled-system/theme-get";
+import css from "@styled-system/css";
 
 const StyledBox = styled.div(
   css({
     py: [30, 50],
-    px: ['1rem', 0],
+    px: ["1rem", 0],
   }),
   {
-    width: '100%',
-  }
+    width: "100%",
+  },
 );
 
 export const ProductCardWrapper = styled.div(
   css({
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'white',
-    position: 'relative',
-    fontFamily: 'inherit',
-    borderRadius: 'base',
-    cursor: 'pointer',
+    height: "100%",
+    width: "100%",
+    backgroundColor: "white",
+    position: "relative",
+    fontFamily: "inherit",
+    borderRadius: "base",
+    cursor: "pointer",
 
-    '.card-counter': {
-      '@media (max-width: 767px)': {
+    ".card-counter": {
+      "@media (max-width: 767px)": {
         width: 30,
         height: 90,
-        flexDirection: 'column-reverse',
-        position: 'absolute',
+        flexDirection: "column-reverse",
+        position: "absolute",
         bottom: 0,
         right: 0,
       },
     },
-  })
+  }),
 );
 
 export const ProductImageWrapper = styled.div`
@@ -54,14 +54,14 @@ export const ProductImageWrapper = styled.div`
 `;
 
 export const SaleTag = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')}px;
-  font-weight: ${themeGet('fontWeights.bold', '700')};
-  color: ${themeGet('colors.white', '#ffffff')};
-  background-color: ${themeGet('colors.yellow.regular', '#FFAD5E')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")}px;
+  font-weight: ${themeGet("fontWeights.bold", "700")};
+  color: ${themeGet("colors.white", "#ffffff")};
+  background-color: ${themeGet("colors.yellow.regular", "#FFAD5E")};
   padding: 0 10px;
   line-height: 24px;
-  border-radius: ${themeGet('radii.medium', '12px')};
+  border-radius: ${themeGet("radii.medium", "12px")};
   display: inline-block;
   position: absolute;
   top: 10px;
@@ -69,12 +69,12 @@ export const SaleTag = styled.span`
 `;
 
 export const DiscountPercent = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')}px;
-  font-weight: ${themeGet('fontWeights.bold', '700')};
-  color: ${themeGet('colors.white', '#ffffff')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")}px;
+  font-weight: ${themeGet("fontWeights.bold", "700")};
+  color: ${themeGet("colors.white", "#ffffff")};
   line-height: 24px;
-  background-color: ${themeGet('colors.yellow.regular', '#FFAD5E')};
+  background-color: ${themeGet("colors.yellow.regular", "#FFAD5E")};
   padding-left: 10px;
   padding-right: 10px;
   position: relative;
@@ -82,7 +82,7 @@ export const DiscountPercent = styled.span`
   position: absolute;
   top: 15px;
   right: 15px;
-  border-radius: ${themeGet('radii.medium', '12px')};
+  border-radius: ${themeGet("radii.medium", "12px")};
   z-index: 2;
 `;
 
@@ -94,31 +94,44 @@ export const ProductInfo = styled.div`
     min-height: 123px;
   }
   .product-title {
-    font-family: ${themeGet('fonts.body', 'sans-serif')};
-    font-size: ${themeGet('fontSizes.base', '15')}px;
-    font-weight: ${themeGet('fontWeights.bold', '700')};
-    color: ${themeGet('colors.text.bold', '#0D1136')};
+    font-family: ${themeGet("fonts.body", "sans-serif")};
+    font-size: ${themeGet("fontSizes.base", "15")}px;
+    font-weight: ${themeGet("fontWeights.bold", "700")};
+    color: ${themeGet("colors.text.bold", "#0D1136")};
     margin: 0 0 7px 0;
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
+    /* white-space: nowrap; */
+    word-wrap: break-word;
     @media (max-width: 767px) {
       font-size: 14px;
       margin: 0 0 5px 0;
     }
   }
+
   .product-weight {
-    font-family: ${themeGet('fonts.body', 'sans-serif')};
-    font-size: ${themeGet('fontSizes.sm', '13')}px;
-    font-weight: ${themeGet('fontWeights.regular', '400')};
-    color: ${themeGet('colors.text.regular', '#77798c')};
+    font-family: ${themeGet("fonts.body", "sans-serif")};
+    font-size: ${themeGet("fontSizes.sm", "13")}px;
+    font-weight: ${themeGet("fontWeights.regular", "400")};
+    color: ${themeGet("colors.text.regular", "#77798c")};
     @media (max-width: 767px) {
-      font-size: ${themeGet('fontSizes.xs', '12')}px;
+      font-size: ${themeGet("fontSizes.xs", "12")}px;
     }
   }
+
+  .product-size {
+    font-family: ${themeGet("fonts.body", "sans-serif")};
+    font-size: ${themeGet("fontSizes.sm", "13")}px;
+    font-weight: ${themeGet("fontWeights.regular", "400")};
+    color: ${themeGet("colors.text.regular", "#77798c")};
+    @media (max-width: 767px) {
+      font-size: ${themeGet("fontSizes.xs", "12")}px;
+    }
+  }
+
   .product-meta {
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -127,52 +140,112 @@ export const ProductInfo = styled.div`
     @media (max-width: 767px) {
       min-height: 36px;
     }
+
     .productPriceWrapper {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+
       .product-price {
-        font-family: ${themeGet('fonts.body', 'sans-serif')};
-        font-size: ${themeGet('fontSizes.base', '15')}px;
-        font-weight: ${themeGet('fontWeights.bold', '700')};
-        color: ${themeGet('colors.primary.regular', '#009E7F')};
-        @media (max-width: 767px) {
-          font-size: calc(${themeGet('fontSizes.base', '15')}px - 1px);
+        .label {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.xs", "12")}px;
+          font-weight: ${themeGet("fontWeights.bold", "500")};
+          color: ${themeGet("colors.primary.regular", "#009E7F")};
+          @media (max-width: 767px) {
+            font-size: calc(${themeGet("fontSizes.xs", "12")}px - 1px);
+          }
+        }
+
+        .value {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.base", "15")}px;
+          font-weight: ${themeGet("fontWeights.bold", "700")};
+          color: ${themeGet("colors.primary.regular", "#009E7F")};
+          @media (max-width: 767px) {
+            font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
+          }
+        }
+
+        .sale {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.sm", "13")}px;
+          font-weight: ${themeGet("fontWeights.regular", "400")};
+          color: ${themeGet("colors.yellow.hover", "#FBB979")};
+          font-style: italic;
+          text-decoration: line-through;
         }
       }
-      .discountedPrice {
-        font-family: ${themeGet('fonts.body', 'sans-serif')};
-        font-size: ${themeGet('fontSizes.sm', '13')}px;
-        font-weight: ${themeGet('fontWeights.regular', '400')};
-        color: ${themeGet('colors.yellow.hover', '#FBB979')};
-        font-style: italic;
-        padding: 0 5px;
-        position: relative;
-        overflow: hidden;
-        position: absolute;
-        top: -20px;
-        left: -4px;
-        &:before {
-          content: '';
-          width: 100%;
-          height: 1px;
-          display: inline-block;
-          background-color: ${themeGet('colors.yellow.hover', '#FBB979')};
-          position: absolute;
-          top: 50%;
-          left: 0;
+
+      .product-pair-price {
+        .label {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.base", "12")}px;
+          font-weight: ${themeGet("fontWeights.bold", "500")};
+          color: ${themeGet("colors.primary.regular", "#009E7F")};
+          @media (max-width: 767px) {
+            font-size: calc(${themeGet("fontSizes.base", "12")}px - 1px);
+          }
+        }
+
+        .value {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.base", "15")}px;
+          font-weight: ${themeGet("fontWeights.bold", "700")};
+          color: ${themeGet("colors.primary.regular", "#009E7F")};
+          @media (max-width: 767px) {
+            font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
+          }
+        }
+      }
+
+      .product-box-price {
+        font-family: ${themeGet("fonts.body", "sans-serif")};
+        font-size: ${themeGet("fontSizes.base", "15")}px;
+        font-weight: ${themeGet("fontWeights.bold", "700")};
+        color: ${themeGet("colors.primary.regular", "#009E7F")};
+        @media (max-width: 767px) {
+          font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
+        }
+
+        .sale-price {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.sm", "13")}px;
+          font-weight: ${themeGet("fontWeights.regular", "400")};
+          color: ${themeGet("colors.yellow.hover", "#FBB979")};
+          font-style: italic;
+          text-decoration: line-through;
+        }
+
+        .price {
+          font-family: ${themeGet("fonts.body", "sans-serif")};
+          font-size: ${themeGet("fontSizes.base", "15")}px;
+          font-weight: ${themeGet("fontWeights.bold", "700")};
+          color: ${themeGet("colors.primary.regular", "#009E7F")};
+          @media (max-width: 767px) {
+            font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
+          }
         }
       }
     }
+  }
+
+  .button-row {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     .cart-button {
-      border: 2px solid ${themeGet('colors.gray.200', '#f7f7f7')};
-      border-radius: ${themeGet('radii.big', '18px')};
+      border: 2px solid ${themeGet("colors.gray.200", "#f7f7f7")};
+      border-radius: ${themeGet("radii.big", "18px")};
       height: 36px;
       padding-left: 17px;
       padding-right: 17px;
-      font-size: ${themeGet('fontSizes.sm', '13')}px;
-      font-weight: ${themeGet('fontWeights.bold', '700')};
+      font-size: ${themeGet("fontSizes.sm", "13")}px;
+      font-weight: ${themeGet("fontWeights.bold", "700")};
+
       @media (max-width: 767px) {
         width: 36px;
         height: 36px;
@@ -186,9 +259,9 @@ export const ProductInfo = styled.div`
         }
       }
       &:hover {
-        color: ${themeGet('colors.white', '#ffffff')};
-        background-color: ${themeGet('colors.primary.regular', '#009e7f')};
-        border-color: ${themeGet('colors.primary.regular', '#009e7f')};
+        color: ${themeGet("colors.white", "#ffffff")};
+        background-color: ${themeGet("colors.primary.regular", "#009e7f")};
+        border-color: ${themeGet("colors.primary.regular", "#009e7f")};
       }
       svg {
         fill: currentColor;
@@ -197,40 +270,41 @@ export const ProductInfo = styled.div`
         }
       }
     }
-    @media (max-width: 767px) {
-      .quantity {
-        width: 32px;
-        height: 90px;
-        display: block;
-        flex-shrink: 0;
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        z-index: 1;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
-      }
-      button {
-        width: 100%;
-        height: 27px;
-      }
-      .incBtn {
-        top: 0;
-        justify-content: center;
-      }
-      .decBtn {
-        top: auto;
-        bottom: 0;
-        justify-content: center;
-      }
-      input[type='number'] {
-        left: 0;
-        font-size: calc(${themeGet('fontSizes.base', '15')}px - 1px);
-        height: calc(100% - 54px);
-        position: absolute;
-        top: 27px;
-        width: 100%;
-        color: ${themeGet('colors.white', '#ffffff')};
-      }
+  }
+
+  @media (max-width: 767px) {
+    .quantity {
+      width: 90px;
+      height: 32px;
+      display: block;
+      flex-shrink: 0;
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      z-index: 1;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+    }
+    button {
+      width: 100%;
+      height: 27px;
+    }
+    .incBtn {
+      top: 0;
+      justify-content: center;
+    }
+    .decBtn {
+      top: auto;
+      bottom: 0;
+      justify-content: center;
+    }
+    input[type="number"] {
+      left: 0;
+      font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
+      height: calc(100% - 54px);
+      position: absolute;
+      top: 27px;
+      width: 100%;
+      color: ${themeGet("colors.white", "#ffffff")};
     }
   }
 `;
@@ -276,10 +350,10 @@ export const BookInfo = styled.div`
 `;
 
 export const ProductName = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.base', '15')}px;
-  font-weight: ${themeGet('fontWeights.bold', '700')};
-  color: ${themeGet('colors.text.bold', '#0D1136')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.base", "15")}px;
+  font-weight: ${themeGet("fontWeights.bold", "700")};
+  color: ${themeGet("colors.text.bold", "#0D1136")};
   margin: 0 0 7px 0;
   width: 100%;
   overflow: hidden;
@@ -291,18 +365,18 @@ export const ProductName = styled.span`
     margin: 0;
   }
   @media (max-width: 767px) {
-    font-size: calc(${themeGet('fontSizes.base', '15')}px - 1px);
+    font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
     margin: 0 0 5px 0;
   }
 `;
 
 export const AuthorInfo = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')}px;
-  font-weight: ${themeGet('fontWeights.regular', '400')};
-  color: ${themeGet('colors.text.regular', '#77798c')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")}px;
+  font-weight: ${themeGet("fontWeights.regular", "400")};
+  color: ${themeGet("colors.text.regular", "#77798c")};
   @media (max-width: 767px) {
-    font-size: ${themeGet('fontSizes.sm', '13')}px;
+    font-size: ${themeGet("fontSizes.sm", "13")}px;
   }
 `;
 
@@ -361,20 +435,20 @@ export const PriceWrapper = styled.div`
 `;
 
 export const Price = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.base', '15')}px;
-  font-weight: ${themeGet('fontWeights.bold', '700')};
-  color: ${themeGet('colors.primary.regular', '#009E7F')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.base", "15")}px;
+  font-weight: ${themeGet("fontWeights.bold", "700")};
+  color: ${themeGet("colors.primary.regular", "#009E7F")};
   @media (max-width: 767px) {
-    font-size: calc(${themeGet('fontSizes.base', '15')}px - 1px);
+    font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
   }
 `;
 
 export const DiscountedPrice = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')} px;
-  font-weight: ${themeGet('fontWeights.regular', '400')};
-  color: ${themeGet('colors.yellow.regular', '#FFAD5E')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")} px;
+  font-weight: ${themeGet("fontWeights.regular", "400")};
+  color: ${themeGet("colors.yellow.regular", "#FFAD5E")};
   font-style: italic;
   padding: 0 5px;
   position: relative;
@@ -383,11 +457,11 @@ export const DiscountedPrice = styled.span`
   margin-left: -4px;
   z-index: 2;
   &:before {
-    content: '';
+    content: "";
     width: 100%;
     height: 1px;
     display: inline-block;
-    background-color: ${themeGet('colors.yellow.regular', '#FFAD5E')};
+    background-color: ${themeGet("colors.yellow.regular", "#FFAD5E")};
     position: absolute;
     top: 50%;
     left: 0;
@@ -398,10 +472,10 @@ export const BookCardWrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 30px;
-  background-color: ${themeGet('colors.white', '#ffffff')};
+  background-color: ${themeGet("colors.white", "#ffffff")};
   position: relative;
-  font-family: ${themeGet('fonts.body', 'Lato')};
-  border-radius: ${themeGet('radii.base', '6px')};
+  font-family: ${themeGet("fonts.body", "Lato")};
+  border-radius: ${themeGet("radii.base", "6px")};
   cursor: pointer;
   @media (max-width: 767px) {
     padding: 15px;
@@ -412,10 +486,10 @@ export const FoodCardWrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 0;
-  background-color: ${themeGet('colors.white', '#ffffff')};
+  background-color: ${themeGet("colors.white", "#ffffff")};
   position: relative;
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  border-radius: ${themeGet('radii.base', '6px')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  border-radius: ${themeGet("radii.base", "6px")};
   overflow: hidden;
   cursor: pointer;
   display: flex;
@@ -437,7 +511,7 @@ export const FoodImageWrapper = styled.div`
     object-fit: cover;
   }
   &:after {
-    content: '';
+    content: "";
     width: 100%;
     height: 100%;
     display: flex;
@@ -460,27 +534,27 @@ export const ProductMeta = styled.div`
 `;
 
 export const DeliveryOpt = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')}px;
-  font-weight: ${themeGet('fontWeights.bold', '700')};
-  color: ${themeGet('colors.text.bold', '#0D1136')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")}px;
+  font-weight: ${themeGet("fontWeights.bold", "700")};
+  color: ${themeGet("colors.text.bold", "#0D1136")};
   white-space: nowrap;
 `;
 
 export const Category = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')}px;
-  font-weight: ${themeGet('fontWeights.bold', '400')};
-  color: ${themeGet('colors.text.regular', '#77798c')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")}px;
+  font-weight: ${themeGet("fontWeights.bold", "400")};
+  color: ${themeGet("colors.text.regular", "#77798c")};
 `;
 
 export const Duration = styled.span`
-  font-family: ${themeGet('fonts.body', 'sans-serif')};
-  font-size: ${themeGet('fontSizes.sm', '13')}px;
-  font-weight: ${themeGet('fontWeights.regular', '400')};
-  color: ${themeGet('colors.white', '#ffffff')};
-  background-color: ${themeGet('colors.primary.regular', '#009E7F')};
-  border-radius: ${themeGet('radii.big', '18px')};
+  font-family: ${themeGet("fonts.body", "sans-serif")};
+  font-size: ${themeGet("fontSizes.sm", "13")}px;
+  font-weight: ${themeGet("fontWeights.regular", "400")};
+  color: ${themeGet("colors.white", "#ffffff")};
+  background-color: ${themeGet("colors.primary.regular", "#009E7F")};
+  border-radius: ${themeGet("radii.big", "18px")};
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 20px;

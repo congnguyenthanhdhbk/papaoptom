@@ -94,7 +94,7 @@ export const Products: React.FC<ProductsProps> = ({
           data,
         } = fetchMoreResult?.filterProduct;
         const newData = [...previousResult?.filterProduct?.data, ...data];
-        console.log("Array after::", JSON.stringify(newData));
+        // console.log("Array after::", JSON.stringify(newData));
 
         return {
           ...previousResult,
@@ -118,9 +118,8 @@ export const Products: React.FC<ProductsProps> = ({
 
   const renderCard = (props: any) => {
     console.log(props);
-    const { name, characteristics, category, brand } = props;
+    const { name, characteristics, category, brand, vcode } = props;
     const {
-      description,
       photo1,
       saleCurrency,
       sizeChart,
@@ -129,17 +128,19 @@ export const Products: React.FC<ProductsProps> = ({
       totalSellingPrice,
       totalOldSellingPrice,
       discountInPercent,
+      steamInBox
     } = characteristics;
 
     return (
       <GeneralCard
-        title={`${name} ${category?.name ?? ""} ${brand?.name ?? ""}`}
-        description={description}
         image={photo1}
-        weight={sizeChart}
+        title={`${name} ${category?.name ?? ""} ${brand?.name ?? ""} ${vcode}`}
+        sizeChart={sizeChart}
+        pairsInBox={steamInBox}
         currency={CURRENCY_UAH}
-        price={totalOldSellingPrice}
-        salePrice={totalSellingPrice}
+        pricePerPair={oldSellingPrice}
+        pricePerBox={totalOldSellingPrice}
+        salePricePerBox={totalSellingPrice}
         discountInPercent={discountInPercent}
         data={props}
         deviceType={deviceType}
