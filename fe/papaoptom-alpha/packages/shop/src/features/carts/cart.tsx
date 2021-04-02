@@ -62,9 +62,9 @@ const Cart: React.FC<CartPropsType> = ({
             {cartItemsCount}
             &nbsp;
             {cartItemsCount > 1 ? (
-              <FormattedMessage id='cartItems' defaultMessage='items' />
+              <FormattedMessage id='cartItems' defaultMessage='Предметы' />
             ) : (
-              <FormattedMessage id='cartItem' defaultMessage='item' />
+              <FormattedMessage id='cartItem' defaultMessage='Предмет' />
             )}
           </span>
         </PopupItemCount>
@@ -142,7 +142,7 @@ const Cart: React.FC<CartPropsType> = ({
                 <Title>
                   <FormattedMessage
                     id='nav.checkout'
-                    defaultMessage='Checkout'
+                    defaultMessage='Перейти к оформлению заказа'
                   />
                 </Title>
                 <PriceBox>
