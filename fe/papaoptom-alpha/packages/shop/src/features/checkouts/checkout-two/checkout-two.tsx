@@ -150,23 +150,23 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
 
             {/* DeliverySchedule */}
             <InformationBox>
-              <DeliverySchedule>
-                <Schedules increment={true} />
-              </DeliverySchedule>
+              {/*<DeliverySchedule>*/}
+              {/*  <Schedules increment={true} />*/}
+              {/*</DeliverySchedule>*/}
             </InformationBox>
 
             {/* Contact number */}
             <InformationBox>
-              <Contact
-                increment={true}
-                flexStart={true}
-                buttonProps={{
-                  variant: 'text',
-                  type: 'button',
-                  className: 'addButton',
-                }}
-                icon={true}
-              />
+              {/*<Contact*/}
+              {/*  increment={true}*/}
+              {/*  flexStart={true}*/}
+              {/*  buttonProps={{*/}
+              {/*    variant: 'text',*/}
+              {/*    type: 'button',*/}
+              {/*    className: 'addButton',*/}
+              {/*  }}*/}
+              {/*  icon={true}*/}
+              {/*/>*/}
             </InformationBox>
             {/* PaymentOption */}
 
@@ -174,7 +174,7 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
               className='paymentBox'
               style={{ paddingBottom: 30 }}
             >
-              <Payment increment={true} deviceType={deviceType} />
+              {/*<Payment increment={true} deviceType={deviceType} />*/}
 
               {/* Coupon start */}
               {coupon ? (
