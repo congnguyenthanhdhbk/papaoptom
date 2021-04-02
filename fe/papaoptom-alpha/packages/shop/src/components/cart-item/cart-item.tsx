@@ -1,7 +1,7 @@
 import React from 'react';
 import { Counter } from 'components/counter/counter';
 import { CloseIcon } from 'assets/icons/CloseIcon';
-import { CURRENCY } from 'utils/constant';
+import {CURRENCY, CURRENCY_UAH} from 'utils/constant';
 import {
   ItemBox,
   Image,
@@ -30,9 +30,10 @@ export const CartItem: React.FC<Props> = ({
   const { name, photo1, quantity, characteristics, type, brand, color, vcode } = data;
   const { totalOldSellingPrice, totalSellingPrice, steamInBox } = characteristics;
   const title = `${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`;
-  const image = photo1;
-  const price = Number(totalSellingPrice) ?? 0;
-  const salePrice = Number(totalOldSellingPrice) ?? 0;
+  const image = photo1 ?? null;
+  console.log("Photo::", image);
+  const price = Number(totalOldSellingPrice) ?? 0;
+  const salePrice = Number(totalSellingPrice) ?? 0;
   const unit = Number(steamInBox) ?? 1;
   const displayPrice = salePrice ? salePrice : price;
   return (
@@ -47,8 +48,8 @@ export const CartItem: React.FC<Props> = ({
       <Information>
         <Name>{title}</Name>
         <Price>
-          {CURRENCY}
           {displayPrice}
+            {CURRENCY_UAH}
         </Price>
         <Weight>
           {quantity} X {unit}
