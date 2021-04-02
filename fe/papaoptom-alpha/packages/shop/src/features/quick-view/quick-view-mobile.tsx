@@ -152,10 +152,9 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
               <ProductCartWrapper>
                 <ProductPriceWrapper>
                   <ProductPrice>
-                    Цена за пару: {totalOldSellingPrice ?? totalSellingPrice} {CURRENCY_UAH}
+                    {totalOldSellingPrice ?? totalSellingPrice} {CURRENCY_UAH}
                   </ProductPrice>
 
-                  Цена за ящ.
                   {discountInPercent ? (
                     <SalePrice>
                       {CURRENCY_UAH}
