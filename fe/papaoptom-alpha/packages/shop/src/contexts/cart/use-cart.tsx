@@ -13,6 +13,7 @@ const useCartActions = (initialCart = INITIAL_STATE) => {
   const [state, dispatch] = useReducer(reducer, initialCart);
 
   const addItemHandler = (item, quantity = 1) => {
+    console.log("Add Cart Items::", JSON.stringify(item));
     dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity } });
   };
 
