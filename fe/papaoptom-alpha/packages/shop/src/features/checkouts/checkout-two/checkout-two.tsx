@@ -95,7 +95,7 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   } = useCart();
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
-  const { address, contact, card, schedules } = state;
+  // const { address, contact, card, schedules } = state;
   const size = useWindowSize();
 
   const handleSubmit = async () => {
@@ -110,11 +110,12 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   useEffect(() => {
     if (
       calculatePrice() > 0 &&
-      cartItemsCount > 0 &&
-      address.length &&
-      contact.length &&
-      card.length &&
-      schedules.length
+      cartItemsCount > 0
+      // cartItemsCount > 0 &&
+      // address.length &&
+      // contact.length &&
+      // card.length &&
+      // schedules.length
     ) {
       setIsValid(true);
     }
