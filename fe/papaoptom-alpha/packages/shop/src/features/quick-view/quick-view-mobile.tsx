@@ -107,6 +107,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     hideModal();
   }
 
+  // @ts-ignore
   return (
     <>
       {/* <ModalClose onClick={onModalClose}>
@@ -128,7 +129,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                 <ProductTitle>{`${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`}</ProductTitle>
               </ProductTitlePriceWrapper>
 
-              <ProductWeight>Количество {sizeChart ?? '36 - 40'}</ProductWeight>
+              <ProductWeight>{sizeChart ?? '36 - 40'}</ProductWeight>
               <ProductDescription>
                 <ReadMore character={600}>{description}</ReadMore>
               </ProductDescription>
@@ -151,8 +152,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
               <ProductCartWrapper>
                 <ProductPriceWrapper>
                   <ProductPrice>
-                    {CURRENCY_UAH}
-                    {totalOldSellingPrice ?? totalSellingPrice}
+                    Цена за пару: {totalOldSellingPrice ?? totalSellingPrice} {CURRENCY_UAH}
                   </ProductPrice>
 
                   {discountInPercent ? (
@@ -162,6 +162,18 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                     </SalePrice>
                   ) : null}
                 </ProductPriceWrapper>
+                <ProductDescription>
+                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
+                </ProductDescription>
+                <ProductDescription>
+                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
+                </ProductDescription>
+                <ProductDescription>
+                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
+                </ProductDescription>
+                <ProductDescription>
+                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
+                </ProductDescription>
 
                 <ProductCartBtn>
                   {!isInCart(id) ? (
