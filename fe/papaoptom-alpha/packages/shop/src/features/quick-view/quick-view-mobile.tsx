@@ -130,7 +130,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                 <ProductTitle>{`${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`}</ProductTitle>
               </ProductTitlePriceWrapper>
 
-              <ProductWeight>{sizeChart ?? '36 - 40'}</ProductWeight>
+              {/*<ProductWeight>{sizeChart ?? '36 - 40'}</ProductWeight>*/}
               <ProductDescription>
                 <ReadMore character={600}>{description}</ReadMore>
               </ProductDescription>
@@ -169,15 +169,18 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
               </ProductsRow>
               <hr/>
               <ProductCartWrapper>
+                <ProductTitlePriceWrapper>
+                  <ProductTitle>{"Цена за ящ. / Цена за пару"}</ProductTitle>
+                </ProductTitlePriceWrapper>
                 <ProductPriceWrapper>
                   <ProductPrice>
-                    {totalOldSellingPrice ?? totalSellingPrice} {CURRENCY_UAH}
+                    {totalSellingPrice ?? totalOldSellingPrice} {CURRENCY_UAH}
                   </ProductPrice>
 
                   {discountInPercent ? (
                     <SalePrice>
                       {CURRENCY_UAH}
-                      {totalSellingPrice}
+                      {totalOldSellingPrice}
                     </SalePrice>
                   ) : null}
                 </ProductPriceWrapper>
