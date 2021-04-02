@@ -140,7 +140,7 @@ export const Products: React.FC<ProductsProps> = ({
 
     return (
       <GeneralCard
-        title={`${name} ${category?.type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color}`}
+        title={`${name} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`}
         description={description}
         image={photo1}
         weight={`P.${sizeChart} / ${steamInBox} Пар`}
