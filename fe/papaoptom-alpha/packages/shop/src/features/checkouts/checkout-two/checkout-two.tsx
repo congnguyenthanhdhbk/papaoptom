@@ -61,6 +61,7 @@ type CartItemProps = {
 
 const OrderItem: React.FC<CartItemProps> = ({ product }) => {
   const { id, quantity, title, name, unit, price, salePrice } = product;
+  console.log("Order Item::", JSON.stringify(product));
   const displayPrice = salePrice ? salePrice : price;
   return (
     <Items key={id}>
