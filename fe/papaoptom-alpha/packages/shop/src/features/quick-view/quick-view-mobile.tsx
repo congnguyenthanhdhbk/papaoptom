@@ -169,21 +169,42 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
               </ProductsRow>
               <hr/>
               <ProductCartWrapper>
-                <ProductTitlePriceWrapper>
-                  <ProductTitle>{"Цена за ящ. / Цена за пару"}</ProductTitle>
-                </ProductTitlePriceWrapper>
-                <ProductPriceWrapper>
-                  <ProductPrice>
-                    {totalSellingPrice ?? totalOldSellingPrice} {CURRENCY_UAH}
-                  </ProductPrice>
+                <ProductsRow>
+                  <ProductTitlePriceWrapper>
+                    <ProductTitle>{"Цена за пару"}</ProductTitle>
+                  </ProductTitlePriceWrapper>:
+                  <ProductPriceWrapper>
+                    {discountInPercent ? (
+                        <SalePrice>
+                          {CURRENCY_UAH}
+                          {totalOldSellingPrice}
+                        </SalePrice>
+                    ) : null}
+                  </ProductPriceWrapper>
+                </ProductsRow>
 
-                  {discountInPercent ? (
-                    <SalePrice>
-                      {CURRENCY_UAH}
-                      {totalOldSellingPrice}
-                    </SalePrice>
-                  ) : null}
-                </ProductPriceWrapper>
+                <ProductsRow>
+                  <ProductTitlePriceWrapper>
+                    <ProductTitle>{"Цена за ящ. / Цена за пару"}</ProductTitle>
+                  </ProductTitlePriceWrapper>:
+                  <ProductPriceWrapper>
+                    <ProductPrice>
+                      {totalSellingPrice ?? totalOldSellingPrice} {CURRENCY_UAH}
+                    </ProductPrice>
+                  </ProductPriceWrapper>
+                </ProductsRow>
+                {/*<ProductPriceWrapper>*/}
+                {/*  <ProductPrice>*/}
+                {/*    {totalSellingPrice ?? totalOldSellingPrice} {CURRENCY_UAH}*/}
+                {/*  </ProductPrice>*/}
+
+                {/*  {discountInPercent ? (*/}
+                {/*    <SalePrice>*/}
+                {/*      {CURRENCY_UAH}*/}
+                {/*      {totalOldSellingPrice}*/}
+                {/*    </SalePrice>*/}
+                {/*  ) : null}*/}
+                {/*</ProductPriceWrapper>*/}
 
                 <ProductCartBtn>
                   {!isInCart(id) ? (
