@@ -27,9 +27,9 @@ export const CartItem: React.FC<Props> = ({
   onRemove,
 }) => {
   // const { title, image, price, salePrice, unit, quantity } = data;
-  const { name, photo1, quantity, characteristics, type, brand, color, vcode } = data;
+  const { name, quantity, characteristics, type, brand, color, vcode } = data;
   console.log("Product cart data::", JSON.stringify(data));
-  const { totalOldSellingPrice, totalSellingPrice, steamInBox } = characteristics;
+  const { totalOldSellingPrice, totalSellingPrice, steamInBox, photo1 } = characteristics;
   const title = `${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`;
   const image = photo1 ?? null;
   console.log("Photo::", image);
