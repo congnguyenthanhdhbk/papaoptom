@@ -3,7 +3,6 @@ import Router from 'next/router';
 import { Button } from 'components/button/button';
 import { Input } from 'components/forms/input';
 import { Label } from 'components/forms/label';
-import Uploader from 'components/upload/upload';
 
 import FormWrapper, {
   Row,
@@ -141,9 +140,9 @@ const Checkout: React.FC<any> = () => {
                 />
               </Heading>
             </Col>
-            <Col xs={12} sm={12} md={12} lg={12}>
-              <Uploader onChange="" intlUploadText="rmUploadText" />
-            </Col>
+            {/*<Col xs={12} sm={12} md={12} lg={12}>*/}
+            {/*  <Uploader onChange="" intlUploadText="rmUploadText" />*/}
+            {/*</Col>*/}
           </Row>
 
           {/* DeliveryAddress */}

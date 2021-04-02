@@ -1,5 +1,5 @@
 {
-  "name": "@pick-bazar/api",
+  "name": "@papaoptom/api",
   "version": "5.0.0",
   "scripts": {
     "shop-dev": "ts-node-dev --respawn server.shop.ts",

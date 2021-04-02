@@ -38,8 +38,8 @@ type GiftCardProps = {
 };
 
 const GiftCardPage: NextPage<GiftCardProps> = ({ deviceType }) => {
-  const { data, error } = useQuery(GET_COUPON);
-  if (error) return <ErrorMessage message={error.message} />;
+  // const { data, error } = useQuery(GET_COUPON);
+  // if (error) return <ErrorMessage message={error.message} />;
 
   return (
     <Modal>
@@ -48,13 +48,13 @@ const GiftCardPage: NextPage<GiftCardProps> = ({ deviceType }) => {
         <MainContentArea>
           <div style={{ width: '100%' }}>
             <ProductsRow>
-              {data && data.coupons
-                ? data.coupons.map((coupon) => (
-                    <ProductsCol key={coupon.id}>
-                      <GiftCard image={coupon.image} code={coupon.code} />
-                    </ProductsCol>
-                  ))
-                : null}
+              {/*{data && data.coupons*/}
+              {/*  ? data.coupons.map((coupon) => (*/}
+              {/*      <ProductsCol key={coupon.id}>*/}
+              {/*        <GiftCard image={coupon.image} code={coupon.code} />*/}
+              {/*      </ProductsCol>*/}
+              {/*    ))*/}
+              {/*  : null}*/}
             </ProductsRow>
           </div>
         </MainContentArea>
@@ -66,17 +66,17 @@ const GiftCardPage: NextPage<GiftCardProps> = ({ deviceType }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const apolloClient = initializeApollo();
-
-  await apolloClient.query({
-    query: GET_COUPON,
-  });
-
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
-  };
-};
+// export const getStaticProps: GetStaticProps = async () => {
+//   const apolloClient = initializeApollo();
+//
+//   await apolloClient.query({
+//     query: GET_COUPON,
+//   });
+//
+//   return {
+//     props: {
+//       initialApolloState: apolloClient.cache.extract(),
+//     },
+//   };
+// };
 export default GiftCardPage;

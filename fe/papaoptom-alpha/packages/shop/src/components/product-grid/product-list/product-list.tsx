@@ -1,5 +1,7 @@
 import React from "react";
+// @ts-ignore
 import { useRouter } from "next/router";
+// @ts-ignore
 import dynamic from "next/dynamic";
 import {
   ProductsRow,
@@ -10,8 +12,10 @@ import {
   ProductCardWrapper,
 } from "./product-list.style";
 import { CURRENCY, CURRENCY_UAH } from "utils/constant";
+// @ts-ignore
 import { useQuery, NetworkStatus } from "@apollo/client";
 import Placeholder from "components/placeholder/placeholder";
+// @ts-ignore
 import Fade from "react-reveal/Fade";
 import NoResultFound from "components/no-result/no-result";
 import { FormattedMessage } from "react-intl";
@@ -37,6 +41,10 @@ type ProductsProps = {
   loadMore?: boolean;
   type?: string;
 };
+
+type FilteredProduct = {
+  filterProduct: any;
+}
 export const Products: React.FC<ProductsProps> = ({
   deviceType,
   fetchLimit = 20,
@@ -76,45 +84,36 @@ export const Products: React.FC<ProductsProps> = ({
     return <NoResultFound />;
   }
   const handleLoadMore = () => {
-    const fetchLimit = data.filterProduct.pageSize;
+    const fetchLimit = data?.filterProduct?.pageSize ?? 10;
     fetchMore({
       variables: {
-        pageNumber: Number(data.filterProduct.nextPage),
+        pageNumber: Number(data?.filterProduct?.nextPage ?? 0),
         pageSize: fetchLimit,
       },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
+      updateQuery: (previousResult: FilteredProduct, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return previousResult;
         }
-        const {
-          pageNumber,
-          pageSize,
-          message,
-          code,
-          totalDocs,
-          totalPages,
-          hasPrevPage,
-          hasNextPage,
-          prevPage,
-          nextPage,
-          data,
-        } = fetchMoreResult?.filterProduct;
-        const newData = [...previousResult?.filterProduct?.data, ...data];
+
+        const newData = [
+            ...previousResult?.filterProduct?.data ?? [],
+          ...fetchMoreResult?.filterProduct?.data ?? []
+        ];
 
         return {
           ...previousResult,
           filterProduct: {
-            data: newData,
-            pageNumber,
-            pageSize,
-            message,
-            code,
-            totalDocs,
-            totalPages,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
+            data: newData ?? [],
+            pageNumber: fetchMoreResult?.filterProduct?.pageNumber ?? 1,
+            pageSize: fetchMoreResult?.filterProduct?.pageSize ?? 10,
+            message: fetchMoreResult?.filterProduct?.message ?? null,
+            code: fetchMoreResult?.filterProduct?.code ?? 400,
+            totalDocs: fetchMoreResult?.filterProduct?.totalDocs ?? 0,
+            totalPages: fetchMoreResult?.filterProduct?.totalPages ?? 0,
+            hasPrevPage: fetchMoreResult?.filterProduct?.hasPrevPage ?? false,
+            hasNextPage: fetchMoreResult?.filterProduct?.hasNextPage ?? false,
+            prevPage: fetchMoreResult?.filterProduct?.prevPage ?? 0,
+            nextPage: fetchMoreResult?.filterProduct?.nextPage ?? 0,
           },
         };
       },
