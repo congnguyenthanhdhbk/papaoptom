@@ -79,7 +79,7 @@ const OrderItem: React.FC<CartItemProps> = ({ product }) => {
 
 const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   const [hasCoupon, setHasCoupon] = useState(false);
-  const { state } = useContext(ProfileContext);
+  // const { state } = useContext(ProfileContext);
   const { isRtl } = useLocale();
   const {
     items,
@@ -119,7 +119,7 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
     ) {
       setIsValid(true);
     }
-  }, [state]);
+  }, []);
   useEffect(() => {
     return () => {
       if (isRestaurant) {
@@ -136,16 +136,16 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
           <CheckoutInformation>
             {/* DeliveryAddress */}
             <InformationBox>
-              <Address
-                increment={true}
-                flexStart={true}
-                buttonProps={{
-                  variant: 'text',
-                  type: 'button',
-                  className: 'addButton',
-                }}
-                icon={true}
-              />
+              {/*<Address*/}
+              {/*  increment={true}*/}
+              {/*  flexStart={true}*/}
+              {/*  buttonProps={{*/}
+              {/*    variant: 'text',*/}
+              {/*    type: 'button',*/}
+              {/*    className: 'addButton',*/}
+              {/*  }}*/}
+              {/*  icon={true}*/}
+              {/*/>*/}
             </InformationBox>
 
             {/* DeliverySchedule */}
