@@ -96,6 +96,11 @@ export const LANGUAGE_MENU = [
     defaultMessage: "English",
     icon: "USFlag",
   },
+  {
+    id: 'ru',
+    defaultMessage: 'Russia',
+    icon: "RUFlag"
+  }
   // {
   //   id: 'de',
   //   defaultMessage: 'German',

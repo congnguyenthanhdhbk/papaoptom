@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
 import {
   CartPopupBody,
-  PopupHeader,
-  PopupItemCount,
-  CloseButton,
-  PromoCode,
-  CheckoutButtonWrapper,
   CheckoutButton,
-  Title,
-  PriceBox,
-  NoProductMsg,
-  NoProductImg,
-  ItemWrapper,
+  CheckoutButtonWrapper,
+  CloseButton,
   CouponBoxWrapper,
   CouponCode,
+  ItemWrapper,
+  NoProductImg,
+  NoProductMsg,
+  PopupHeader,
+  PopupItemCount,
+  PriceBox,
+  PromoCode,
+  Title,
 } from './cart.style';
-import { CloseIcon } from 'assets/icons/CloseIcon';
-import { ShoppingBagLarge } from 'assets/icons/ShoppingBagLarge';
-import { NoCartBag } from 'assets/icons/NoCartBag';
-import {CURRENCY, CURRENCY_UAH} from 'utils/constant';
-import { FormattedMessage } from 'react-intl';
-import { useLocale } from 'contexts/language/language.provider';
+import {CloseIcon} from 'assets/icons/CloseIcon';
+import {ShoppingBagLarge} from 'assets/icons/ShoppingBagLarge';
+import {NoCartBag} from 'assets/icons/NoCartBag';
+import {CURRENCY_UAH} from 'utils/constant';
+import {FormattedMessage} from 'react-intl';
+import {useLocale} from 'contexts/language/language.provider';
 
-import { Scrollbar } from 'components/scrollbar/scrollbar';
-import { useCart } from 'contexts/cart/use-cart';
-import { CartItem } from 'components/cart-item/cart-item';
+import {Scrollbar} from 'components/scrollbar/scrollbar';
+import {useCart} from 'contexts/cart/use-cart';
+import {CartItem} from 'components/cart-item/cart-item';
 import Coupon from 'features/coupon/coupon';
 
 type CartPropsType = {
@@ -156,7 +156,7 @@ const Cart: React.FC<CartPropsType> = ({
           <CheckoutButton>
             <>
               <Title>
-                <FormattedMessage id='nav.checkout' defaultMessage='Checkout' />
+                <FormattedMessage id='nav.checkout' defaultMessage='Перейти к оформлению заказа' />
               </Title>
               <PriceBox>
                 {calculatePrice()}
