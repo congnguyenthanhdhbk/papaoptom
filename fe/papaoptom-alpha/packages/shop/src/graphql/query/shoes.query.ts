@@ -57,7 +57,6 @@ export const GET_SHOES = gql`
           totalPurchasePrice
           totalSellingPrice
           discountInPercent
-          gallery
         }
         slug
       }

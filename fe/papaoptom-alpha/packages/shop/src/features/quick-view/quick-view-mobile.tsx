@@ -81,11 +81,12 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     outsoleMaterial,
     productMaterial,
     color,
-    gallery,
     totalOldSellingPrice,
-    totalSellingPrice
+    totalSellingPrice,
+      photo1
   } = characteristics;
 
+  const gallery = [photo1, photo1, photo1, photo1];
   const { isRtl } = useLocale();
 
   const handleAddClick = (e: any) => {
