@@ -28,11 +28,9 @@ export const CartItem: React.FC<Props> = ({
 }) => {
   // const { title, image, price, salePrice, unit, quantity } = data;
   const { name, quantity, characteristics, type, brand, color, vcode } = data;
-  console.log("Product cart data::", JSON.stringify(data));
   const { totalOldSellingPrice, totalSellingPrice, steamInBox, photo1 } = characteristics;
   const title = `${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`;
   const image = photo1 ?? null;
-  console.log("Photo::", image);
   const price = Number(totalOldSellingPrice) ?? 0;
   const salePrice = Number(totalSellingPrice) ?? 0;
   const unit = Number(steamInBox) ?? 1;
@@ -57,8 +55,8 @@ export const CartItem: React.FC<Props> = ({
         </Weight>
       </Information>
       <Total>
-        {CURRENCY}
         {(quantity * displayPrice).toFixed(2)}
+          {CURRENCY_UAH}
       </Total>
       <RemoveButton onClick={onRemove}>
         <CloseIcon />

@@ -19,7 +19,7 @@ import {
 import { CloseIcon } from 'assets/icons/CloseIcon';
 import { ShoppingBagLarge } from 'assets/icons/ShoppingBagLarge';
 import { NoCartBag } from 'assets/icons/NoCartBag';
-import { CURRENCY } from 'utils/constant';
+import {CURRENCY, CURRENCY_UAH} from 'utils/constant';
 import { FormattedMessage } from 'react-intl';
 import { useLocale } from 'contexts/language/language.provider';
 
@@ -146,8 +146,8 @@ const Cart: React.FC<CartPropsType> = ({
                   />
                 </Title>
                 <PriceBox>
-                  {CURRENCY}
                   {calculatePrice()}
+                  {CURRENCY_UAH}
                 </PriceBox>
               </>
             </CheckoutButton>
@@ -159,8 +159,8 @@ const Cart: React.FC<CartPropsType> = ({
                 <FormattedMessage id='nav.checkout' defaultMessage='Checkout' />
               </Title>
               <PriceBox>
-                {CURRENCY}
                 {calculatePrice()}
+                {CURRENCY_UAH}
               </PriceBox>
             </>
           </CheckoutButton>
