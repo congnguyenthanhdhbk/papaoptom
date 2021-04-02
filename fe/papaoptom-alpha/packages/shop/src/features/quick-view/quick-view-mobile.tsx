@@ -84,10 +84,10 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     color,
     totalOldSellingPrice,
     totalSellingPrice,
-      photo1
+    photo1
   } = characteristics;
 
-  const gallery = [photo1, photo1, photo1, photo1];
+  const gallery = [{ url: photo1 } , { url: photo1 }, { url: photo1 }, { url: photo1 }];
   const { isRtl } = useLocale();
 
   const handleAddClick = (e: any) => {
@@ -128,7 +128,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                 <ProductTitle>{`${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`}</ProductTitle>
               </ProductTitlePriceWrapper>
 
-              <ProductWeight>{sizeChart}</ProductWeight>
+              <ProductWeight>Количество {sizeChart ?? '36 - 40'}</ProductWeight>
               <ProductDescription>
                 <ReadMore character={600}>{description}</ReadMore>
               </ProductDescription>
@@ -152,7 +152,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                 <ProductPriceWrapper>
                   <ProductPrice>
                     {CURRENCY_UAH}
-                    {totalOldSellingPrice ? totalOldSellingPrice : totalSellingPrice}
+                    {totalOldSellingPrice ?? totalSellingPrice}
                   </ProductPrice>
 
                   {discountInPercent ? (
