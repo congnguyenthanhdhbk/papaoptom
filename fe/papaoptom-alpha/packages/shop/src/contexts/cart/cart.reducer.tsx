@@ -2,10 +2,17 @@
 export const cartItemsTotalPrice = (items, coupon = null) => {
   if (items === null || items.length === 0) return 0;
   const itemCost = items.reduce((total, item) => {
-    if (item.salePrice) {
-      return total + item.salePrice * item.quantity;
+    const { characteristics } = item;
+    const { totalSellingPrice, totalOldSellingPrice } = characteristics;
+
+    if (totalSellingPrice) {
+      return total + Number(totalSellingPrice) * item.quantity;
     }
-    return total + item.price * item.quantity;
+    return total + Number(totalOldSellingPrice) * item?.quantity;
+    // if (item.salePrice) {
+    //   return total + item.salePrice * item.quantity;
+    // }
+    // return total + item.price * item.quantity;
   }, 0);
   // const discountRate = 1 - discountInPercent;
   const discount = coupon
