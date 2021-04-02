@@ -67,7 +67,6 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     type,
     vcode,
     quantity,
-    discountInPercent,
     description,
     categories,
     characteristics,
@@ -84,7 +83,8 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     color,
     totalOldSellingPrice,
     totalSellingPrice,
-    photo1
+    photo1,
+    discountInPercent
   } = characteristics;
 
   const gallery = [{ url: photo1 } , { url: photo1 }, { url: photo1 }, { url: photo1 }];
@@ -155,6 +155,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                     Цена за пару: {totalOldSellingPrice ?? totalSellingPrice} {CURRENCY_UAH}
                   </ProductPrice>
 
+                  Цена за ящ.
                   {discountInPercent ? (
                     <SalePrice>
                       {CURRENCY_UAH}
@@ -162,18 +163,6 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                     </SalePrice>
                   ) : null}
                 </ProductPriceWrapper>
-                <ProductDescription>
-                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
-                </ProductDescription>
-                <ProductDescription>
-                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
-                </ProductDescription>
-                <ProductDescription>
-                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
-                </ProductDescription>
-                <ProductDescription>
-                  <ReadMore character={10}>Пар в ящике {steamInBox}</ReadMore>
-                </ProductDescription>
 
                 <ProductCartBtn>
                   {!isInCart(id) ? (
