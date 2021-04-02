@@ -26,7 +26,14 @@ export const CartItem: React.FC<Props> = ({
   onIncrement,
   onRemove,
 }) => {
-  const { title, image, price, salePrice, unit, quantity } = data;
+  // const { title, image, price, salePrice, unit, quantity } = data;
+  const { name, photo1, quantity, characteristics, type, brand, color, vcode } = data;
+  const { totalOldSellingPrice, totalSellingPrice, steamInBox } = characteristics;
+  const title = `${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`;
+  const image = photo1;
+  const price = Number(totalSellingPrice) ?? 0;
+  const salePrice = Number(totalOldSellingPrice) ?? 0;
+  const unit = Number(steamInBox) ?? 1;
   const displayPrice = salePrice ? salePrice : price;
   return (
     <ItemBox>
