@@ -26,7 +26,7 @@ import {
 } from './quick-view.style';
 import { CloseIcon } from 'assets/icons/CloseIcon';
 import { CartIcon } from 'assets/icons/CartIcon';
-import { CURRENCY } from 'utils/constant';
+import {CURRENCY, CURRENCY_UAH} from 'utils/constant';
 
 import ReadMore from 'components/truncate/truncate';
 import CarouselWithCustomDots from 'components/multi-carousel/multi-carousel';
@@ -49,18 +49,42 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
   deviceType,
 }) => {
   const { addItem, removeItem, isInCart, getItem } = useCart();
+  // const {
+  //   id,
+  //   type,
+  //   title,
+  //   unit,
+  //   price,
+  //   discountInPercent,
+  //   salePrice,
+  //   description,
+  //   gallery,
+  //   categories,
+  // } = modalProps;
+
   const {
-    id,
+    name,
     type,
-    title,
-    unit,
-    price,
+    vcode,
+    quantity,
     discountInPercent,
-    salePrice,
     description,
-    gallery,
     categories,
+    characteristics,
+    brand,
+    id,
   } = modalProps;
+  const {
+    steamInBox,
+    sizeChart,
+    season,
+    outsoleMaterial,
+    productMaterial,
+    color,
+    gallery,
+    totalOldSellingPrice,
+    totalSellingPrice
+  } = characteristics;
 
   const { isRtl } = useLocale();
 
@@ -99,10 +123,10 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
           <ProductInfoWrapper dir={isRtl ? 'rtl' : 'ltr'}>
             <ProductInfo>
               <ProductTitlePriceWrapper>
-                <ProductTitle>{title}</ProductTitle>
+                <ProductTitle>{`${name ?? ""} ${type ?? ""} ${brand?.name ?? ""} ${vcode ?? ""} ${color ?? ""}`}</ProductTitle>
               </ProductTitlePriceWrapper>
 
-              <ProductWeight>{unit}</ProductWeight>
+              <ProductWeight>{sizeChart}</ProductWeight>
               <ProductDescription>
                 <ReadMore character={600}>{description}</ReadMore>
               </ProductDescription>
@@ -125,14 +149,14 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
               <ProductCartWrapper>
                 <ProductPriceWrapper>
                   <ProductPrice>
-                    {CURRENCY}
-                    {salePrice ? salePrice : price}
+                    {CURRENCY_UAH}
+                    {totalOldSellingPrice ? totalOldSellingPrice : totalSellingPrice}
                   </ProductPrice>
 
                   {discountInPercent ? (
                     <SalePrice>
-                      {CURRENCY}
-                      {price}
+                      {CURRENCY_UAH}
+                      {totalSellingPrice}
                     </SalePrice>
                   ) : null}
                 </ProductPriceWrapper>
