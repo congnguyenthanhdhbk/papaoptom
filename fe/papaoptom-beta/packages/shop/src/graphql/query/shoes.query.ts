@@ -2,13 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_SHOES = gql`
   query getShoes($supplier: String, $pageSize: Int, $pageNumber: Int) {
-    filterProduct(
-      filter: {
-        supplier: $supplier
-        pageSize: $pageSize
-        pageNumber: $pageNumber
-      }
-    ) {
+    filterProduct(filter: { supplier: $supplier, pageSize: $pageSize, pageNumber: $pageNumber }) {
       message
       code
       data {

@@ -86,6 +86,7 @@ const ContentSection = styled.div`
 `;
 
 const OfferSection = styled.div`
+  margin-top: 5rem;
   width: 100%;
   display: block;
   padding: 60px;

@@ -1,23 +1,17 @@
-import React from "react";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import {
-  ProductsRow,
-  ProductsCol,
-  ButtonWrapper,
-  LoaderWrapper,
-  LoaderItem,
-  ProductCardWrapper,
-} from "./product-list.style";
-import { CURRENCY } from "utils/constant";
-import { useQuery, NetworkStatus } from "@apollo/client";
-import Placeholder from "components/placeholder/placeholder";
-import Fade from "react-reveal/Fade";
-import NoResultFound from "components/no-result/no-result";
-import { FormattedMessage } from "react-intl";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import { Button } from "components/button/loadmore-button";
-import { GET_PRODUCTS } from "graphql/query/products.query";
+import NoResultFound from "components/no-result/no-result";
+import Placeholder from "components/placeholder/placeholder";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import Fade from "react-reveal/Fade";
+import { CURRENCY_UAH } from "utils/constant";
 import { GET_SHOES } from "../../../graphql/query/shoes.query";
+import {
+  ButtonWrapper, LoaderItem, LoaderWrapper, ProductCardWrapper, ProductsCol, ProductsRow
+} from "./product-list.style";
 
 const ErrorMessage = dynamic(
   () => import("components/error-message/error-message")
@@ -25,15 +19,6 @@ const ErrorMessage = dynamic(
 
 const GeneralCard = dynamic(
   import("components/product-card/product-card-one/product-card-one")
-);
-const BookCard = dynamic(
-  import("components/product-card/product-card-two/product-card-two")
-);
-const FurnitureCard = dynamic(
-  import("components/product-card/product-card-three/product-card-three")
-);
-const MedicineCard = dynamic(
-  import("components/product-card/product-card-five/product-card-five")
 );
 
 type ProductsProps = {
@@ -85,91 +70,102 @@ export const Products: React.FC<ProductsProps> = ({
   }
 
   const handleLoadMore = () => {
+    const fetchLimit = data.filterProduct.pageSize;
     fetchMore({
       variables: {
-        offset: Number(data.products.items.length),
-        limit: fetchLimit,
+        pageNumber: Number(data.filterProduct.nextPage),
+        pageSize: fetchLimit,
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+        const {
+          pageNumber,
+          pageSize,
+          message,
+          code,
+          totalDocs,
+          totalPages,
+          hasPrevPage,
+          hasNextPage,
+          prevPage,
+          nextPage,
+          data,
+        } = fetchMoreResult?.filterProduct;
+        const newData = [...previousResult?.filterProduct?.data, ...data];
+        console.log("Array after::", JSON.stringify(newData));
+
+        return {
+          ...previousResult,
+          filterProduct: {
+            data: newData,
+            pageNumber,
+            pageSize,
+            message,
+            code,
+            totalDocs,
+            totalPages,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+          },
+        };
       },
     });
   };
 
-  const renderCard = (productType, props) => {
-    switch (productType) {
-      case "book":
-        return (
-          <BookCard
-            title={props.title}
-            image={props.image}
-            name={props?.author?.name}
-            data={props}
-            deviceType={deviceType}
-            onClick={() => {
-              router.push("/product/[slug]", `/product/${props.slug}`);
-              if (typeof window !== "undefined") {
-                window.scrollTo(0, 0);
-              }
-            }}
-          />
-        );
-      case "medicine":
-        return (
-          <MedicineCard
-            title={props.title}
-            currency={CURRENCY}
-            image={props.image}
-            price={props.price}
-            weight={props.unit}
-            data={props}
-          />
-        );
-      case "furniture":
-        return (
-          <FurnitureCard
-            title={props.title}
-            image={props.gallery[0].url}
-            discountInPercent={props.discountInPercent}
-            data={props}
-            deviceType={deviceType}
-          />
-        );
-      default:
-        return (
-          <GeneralCard
-            title={props.title}
-            description={props.description}
-            image={props.image}
-            weight={props.unit}
-            currency={CURRENCY}
-            price={props.price}
-            salePrice={props.salePrice}
-            discountInPercent={props.discountInPercent}
-            data={props}
-            deviceType={deviceType}
-          />
-        );
-    }
+  const renderCard = (props: any) => {
+    console.log(props);
+    const { name, characteristics, category, brand } = props;
+    const {
+      description,
+      photo1,
+      saleCurrency,
+      sizeChart,
+      sellingPrice,
+      oldSellingPrice,
+      totalSellingPrice,
+      totalOldSellingPrice,
+      discountInPercent,
+    } = characteristics;
+
+    return (
+      <GeneralCard
+        title={`${name} ${category?.name ?? ""} ${brand?.name ?? ""}`}
+        description={description}
+        image={photo1}
+        weight={sizeChart}
+        currency={CURRENCY_UAH}
+        price={totalOldSellingPrice}
+        salePrice={totalSellingPrice}
+        discountInPercent={discountInPercent}
+        data={props}
+        deviceType={deviceType}
+      />
+    );
   };
+
+
   return (
     <>
       <ProductsRow>
-        {data.products.items.map((item: any, index: number) => (
-          <ProductsCol
-            key={index}
-            style={type === "book" ? { paddingLeft: 0, paddingRight: 1 } : {}}
-          >
+        {data?.filterProduct?.data.map((item: any, index: number) => (
+          <ProductsCol key={index}          >
             <ProductCardWrapper>
               <Fade
                 duration={800}
                 delay={index * 10}
                 style={{ height: "100%" }}
               >
-                {renderCard(type, item)}
+                {renderCard(item)}
               </Fade>
             </ProductCardWrapper>
           </ProductsCol>
         ))}
       </ProductsRow>
-      {loadMore && data.products.hasMore && (
+      {loadMore && (
         <ButtonWrapper>
           <Button
             onClick={handleLoadMore}

@@ -30,15 +30,11 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     <LayoutWrapper className={`layoutWrapper ${className}`}>
       <Sticky enabled={isSticky} innerZ={1001}>
         <MobileHeader
-          className={`${isSticky ? "sticky" : "unSticky"} ${
-            isHomePage ? "home" : ""
-          } desktop`}
+          className={`${isSticky ? "sticky" : "sticky"} ${isHomePage ? "home" : ""} desktop`}
         />
 
         <Header
-          className={`${isSticky ? "sticky" : "unSticky"} ${
-            isHomePage ? "home" : ""
-          }`}
+          className={`${isSticky ? "sticky" : "sticky"} ${isHomePage ? "home" : ""}`}
         />
       </Sticky>
       {children}

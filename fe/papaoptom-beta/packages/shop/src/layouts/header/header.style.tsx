@@ -91,7 +91,7 @@ const HeaderWrapper = styled.header`
   }
 
   &.sticky {
-    background-color: ${themeGet('colors.white', '#ffffff')};
+    background-color: ${themeGet('colors.primary.regular', '#009e7f')};
     position: fixed;
     box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
     padding-top: 20px;
@@ -313,7 +313,7 @@ export const MobileHeaderInnerWrapper = styled.div`
 
   &.sticky {
     position: fixed;
-    background-color: ${themeGet('colors.white', '#ffffff')};
+    background-color: ${themeGet('colors.primary.regular', '#009e7f')};
     box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
 
     @media only screen and (min-width: 991px) and (max-width: 1366px) {

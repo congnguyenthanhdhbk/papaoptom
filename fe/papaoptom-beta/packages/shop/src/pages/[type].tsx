@@ -63,16 +63,15 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
             </div>
           </OfferSection>
           <MobileCarouselDropdown>
-            <Sidebar type={PAGE_TYPE} deviceType={deviceType} />
+            <Sidebar deviceType={deviceType} />
           </MobileCarouselDropdown>
           <MainContentArea>
             <SidebarSection>
-              <Sidebar type={PAGE_TYPE} deviceType={deviceType} />
+              <Sidebar deviceType={deviceType} />
             </SidebarSection>
             <ContentSection>
               <div ref={targetRef}>
                 <Products
-                  type={PAGE_TYPE}
                   deviceType={deviceType}
                   fetchLimit={20}
                 />

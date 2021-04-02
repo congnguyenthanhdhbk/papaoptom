@@ -1,24 +1,25 @@
-import React from "react";
-import { GetStaticProps } from "next";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import { Modal } from "@redq/reuse-modal";
-import Carousel from "components/carousel/carousel";
-
 import {
   ContentSection,
   MainContentArea,
   MobileCarouselDropdown,
   OfferSection,
-  SidebarSection,
+  SidebarSection
 } from "assets/styles/pages.style";
+import Carousel from "components/carousel/carousel";
+import { SEO } from "components/seo";
+import { ModalProvider } from "contexts/modal/modal.provider";
+import { GET_SHOES } from "graphql/query/shoes.query";
+import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import React from "react";
 // Static Data Import Here
 import { siteOffers } from "site-settings/site-offers";
 import { sitePages } from "site-settings/site-pages";
-import { SEO } from "components/seo";
-import { useRefScroll } from "utils/use-ref-scroll";
 import { initializeApollo } from "utils/apollo";
-import { ModalProvider } from "contexts/modal/modal.provider";
+import { useRefScroll } from "utils/use-ref-scroll";
+
 
 const Sidebar = dynamic(() => import("layouts/sidebar/sidebar"));
 const Products = dynamic(
@@ -49,7 +50,7 @@ const HomePage: React.FC<any> = ({ deviceType }) => {
       <ModalProvider>
         <Modal>
           <OfferSection>
-            <div style={{ margin: "5rem -10px" }}>
+            <div style={{ margin: "0 -10px" }}>
               <Carousel deviceType={deviceType} data={siteOffers} />
             </div>
           </OfferSection>
@@ -63,7 +64,6 @@ const HomePage: React.FC<any> = ({ deviceType }) => {
             <ContentSection>
               <div ref={targetRef}>
                 <Products
-                  type={PAGE_TYPE}
                   deviceType={deviceType}
                   fetchLimit={20}
                 />
@@ -77,7 +77,7 @@ const HomePage: React.FC<any> = ({ deviceType }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({

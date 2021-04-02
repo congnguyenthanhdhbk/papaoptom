@@ -1,6 +1,6 @@
 export const initialState = {
   searchTerm: "",
-  isSticky: true,
+  isSticky: false,
   isSidebarSticky: true,
   isDrawerOpen: false,
   isModalOpen: false,
