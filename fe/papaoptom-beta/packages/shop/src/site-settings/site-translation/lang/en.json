@@ -186,5 +186,8 @@
   "deliveryText": "Delivery",
   "cuisineText": "Cuisine",
   "minOrderText": "Min Order",
-  "fromText": "From"
+  "fromText": "From",
+
+  "priceOfPair": "Price of a pair",
+  "priceOfBox": "Price of a box"
 }

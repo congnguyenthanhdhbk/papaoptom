@@ -53,7 +53,7 @@ const Header: React.FC<Props> = ({ className }) => {
   return (
     <HeaderWrapper className={className} id="layout-header">
       <LeftMenu logo={LogoImage} />
-      {/*{showSearch && <Search minimal={true} className="headerSearch" />}*/}
+      {/* {showSearch && <Search minimal={true} className="headerSearch" />} */}
       <Search minimal={true} className="headerSearch" />
       <RightMenu
         isAuthenticated={isAuthenticated}
