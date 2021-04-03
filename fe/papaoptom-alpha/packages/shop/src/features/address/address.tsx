@@ -41,7 +41,8 @@ const Address = ({
   const handleOnDelete = async (item) => {
     dispatch({ type: 'DELETE_ADDRESS', payload: item.id });
     return await deleteAddressMutation({
-      variables: { addressId: JSON.stringify(item.id) },
+      // variables: { addressId: JSON.stringify(item.id) },
+      variables: { addressId: item.id },
     });
   };
   return (

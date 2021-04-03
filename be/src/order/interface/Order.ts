@@ -6,6 +6,7 @@ import { Shipping } from './Shipping';
 import { Product } from './Product';
 
 export interface Order extends Document {
+  orderNumber: string;
   customer: Customer;
   payment: Payment;
   bill: Bill;

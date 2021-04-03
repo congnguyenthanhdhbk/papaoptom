@@ -2,6 +2,42 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CustomerRes {
+  code: Int
+  message: String
+  success: Boolean
+}
+
+type AddressRes {
+  id: String
+  type: String
+  name: String
+  info: String
+}
+
+type CardRes {
+  id: String
+  type: String
+  cardType: String
+  name: String
+  lastFourDigit: Int
+}
+
+type ContactRes {
+  id: String
+  type: String
+  number: String
+}
+
+type CustomerDtoRes {
+  id: Int
+  name: String
+  email: String
+  address: [AddressRes!]
+  card: [CardRes!]
+  contact: [ContactRes!]
+}
+
 type CategoryChildrenRes {
   id: Int!
   name: String!
@@ -110,6 +146,7 @@ type OrderRes {
 }
 
 type Query {
+  me(id: String): CustomerDtoRes!
   getProduct(slug: String!): ProductDetailRes!
   filterProduct(filter: ProductFilterReq!): ProductRes!
 }
@@ -125,99 +162,37 @@ input ProductFilterReq {
 }
 
 type Mutation {
-  addOrder(product: [ProductReq!], shipping: [ShippingReq!], payment: PaymentReq, customer: CustomerReq): OrderRes!
+  updateContact(contactInput: String): CustomerDtoRes!
+  addCustomers(customers: [CustomersReq!]): CustomerRes!
+  addOrder(product: String!, phoneNumber: String!): OrderRes!
 }
 
-input ProductReq {
+input CustomersReq {
+  id: Int
+  name: String
+  email: String
+  address: [AddressReq!]
+  card: [CardReq!]
+  contact: [ContactReq!]
+}
+
+input AddressReq {
   id: String
-  vcode: String
+  addressType: String
   name: String
-  quantity: Int
-  category: CategoryReq
-  supplier: SupplierReq
-  brand: BrandReq
-  createdAt: DateTime
-  updatedAt: DateTime
-  characteristics: CharacteristicsReq
+  info: String
 }
 
-input CategoryReq {
-  id: Int
+input CardReq {
+  id: String
+  usedType: String
+  cardType: String
   name: String
-  child: CategoryChildrenReq
+  lastFourDigit: Int
 }
 
-input CategoryChildrenReq {
-  id: Int!
-  name: String!
-}
-
-input SupplierReq {
-  id: Int
-  address: String
-  phone: String
-  email: String
-  company: String
-  exchangeRate: Int
-}
-
-input BrandReq {
-  id: Int
-  name: String
-}
-
-input CharacteristicsReq {
-  description: String
-  photo1: String
-  productMaterial: String
-  sizeChart: String
-  repeatedDimensions: String
-  steamInBox: String
-  liningMaterial: String
-  outsoleMaterial: String
-  country: String
-  heelHeight: String
-  platformHeight: String
-  picturedSize: String
-  purchasePrice: String
-  sellingPrice: String
-  season: String
-  shootingDate: String
-  purchaseCurrency: String
-  saleCurrency: String
-  floor: String
-  type: String
-  oldPurchasePrice: String
-  oldSellingPrice: String
-  insoleMaterial: String
-  videoReview: String
-  totalOldPurchasePrice: String
-  totalOldSellingPrice: String
-  totalPurchasePrice: String
-  totalSellingPrice: String
-  discountInPercent: String
-  gallery: [GalleryReq!]
-}
-
-input GalleryReq {
-  url: String
-}
-
-input ShippingReq {
-  address: String
-  phone: String
-  name: String
-}
-
-input PaymentReq {
-  cardNumber: String
-  methods: String
-  securityCode: String
-}
-
-input CustomerReq {
-  fullName: String
-  email: String
-  phone: String
-  address: String
+input ContactReq {
+  id: String
+  contactType: String
+  number: String
 }

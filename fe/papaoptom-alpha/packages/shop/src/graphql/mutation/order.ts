@@ -14,6 +14,16 @@ export const ADD_ORDER = gql`
   }
 `;
 
+export const ADD_ORDER_PAPA = gql`
+  mutation($phoneNumber: String!, $product: String!) {
+    addOrder(phoneNumber: $phoneNumber, product: $product) {
+      code,
+      message,
+      success
+    }
+  }
+`;
+
 export const GET_PAYMENT = gql`
   mutation($paymentInput: String!) {
     charge(paymentInput: $paymentInput) {

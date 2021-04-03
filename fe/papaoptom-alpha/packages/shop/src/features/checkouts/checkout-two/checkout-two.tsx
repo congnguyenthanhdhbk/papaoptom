@@ -1,53 +1,51 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import { Button } from 'components/button/button';
-import { CURRENCY } from 'utils/constant';
-import { Scrollbar } from 'components/scrollbar/scrollbar';
+import {Button} from 'components/button/button';
+import {CURRENCY_UAH} from 'utils/constant';
+import {Scrollbar} from 'components/scrollbar/scrollbar';
 import CheckoutWrapper, {
+  Bold,
+  CalculationWrapper,
+  CartWrapper,
   CheckoutContainer,
   CheckoutInformation,
-  InformationBox,
-  DeliverySchedule,
   CheckoutSubmit,
-  HaveCoupon,
   CouponBoxWrapper,
-  CouponInputBox,
   CouponCode,
-  RemoveCoupon,
-  TermConditionText,
-  TermConditionLink,
-  CartWrapper,
-  CalculationWrapper,
-  OrderInfo,
-  Title,
-  ItemsWrapper,
-  Items,
-  Quantity,
-  Multiplier,
+  CouponInputBox,
+  HaveCoupon,
+  InformationBox,
   ItemInfo,
-  Price,
-  TextWrapper,
-  Text,
-  Bold,
-  Small,
-  NoProductMsg,
+  Items,
+  ItemsWrapper,
+  Multiplier,
   NoProductImg,
+  NoProductMsg,
+  OrderInfo,
+  Price,
+  Quantity,
+  RemoveCoupon,
+  Small,
+  TermConditionLink,
+  TermConditionText,
+  Text,
+  TextWrapper,
+  Title,
 } from './checkout-two.style';
 
-import { NoCartBag } from 'assets/icons/NoCartBag';
+import {NoCartBag} from 'assets/icons/NoCartBag';
 
 import Sticky from 'react-stickynode';
-import { ProfileContext } from 'contexts/profile/profile.context';
-import { FormattedMessage } from 'react-intl';
-import { useCart } from 'contexts/cart/use-cart';
-import { useLocale } from 'contexts/language/language.provider';
-import { useWindowSize } from 'utils/useWindowSize';
+import {ProfileContext} from 'contexts/profile/profile.context';
+import {FormattedMessage} from 'react-intl';
+import {useCart} from 'contexts/cart/use-cart';
+import {useLocale} from 'contexts/language/language.provider';
+import {useWindowSize} from 'utils/useWindowSize';
 import Coupon from 'features/coupon/coupon';
-import Address from 'features/address/address';
-import Schedules from 'features/schedule/schedule';
 import Contact from 'features/contact/contact';
-import Payment from 'features/payment/payment';
+import { useMutation } from '@apollo/client';
+import {ADD_ORDER_PAPA} from "../../../graphql/mutation/order";
 
 // The type of props Checkout Form receives
 interface MyFormProps {
@@ -60,7 +58,12 @@ type CartItemProps = {
 };
 
 const OrderItem: React.FC<CartItemProps> = ({ product }) => {
-  const { id, quantity, title, name, unit, price, salePrice } = product;
+  console.log("Product::", JSON.stringify(product));
+  const { id, quantity, name } = product;
+  const title = `${product?.name ?? ""} ${product?.characteristics?.type ?? ""} ${product?.characteristics?.brand?.name ?? ""} ${product?.vcode ?? ""} ${product?.characteristics?.color ?? ""}` ?? null;
+  const unit = Number(product?.characteristics?.steamInBox) ?? 1;
+  const price = Number(product?.characteristics?.totalOldPurchasePrice) ?? 0;
+  const salePrice = Number(product?.characteristics?.totalSellingPrice) ?? 0;
   const displayPrice = salePrice ? salePrice : price;
   return (
     <Items key={id}>
@@ -70,8 +73,8 @@ const OrderItem: React.FC<CartItemProps> = ({ product }) => {
         {name ? name : title} {unit ? `| ${unit}` : ''}
       </ItemInfo>
       <Price>
-        {CURRENCY}
         {(displayPrice * quantity).toFixed(2)}
+        {CURRENCY_UAH}
       </Price>
     </Items>
   );
@@ -79,7 +82,7 @@ const OrderItem: React.FC<CartItemProps> = ({ product }) => {
 
 const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   const [hasCoupon, setHasCoupon] = useState(false);
-  // const { state } = useContext(ProfileContext);
+  const { state } = useContext(ProfileContext);
   const { isRtl } = useLocale();
   const {
     items,
@@ -96,11 +99,20 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   // const { address, contact, card, schedules } = state;
+  const { contact } = state;
   const size = useWindowSize();
 
+  const [addOrderMutation] = useMutation(ADD_ORDER_PAPA);
   const handleSubmit = async () => {
     setLoading(true);
     if (isValid) {
+      console.log("Number::", JSON.stringify(contact?.number ?? "Không thành công"));
+      await addOrderMutation({
+        variables: {
+          phoneNumber: contact[0]?.number ?? "0988656949",
+          product: JSON.stringify(items)
+        }
+      });
       clearCart();
       Router.push('/order-received');
     }
@@ -110,9 +122,10 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   useEffect(() => {
     if (
       calculatePrice() > 0 &&
-      cartItemsCount > 0
+      cartItemsCount > 0 &&
       // cartItemsCount > 0 &&
       // address.length &&
+      contact.length
       // contact.length &&
       // card.length &&
       // schedules.length
@@ -134,39 +147,39 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
       <CheckoutWrapper>
         <CheckoutContainer>
           <CheckoutInformation>
-            {/* DeliveryAddress */}
-            <InformationBox>
-              {/*<Address*/}
-              {/*  increment={true}*/}
-              {/*  flexStart={true}*/}
-              {/*  buttonProps={{*/}
-              {/*    variant: 'text',*/}
-              {/*    type: 'button',*/}
-              {/*    className: 'addButton',*/}
-              {/*  }}*/}
-              {/*  icon={true}*/}
-              {/*/>*/}
-            </InformationBox>
+            {/* DeliveryAddress*/}
+            {/*<InformationBox>*/}
+            {/*  <Address*/}
+            {/*    increment={true}*/}
+            {/*    flexStart={true}*/}
+            {/*    buttonProps={{*/}
+            {/*      variant: 'text',*/}
+            {/*      type: 'button',*/}
+            {/*      className: 'addButton',*/}
+            {/*    }}*/}
+            {/*    icon={true}*/}
+            {/*  />*/}
+            {/*</InformationBox>*/}
 
             {/* DeliverySchedule */}
-            <InformationBox>
-              {/*<DeliverySchedule>*/}
-              {/*  <Schedules increment={true} />*/}
-              {/*</DeliverySchedule>*/}
-            </InformationBox>
+            {/*<InformationBox>*/}
+            {/*  <DeliverySchedule>*/}
+            {/*    <Schedules increment={true} />*/}
+            {/*  </DeliverySchedule>*/}
+            {/*</InformationBox>*/}
 
-            {/* Contact number */}
+             Contact number
             <InformationBox>
-              {/*<Contact*/}
-              {/*  increment={true}*/}
-              {/*  flexStart={true}*/}
-              {/*  buttonProps={{*/}
-              {/*    variant: 'text',*/}
-              {/*    type: 'button',*/}
-              {/*    className: 'addButton',*/}
-              {/*  }}*/}
-              {/*  icon={true}*/}
-              {/*/>*/}
+              <Contact
+                increment={true}
+                flexStart={true}
+                buttonProps={{
+                  variant: 'text',
+                  type: 'button',
+                  className: 'addButton',
+                }}
+                icon={true}
+              />
             </InformationBox>
             {/* PaymentOption */}
 
@@ -291,8 +304,8 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
                       />
                     </Text>
                     <Text>
-                      {CURRENCY}
                       {calculateSubTotalPrice()}
+                      {CURRENCY_UAH}
                     </Text>
                   </TextWrapper>
 
@@ -303,7 +316,7 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
                         defaultMessage='Delivery Fee'
                       />
                     </Text>
-                    <Text>{CURRENCY}0.00</Text>
+                    <Text>0.00{CURRENCY_UAH}</Text>
                   </TextWrapper>
 
                   <TextWrapper>
@@ -314,8 +327,8 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
                       />
                     </Text>
                     <Text>
-                      {CURRENCY}
                       {calculateDiscount()}
+                      {CURRENCY_UAH}
                     </Text>
                   </TextWrapper>
 
@@ -332,8 +345,8 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
                       </Small>
                     </Bold>
                     <Bold>
-                      {CURRENCY}
                       {calculatePrice()}
+                      {CURRENCY_UAH}
                     </Bold>
                   </TextWrapper>
                 </CalculationWrapper>

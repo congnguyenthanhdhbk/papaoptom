@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const OrderSchema = new mongoose.Schema(
   {
+    orderNumber: String,
     isActivated: {
       type: Boolean,
       default: true,

@@ -17,29 +17,26 @@ type Props = {
   };
 };
 const CheckoutPage: NextPage<Props> = ({ deviceType }) => {
-  /*const { data, error, loading } = useQuery(GET_LOGGED_IN_CUSTOMER);
+  const { data, error, loading } = useQuery(GET_LOGGED_IN_CUSTOMER);
   if (loading) {
     return <div>loading...</div>;
   }
-  if (error) return <div>{error.message}</div>;*/
+  if (error) return <div>{error.message}</div>;
   const token = 'true';
 
   return (
     <>
       <SEO title="Checkout - Papaoptom" description="Checkout Details" />
-      <Modal>
-        <Checkout token={token} deviceType={deviceType} />
-      </Modal>
-      {/*<ProfileProvider initData={data.me}>
+      <ProfileProvider initData={data.me}>
         <Modal>
           <Checkout token={token} deviceType={deviceType} />
         </Modal>
-      </ProfileProvider>*/}
+      </ProfileProvider>
     </>
   );
 };
 
-/*export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
@@ -51,5 +48,5 @@ const CheckoutPage: NextPage<Props> = ({ deviceType }) => {
       initialApolloState: apolloClient.cache.extract(),
     },
   };
-};*/
+};
 export default CheckoutPage;
