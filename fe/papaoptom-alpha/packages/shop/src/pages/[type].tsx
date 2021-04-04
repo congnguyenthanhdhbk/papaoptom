@@ -1,11 +1,11 @@
-import React from 'react';
-import { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import { Modal } from '@redq/reuse-modal';
-import Carousel from 'components/carousel/carousel';
-import { Banner } from 'components/banner/banner';
-import { MobileBanner } from 'components/banner/mobile-banner';
+import React from "react";
+import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { Modal } from "@redq/reuse-modal";
+import Carousel from "components/carousel/carousel";
+import { Banner } from "components/banner/banner";
+import { MobileBanner } from "components/banner/mobile-banner";
 
 import {
   MainContentArea,
@@ -13,22 +13,20 @@ import {
   ContentSection,
   OfferSection,
   MobileCarouselDropdown,
-} from 'assets/styles/pages.style';
+} from "assets/styles/pages.style";
 // Static Data Import Here
-import { siteOffers } from 'site-settings/site-offers';
-import { sitePages } from 'site-settings/site-pages';
-import { SEO } from 'components/seo';
-import { useRefScroll } from 'utils/use-ref-scroll';
-import { initializeApollo } from 'utils/apollo';
-import { GET_PRODUCTS } from 'graphql/query/products.query';
-import { GET_CATEGORIES } from 'graphql/query/category.query';
-import { ModalProvider } from 'contexts/modal/modal.provider';
-import {GET_SHOES, SEARCH_SHOES} from 'graphql/query/shoes.query';
-const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
-const Products = dynamic(() =>
-  import('components/product-grid/product-list/product-list')
-);
-const CartPopUp = dynamic(() => import('features/carts/cart-popup'), {
+import { siteOffers } from "site-settings/site-offers";
+import { sitePages } from "site-settings/site-pages";
+import { SEO } from "components/seo";
+import { useRefScroll } from "utils/use-ref-scroll";
+import { initializeApollo } from "utils/apollo";
+import { GET_PRODUCTS } from "graphql/query/products.query";
+import { GET_CATEGORIES } from "graphql/query/category.query";
+import { ModalProvider } from "contexts/modal/modal.provider";
+import { GET_SHOES, SEARCH_SHOES } from "graphql/query/shoes.query";
+const Sidebar = dynamic(() => import("layouts/sidebar/sidebar"));
+const Products = dynamic(() => import("components/product-grid/product-list/product-list"));
+const CartPopUp = dynamic(() => import("features/carts/cart-popup"), {
   ssr: false,
 });
 
@@ -61,7 +59,7 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
           /> */}
 
           <OfferSection>
-            <div style={{ margin: '0 -10px' }}>
+            <div style={{ margin: "0 -10px" }}>
               <Carousel deviceType={deviceType} data={siteOffers} />
             </div>
           </OfferSection>
@@ -74,11 +72,7 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
             </SidebarSection>
             <ContentSection>
               <div ref={targetRef}>
-                <Products
-                  type={PAGE_TYPE}
-                  deviceType={deviceType}
-                  fetchLimit={20}
-                />
+                <Products type={PAGE_TYPE} deviceType={deviceType} fetchLimit={20} />
               </div>
             </ContentSection>
           </MainContentArea>
@@ -90,6 +84,8 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
 };
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const apolloClient = initializeApollo();
+
+  // console.log(params);
 
   // await apolloClient.query({
   //   query: GET_PRODUCTS,
@@ -107,22 +103,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   //   },
   // });
 
-  await apolloClient.query({
-    query: SEARCH_SHOES,
-    variables: {
-      pageSize: 25,
-      pageNumber: 1,
-      searchTerm: params.searchTerm
-    }
-  })
+  // await apolloClient.query({
+  //   query: SEARCH_SHOES,
+  //   variables: {
+  //     pageSize: 25,
+  //     pageNumber: 1,
+  //     searchTerm: params.searchTerm
+  //   }
+  // })
 
-  await apolloClient.query({
-    query: GET_SHOES,
-    variables: {
-      pageSize: 25,
-      pageNumber: 1,
-    },
-  });
+  // await apolloClient.query({
+  //   query: GET_SHOES,
+  //   variables: {
+  //     pageSize: 25,
+  //     pageNumber: 1,
+  //   },
+  // });
   // console.log(apolloClient.cache.extract());
 
   return {
@@ -135,9 +131,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      { params: { type: 'shoes' } },
-    ],
+    paths: [{ params: { type: "shoes" } }],
     fallback: false,
   };
 }

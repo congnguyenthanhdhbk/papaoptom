@@ -21,16 +21,12 @@ import NoResultFound from "components/no-result/no-result";
 import { FormattedMessage } from "react-intl";
 import { Button } from "components/button/loadmore-button";
 import { GET_PRODUCTS } from "graphql/query/products.query";
-import {GET_SHOES, SEARCH_SHOES} from "graphql/query/shoes.query";
-import {useAppState} from "../../../contexts/app/app.provider";
+import { GET_SHOES, SEARCH_SHOES } from "graphql/query/shoes.query";
+import { useAppState } from "../../../contexts/app/app.provider";
 
-const ErrorMessage = dynamic(
-  () => import("components/error-message/error-message")
-);
+const ErrorMessage = dynamic(() => import("components/error-message/error-message"));
 
-const GeneralCard = dynamic(
-  import("components/product-card/product-card-one/product-card-one")
-);
+const GeneralCard = dynamic(import("components/product-card/product-card-one/product-card-one"));
 
 type ProductsProps = {
   deviceType?: {
@@ -43,38 +39,35 @@ type ProductsProps = {
   type?: string;
 };
 
-type FilteredProduct = {
-  filterProduct: any;
-}
-export const Products: React.FC<ProductsProps> = ({
-  deviceType,
-  fetchLimit = 20,
-  loadMore = true,
-  type,
-}) => {
+type ProductsQueryProps = {
+  filterProduct?: any;
+  searchShoes?: any;
+};
+
+export const Products: React.FC<ProductsProps> = ({ deviceType, fetchLimit = 20, loadMore = true, type }) => {
   const router = useRouter();
-  const searchTerm = useAppState('searchTerm');
+  const searchTerm = useAppState("searchTerm");
 
-  let queryResult = useQuery(GET_SHOES, {
-    variables: {
-      pageSize: fetchLimit,
-      pageNumber: 1,
-    },
-  });
+  let queryResult = useQuery(
+    searchTerm ? SEARCH_SHOES : GET_SHOES,
+    searchTerm
+      ? {
+          variables: {
+            searchTerm: searchTerm,
+            pageSize: fetchLimit,
+            pageNumber: 1,
+          },
+        }
+      : {
+          variables: {
+            pageSize: fetchLimit,
+            pageNumber: 1,
+          },
+        },
+  );
 
-  if (searchTerm) {
-    queryResult = useQuery(SEARCH_SHOES, {
-      variables: {
-        pageSize: fetchLimit,
-        pageNumber: 1,
-        searchTerm: searchTerm
-      }
-    })
-  }
+  const { error, loading, fetchMore, networkStatus } = queryResult;
 
-  console.log("Search term::", searchTerm);
-  // console.log(queryResult);
-  const { data, error, loading, fetchMore, networkStatus } = queryResult;
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
 
   if (error) return <ErrorMessage message={error.message} />;
@@ -94,40 +87,85 @@ export const Products: React.FC<ProductsProps> = ({
     );
   }
 
-  if (!data || !data.filterProduct || data.filterProduct.data.length === 0) {
+  const result = searchTerm ? queryResult.data.searchShoes : queryResult.data.filterProduct;
+  // console.log(result);
+
+  if (!result || !result.data || result.data.length === 0) {
     return <NoResultFound />;
   }
+
+  const data = result?.data;
+  // console.log(data);
+
   const handleLoadMore = () => {
-    const fetchLimit = data?.filterProduct?.pageSize ?? 10;
+    const fetchLimit = result?.pageSize ?? 10;
     fetchMore({
       variables: {
-        pageNumber: Number(data?.filterProduct?.nextPage ?? 0),
+        pageNumber: Number(result?.nextPage ?? 0),
         pageSize: fetchLimit,
       },
-      updateQuery: (previousResult: FilteredProduct, { fetchMoreResult }) => {
+      updateQuery: (previousResult: ProductsQueryProps, { fetchMoreResult }) => {
+        console.log(previousResult);
+        console.log(fetchMoreResult);
+
         if (!fetchMoreResult) {
           return previousResult;
         }
 
-        const newData = [
-            ...previousResult?.filterProduct?.data ?? [],
-          ...fetchMoreResult?.filterProduct?.data ?? []
+        // const newData = [
+        //   ...(previousResult?.filterProduct?.data ?? []),
+        //   ...(fetchMoreResult?.filterProduct?.data ?? []),
+        // ];
+
+        // return {
+        //   ...previousResult,
+        //   filterProduct: {
+        //     data: newData ?? [],
+        //     pageNumber: fetchMoreResult?.filterProduct?.pageNumber ?? 1,
+        //     pageSize: fetchMoreResult?.filterProduct?.pageSize ?? 10,
+        //     message: fetchMoreResult?.filterProduct?.message ?? null,
+        //     code: fetchMoreResult?.filterProduct?.code ?? 400,
+        //     totalDocs: fetchMoreResult?.filterProduct?.totalDocs ?? 0,
+        //     totalPages: fetchMoreResult?.filterProduct?.totalPages ?? 0,
+        //     hasPrevPage: fetchMoreResult?.filterProduct?.hasPrevPage ?? false,
+        //     hasNextPage: fetchMoreResult?.filterProduct?.hasNextPage ?? false,
+        //     prevPage: fetchMoreResult?.filterProduct?.prevPage ?? 0,
+        //     nextPage: fetchMoreResult?.filterProduct?.nextPage ?? 0,
+        //   },
+        // };
+
+        const data = [
+          ...(previousResult?.[searchTerm ? "searchShoes" : "filterProduct"]?.data ?? []),
+          ...(fetchMoreResult?.[searchTerm ? "searchShoes" : "filterProduct"].data ?? []),
         ];
+
+        const {
+          pageNumber,
+          pageSize,
+          message,
+          code,
+          totalDocs,
+          totalPages,
+          hasPrevPage,
+          hasNextPage,
+          prevPage,
+          nextPage,
+        } = fetchMoreResult?.[searchTerm ? "searchShoes" : "filterProduct"];
 
         return {
           ...previousResult,
-          filterProduct: {
-            data: newData ?? [],
-            pageNumber: fetchMoreResult?.filterProduct?.pageNumber ?? 1,
-            pageSize: fetchMoreResult?.filterProduct?.pageSize ?? 10,
-            message: fetchMoreResult?.filterProduct?.message ?? null,
-            code: fetchMoreResult?.filterProduct?.code ?? 400,
-            totalDocs: fetchMoreResult?.filterProduct?.totalDocs ?? 0,
-            totalPages: fetchMoreResult?.filterProduct?.totalPages ?? 0,
-            hasPrevPage: fetchMoreResult?.filterProduct?.hasPrevPage ?? false,
-            hasNextPage: fetchMoreResult?.filterProduct?.hasNextPage ?? false,
-            prevPage: fetchMoreResult?.filterProduct?.prevPage ?? 0,
-            nextPage: fetchMoreResult?.filterProduct?.nextPage ?? 0,
+          [searchTerm ? "searchShoes" : "filterProduct"]: {
+            data: data ?? [],
+            pageNumber: pageNumber ?? 1,
+            pageSize: pageSize ?? 10,
+            message: message ?? null,
+            code: code ?? 400,
+            totalDocs: totalDocs ?? 0,
+            totalPages: totalPages ?? 0,
+            hasPrevPage: hasPrevPage ?? false,
+            hasNextPage: hasNextPage ?? false,
+            prevPage: prevPage ?? 0,
+            nextPage: nextPage ?? 0,
           },
         };
       },
@@ -135,7 +173,7 @@ export const Products: React.FC<ProductsProps> = ({
   };
 
   const renderCard = (productType, props) => {
-    console.log(props);
+    // console.log(props);
     const { name, characteristics, category, brand, vcode, type, supplier } = props;
     const {
       description,
@@ -148,7 +186,7 @@ export const Products: React.FC<ProductsProps> = ({
       totalOldSellingPrice,
       discountInPercent,
       color,
-      steamInBox
+      steamInBox,
     } = characteristics;
 
     return (
@@ -169,14 +207,10 @@ export const Products: React.FC<ProductsProps> = ({
   return (
     <>
       <ProductsRow>
-        {data?.filterProduct?.data.map((item: any, index: number) => (
+        {data?.map((item: any, index: number) => (
           <ProductsCol key={index}>
             <ProductCardWrapper>
-              <Fade
-                duration={800}
-                delay={index * 10}
-                style={{ height: "100%" }}
-              >
+              <Fade duration={800} delay={index * 10} style={{ height: "100%" }}>
                 {renderCard(type, item)}
               </Fade>
             </ProductCardWrapper>
