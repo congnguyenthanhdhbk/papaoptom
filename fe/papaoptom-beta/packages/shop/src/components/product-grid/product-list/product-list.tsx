@@ -10,16 +10,17 @@ import Fade from "react-reveal/Fade";
 import { CURRENCY_UAH } from "utils/constant";
 import { GET_SHOES } from "../../../graphql/query/shoes.query";
 import {
-  ButtonWrapper, LoaderItem, LoaderWrapper, ProductCardWrapper, ProductsCol, ProductsRow
+  ButtonWrapper,
+  LoaderItem,
+  LoaderWrapper,
+  ProductCardWrapper,
+  ProductsCol,
+  ProductsRow,
 } from "./product-list.style";
 
-const ErrorMessage = dynamic(
-  () => import("components/error-message/error-message")
-);
+const ErrorMessage = dynamic(() => import("components/error-message/error-message"));
 
-const GeneralCard = dynamic(
-  import("components/product-card/product-card-one/product-card-one")
-);
+const GeneralCard = dynamic(import("components/product-card/product-card-one/product-card-one"));
 
 type ProductsProps = {
   deviceType?: {
@@ -30,22 +31,15 @@ type ProductsProps = {
   fetchLimit?: number;
   loadMore?: boolean;
 };
-export const Products: React.FC<ProductsProps> = ({
-  deviceType,
-  fetchLimit = 20,
-  loadMore = true,
-}) => {
+export const Products: React.FC<ProductsProps> = ({ deviceType, fetchLimit = 20, loadMore = true }) => {
   const router = useRouter();
-  const { data, error, loading, fetchMore, networkStatus } = useQuery(
-    GET_SHOES,
-    {
-      variables: {
-        pageSize: fetchLimit,
-        pageNumber: 1,
-      },
-      notifyOnNetworkStatusChange: true,
-    }
-  );
+  const { data, error, loading, fetchMore, networkStatus } = useQuery(GET_SHOES, {
+    variables: {
+      pageSize: fetchLimit,
+      pageNumber: 1,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
 
   if (error) return <ErrorMessage message={error.message} />;
@@ -117,7 +111,6 @@ export const Products: React.FC<ProductsProps> = ({
   };
 
   const renderCard = (props: any) => {
-    console.log(props);
     const { name, characteristics, category, brand, vcode } = props;
     const {
       photo1,
@@ -128,7 +121,7 @@ export const Products: React.FC<ProductsProps> = ({
       totalSellingPrice,
       totalOldSellingPrice,
       discountInPercent,
-      steamInBox
+      steamInBox,
     } = characteristics;
 
     return (
@@ -148,18 +141,13 @@ export const Products: React.FC<ProductsProps> = ({
     );
   };
 
-
   return (
     <>
       <ProductsRow>
         {data?.filterProduct?.data.map((item: any, index: number) => (
-          <ProductsCol key={index}          >
+          <ProductsCol key={index}>
             <ProductCardWrapper>
-              <Fade
-                duration={800}
-                delay={index * 10}
-                style={{ height: "100%" }}
-              >
+              <Fade duration={800} delay={index * 10} style={{ height: "100%" }}>
                 {renderCard(item)}
               </Fade>
             </ProductCardWrapper>

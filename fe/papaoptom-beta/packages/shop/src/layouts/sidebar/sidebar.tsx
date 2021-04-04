@@ -4,16 +4,8 @@ import { useQuery } from "@apollo/client";
 import Sticky from "react-stickynode";
 import { Scrollbar } from "components/scrollbar/scrollbar";
 import { useAppState } from "contexts/app/app.provider";
-import {
-  SidebarLoader,
-  SidebarMobileLoader,
-} from "components/placeholder/placeholder";
-import {
-  CategoryWrapper,
-  PopoverWrapper,
-  SidebarWrapper,
-  TreeWrapper,
-} from "./sidebar.style";
+import { SidebarLoader, SidebarMobileLoader } from "components/placeholder/placeholder";
+import { CategoryWrapper, PopoverWrapper, SidebarWrapper, TreeWrapper } from "./sidebar.style";
 
 import { TreeMenu } from "components/tree-menu/tree-menu";
 import { GET_CATEGORIES } from "graphql/query/category.query";
@@ -28,14 +20,12 @@ type SidebarCategoryProps = {
   };
 };
 
-const SidebarCategory: React.FC<SidebarCategoryProps> = ({
-  deviceType: { mobile, tablet, desktop },
-}) => {
+const SidebarCategory: React.FC<SidebarCategoryProps> = ({ deviceType: { mobile, tablet, desktop } }) => {
   const router = useRouter();
   const { data, loading } = useQuery(GET_CATEGORIES);
   const { pathname, query } = router;
-  console.log(pathname);
-  console.log(query);
+  // console.log(pathname);
+  // console.log(query);
   const selectedQueries = query.category;
 
   const onCategoryClick = (slug: string) => {
@@ -71,11 +61,7 @@ const SidebarCategory: React.FC<SidebarCategoryProps> = ({
     <CategoryWrapper>
       <PopoverWrapper>
         <CategoryWalker>
-          <TreeMenu
-            data={data.categories}
-            onClick={onCategoryClick}
-            active={selectedQueries}
-          />
+          <TreeMenu data={data.categories} onClick={onCategoryClick} active={selectedQueries} />
         </CategoryWalker>
       </PopoverWrapper>
 
@@ -83,11 +69,7 @@ const SidebarCategory: React.FC<SidebarCategoryProps> = ({
         <Sticky enabled={isSidebarSticky} top={110}>
           <Scrollbar className="sidebar-scrollbar">
             <TreeWrapper>
-              <TreeMenu
-                data={data.categories}
-                onClick={onCategoryClick}
-                active={selectedQueries}
-              />
+              <TreeMenu data={data.categories} onClick={onCategoryClick} active={selectedQueries} />
             </TreeWrapper>
           </Scrollbar>
         </Sticky>
