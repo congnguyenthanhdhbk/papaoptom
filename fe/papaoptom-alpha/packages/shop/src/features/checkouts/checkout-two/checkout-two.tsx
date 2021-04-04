@@ -105,7 +105,7 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   const [addOrderMutation] = useMutation(ADD_ORDER_PAPA);
   const handleSubmit = async () => {
     setLoading(true);
-    if (isValid) {
+    if (isValid && contact.length) {
       await addOrderMutation({
         variables: {
           phoneNumber: contact[0]?.number ?? "",
@@ -121,10 +121,10 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   useEffect(() => {
     if (
       calculatePrice() > 0 &&
-      cartItemsCount > 0 &&
+      cartItemsCount > 0
+      // cartItemsCount > 0 &&
       // cartItemsCount > 0 &&
       // address.length &&
-      contact.length
       // contact.length &&
       // card.length &&
       // schedules.length
