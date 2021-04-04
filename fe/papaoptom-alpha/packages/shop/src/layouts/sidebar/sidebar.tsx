@@ -32,31 +32,31 @@ const SidebarCategory: React.FC<SidebarCategoryProps> = ({
 }) => {
   const router = useRouter();
   // const { data, loading } = useQuery(GET_CATEGORIES, {
-  const { loading } = useQuery(GET_CATEGORIES, {
+  const { loading, data } = useQuery(GET_CATEGORIES, {
     variables: { type },
   });
   // TODO: hardcode categories
-  const data = {
-    "categories": [
-      {
-        "__typename": "Category",
-        "id": 14,
-        "title": "Men",
-        "slug": "men",
-        "icon": "HandBags",
-        "children": []
-      },
-      {
-        "__typename": "Category",
-        "id": 15,
-        "title": "Women",
-        "slug": "women",
-        "icon": "ShoulderBags",
-        "children": []
-      },
-
-    ]
-  }
+  // const data = {
+  //   "categories": [
+  //     {
+  //       "__typename": "Category",
+  //       "id": 14,
+  //       "title": "Men",
+  //       "slug": "men",
+  //       "icon": "HandBags",
+  //       "children": []
+  //     },
+  //     {
+  //       "__typename": "Category",
+  //       "id": 15,
+  //       "title": "Women",
+  //       "slug": "women",
+  //       "icon": "ShoulderBags",
+  //       "children": []
+  //     },
+  //
+  //   ]
+  // }
 
   const { pathname, query } = router;
   const selectedQueries = query.category;
