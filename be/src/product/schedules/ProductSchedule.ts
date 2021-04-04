@@ -1,18 +1,18 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { NotFoundProduct } from '../interfaces/NotFoundProduct';
-import { Product } from '../interfaces/product.interface';
-import { RefBookCharacteristics } from '../interfaces/ref-book-characteristics.interface';
-import { Sku } from '../interfaces/Sku';
-import { CronJob } from '../interfaces/CronJob';
-import { ForsageService } from '../../forsage/services/forsage.service';
+import {HttpStatus, Injectable, Logger} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {NotFoundProduct} from '../interfaces/NotFoundProduct';
+import {Product} from '../interfaces/product.interface';
+import {RefBookCharacteristics} from '../interfaces/ref-book-characteristics.interface';
+import {Sku} from '../interfaces/Sku';
+import {CronJob} from '../interfaces/CronJob';
+import {ForsageService} from '../../forsage/services/forsage.service';
 import * as momentTz from 'moment-timezone';
-import fs from 'fs';
 import axios from 'axios';
 import * as _ from 'lodash';
-import { ProductConstant } from '../constants/ProductConstant';
-import { Cron } from '@nestjs/schedule';
+import {ProductConstant} from '../constants/ProductConstant';
+import {Cron} from '@nestjs/schedule';
+import {Categories} from "../interfaces/Categories";
 
 @Injectable()
 export class ProductSchedule {
@@ -28,9 +28,38 @@ export class ProductSchedule {
     private readonly refbookCharacteristics: Model<RefBookCharacteristics>,
     @InjectModel('sku') private readonly sku: Model<Sku>,
     @InjectModel('CronJob') private readonly cronJob: Model<CronJob>,
+    @InjectModel("Categories") private readonly categoriesModel: Model<Categories>,
     private readonly forsageService: ForsageService,
   ) {}
 
+  @Cron("*/10 * * * * *")
+  async fetchCharacteristics(): Promise<void> {
+      const checkExists = await this.categoriesModel.find({});
+      if (_.isEmty(checkExists)) {
+          const forsageCharacteristics = await axios
+              .get(`${process.env.FORSAGE_URI}/get_refbook_characteristics?token=${process.env.FORSAGE_TOKEN}`);
+          if (_.isEqual(HttpStatus.OK, forsageCharacteristics?.status)) {
+              const success = forsageCharacteristics?.data?.success ?? false;
+              if (success) {
+                  this.logger.debug("Start for sync categories");
+                  const characteristics = forsageCharacteristics?.data?.characteristics ?? [];
+                  const normalizeCharacteristics = characteristics.map((ch) => ({
+                      title: ch?.name ?? null,
+                      slug: ch?.name ?? null,
+                      icon: null,
+                      id: ch?.id ?? null,
+                      children: ch?.values?.map((v) => ({
+                          id: v?.id ?? null,
+                          title: v?.value ?? null,
+                          slug: v?.value ?? null,
+                      })) ?? []
+                  }));
+                  await this.categoriesModel.insertMany(normalizeCharacteristics);
+                  this.logger.debug("Finished for sync categories");
+              }
+          }
+      }
+  }
   // @Cron("*/10 * * * * *")
   /*async normalizeProducts(): Promise<void> {
         this.logger.debug("++++++++++++++++++start build+++++++++++++++++++");
@@ -247,7 +276,7 @@ export class ProductSchedule {
     }
   }
 
-  @Cron('*/3 * * * * *')
+  // @Cron('*/3 * * * * *')
   async loadAllProduct(): Promise<void> {
     const cronJob = await this.cronJob.findOne({ domain: 'PRODUCT' });
     let skuOption = 0;

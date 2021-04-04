@@ -148,7 +148,7 @@ type OrderRes {
 type Query {
   me(id: String): CustomerDtoRes!
   getProduct(slug: String!): ProductDetailRes!
-  searchShoes(PageNumber: String, pageSize: String, searchTerm: String): ProductRes!
+  searchShoes(PageNumber: Int, pageSize: Int, searchTerm: String): ProductRes!
   filterProduct(filter: ProductFilterReq!): ProductRes!
 }
 

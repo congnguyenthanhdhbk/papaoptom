@@ -14,6 +14,7 @@ import { NormalizeProductSchema } from './schemas/NormalizeProductSchema';
 import { ProductSchedule } from './schedules/ProductSchedule';
 import { CurrencyRate } from '../shared/CurrencyRate';
 import { ProductHelper } from './helpers/ProductHelper';
+import {CategoriesSchema} from "./schemas/CategoriesSchema";
 
 @Module({
   imports: [
@@ -51,6 +52,16 @@ import { ProductHelper } from './helpers/ProductHelper';
         },
       },
     ]),
+      MongooseModule.forFeatureAsync([
+        {
+          name: "Categories",
+          useFactory: () => {
+            const schema = CategoriesSchema;
+            schema.plugin(mongoosePaginate);
+            return schema;
+          }
+        }
+      ]),
     MongooseModule.forFeature([
       { name: 'RefbookCharacteristics', schema: RefBookCharacteristics },
     ]),

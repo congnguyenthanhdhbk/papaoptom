@@ -1,11 +1,11 @@
 import {Args, Int, Query, Resolver} from '@nestjs/graphql';
-import { ProductFilterReq } from '../../dto/req/ProductFilterReq';
-import { ProductRes } from '../../dto/res/ProductRes';
-import { HttpStatus } from '@nestjs/common';
-import { ProductService } from '../../services/product.service';
+import {ProductFilterReq} from '../../dto/req/ProductFilterReq';
+import {ProductRes} from '../../dto/res/ProductRes';
+import {HttpStatus} from '@nestjs/common';
+import {ProductService} from '../../services/product.service';
 import * as _ from 'lodash';
-import { ProductDetailRes } from '../../dto/res/ProductDetailRes';
-import { ProductHelper } from '../../helpers/ProductHelper';
+import {ProductDetailRes} from '../../dto/res/ProductDetailRes';
+import {ProductHelper} from '../../helpers/ProductHelper';
 
 @Resolver()
 export class ProductResolver {
