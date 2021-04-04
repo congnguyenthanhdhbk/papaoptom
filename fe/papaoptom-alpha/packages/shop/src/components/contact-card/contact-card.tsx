@@ -27,9 +27,10 @@ const ContactValidationSchema = Yup.object().shape({
 });
 
 const CreateOrUpdateContact: React.FC<Props> = ({ item }) => {
+  console.log("Contact Type::", JSON.stringify(item));
   const initialValues = {
     id: item.id || null,
-    type: item.type || 'secondary',
+    type: item.type || 'primary',
     number: item.number || '',
   };
   const [addContactMutation] = useMutation(UPDATE_CONTACT);

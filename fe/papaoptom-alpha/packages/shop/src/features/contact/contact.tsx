@@ -36,6 +36,7 @@ const Contact = ({
     state: { contact },
     dispatch,
   } = useContext(ProfileContext);
+  console.log("Contact::", JSON.stringify(contact));
 
   const handleOnDelete = async (item) => {
     dispatch({ type: 'DELETE_CONTACT', payload: item.id });

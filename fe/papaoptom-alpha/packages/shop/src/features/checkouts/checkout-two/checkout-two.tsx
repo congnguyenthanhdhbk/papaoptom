@@ -106,10 +106,9 @@ const CheckoutWithSidebar: React.FC<MyFormProps> = ({ token, deviceType }) => {
   const handleSubmit = async () => {
     setLoading(true);
     if (isValid) {
-      console.log("Number::", JSON.stringify(contact?.number ?? "Không thành công"));
       await addOrderMutation({
         variables: {
-          phoneNumber: contact[0]?.number ?? "0988656949",
+          phoneNumber: contact[0]?.number ?? "",
           product: JSON.stringify(items)
         }
       });

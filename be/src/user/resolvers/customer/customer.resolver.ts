@@ -51,7 +51,7 @@ export class CustomerResolver {
             name: customer?.name ?? null,
             email: customer?.email ?? null,
             address,
-            contact,
+            contact: [],
             card };
     }
 
@@ -62,18 +62,36 @@ export class CustomerResolver {
         const customer = await this.customerModel.findOne({ id: 1});
         const id = uniqid();
         const primaryContact = [];
-        contact.id = id;
+        contact.id = contact?.id ?? id;
+        contact.contactType = contact?.type ?? "primary";
         (customer?.contact ?? []).push(contact);
         primaryContact.push(contact);
         customer.primaryContact = [...primaryContact];
         const savedCustomer = await customer.save();
+        const savedContact = customer?.primaryContact?.map(c => ({
+            id: c?.id ?? null,
+            type: c?.contactType ?? null,
+            number: c?.number ?? 0
+        }));
 
         return {
             id: savedCustomer?.id ?? 1,
             name: savedCustomer?.name ?? null,
-            contact: savedCustomer?.primaryContact ?? []
+            contact: savedContact ?? []
         };
 
+    }
+
+    @Mutation(() => CustomerDtoRes)
+    async deleteContact(@Args({ name: 'contactId', type: () => String, nullable: true}) contactId: string) {
+        const customer = await this.customerModel.findOne({ id: 1 });
+        customer.primaryContact = [];
+        const savedCustomer = await customer.save();
+        return {
+            id: savedCustomer?.id ?? 1,
+            name: savedCustomer?.id ?? null,
+            contact: savedCustomer?.primaryContact ?? []
+        }
     }
     @Mutation(() => CustomerRes)
     async addCustomers(

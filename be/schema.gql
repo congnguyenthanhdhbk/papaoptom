@@ -163,6 +163,7 @@ input ProductFilterReq {
 
 type Mutation {
   updateContact(contactInput: String): CustomerDtoRes!
+  deleteContact(contactId: String): CustomerDtoRes!
   addCustomers(customers: [CustomersReq!]): CustomerRes!
   addOrder(product: String!, phoneNumber: String!): OrderRes!
 }

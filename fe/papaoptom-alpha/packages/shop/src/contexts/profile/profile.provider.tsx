@@ -33,11 +33,13 @@ function reducer(state: any, action: Action): any {
       const newContact = {
         ...action.payload,
         id: uuidV4(),
-        type: state.contact.length === '0' ? 'primary' : 'secondary',
+        // type: state.contact.length === '0' ? 'primary' : 'secondary',
+        type: 'primary',
       };
       return {
         ...state,
-        contact: [...state.contact, newContact],
+        // contact: [...state.contact, newContact],
+        contact: [newContact],
       };
 
     case 'DELETE_CONTACT':
