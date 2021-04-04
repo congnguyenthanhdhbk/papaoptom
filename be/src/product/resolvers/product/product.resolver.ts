@@ -14,6 +14,7 @@ export class ProductResolver {
     private readonly productHelper: ProductHelper,
   ) {}
 
+
   @Query(() => ProductDetailRes)
   async getProduct(@Args({ name: 'slug', type: () => String }) slug: string) {
     if (!slug) {
