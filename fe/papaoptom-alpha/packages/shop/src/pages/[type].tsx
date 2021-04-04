@@ -23,7 +23,7 @@ import { initializeApollo } from 'utils/apollo';
 import { GET_PRODUCTS } from 'graphql/query/products.query';
 import { GET_CATEGORIES } from 'graphql/query/category.query';
 import { ModalProvider } from 'contexts/modal/modal.provider';
-import { GET_SHOES } from 'graphql/query/shoes.query';
+import {GET_SHOES, SEARCH_SHOES} from 'graphql/query/shoes.query';
 const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
 const Products = dynamic(() =>
   import('components/product-grid/product-list/product-list')
@@ -106,6 +106,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   //     type: params.type,
   //   },
   // });
+
+  await apolloClient.query({
+    query: SEARCH_SHOES,
+    variables: {
+      pageSize: 25,
+      pageNumber: 1,
+      searchTerm: params.searchTerm
+    }
+  })
 
   await apolloClient.query({
     query: GET_SHOES,

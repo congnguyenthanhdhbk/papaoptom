@@ -68,6 +68,24 @@ export class ProductService {
     return this.product.paginate({}, { page, limit });
   }
 
+  async searchShoes({ searchTerm, pageSize, pageNumber }) {
+    const page = pageNumber ? pageNumber : 1;
+    const limit = pageSize ? pageSize : 999999;
+
+    const criteria = {
+      $or: [],
+    };
+
+    criteria.$or.push({ name: new RegExp(`^${searchTerm}$`, 'i')  });
+    criteria.$or.push({ vcode: new RegExp(`^${searchTerm}$`, 'i') });
+    criteria.$or.push({ id: new RegExp(`^${searchTerm}$`, 'i') });
+    criteria.$or.push({ "brand.name": new RegExp(`^${searchTerm}$`, 'i') });
+    criteria.$or.push({ "category.name": new RegExp(`^${searchTerm}$`, 'i') });
+    criteria.$or.push({ "supplier.company": new RegExp(`^${searchTerm}$`, 'i') });
+
+    // @ts-ignore
+    return this.product.paginate(criteria, { page, limit });
+  }
   async filterProduct({
     id,
     name,

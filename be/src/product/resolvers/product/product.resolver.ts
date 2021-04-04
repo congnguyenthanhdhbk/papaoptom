@@ -54,6 +54,38 @@ export class ProductResolver {
   }
 
   @Query(() => ProductRes)
+  async searchShoes(
+      @Args({ name: 'searchTerm', type: () => String, nullable: true}) searchTerm?: string,
+      @Args({ name: 'pageSize', type: () => String, nullable: true}) pageSize?: string,
+      @Args({ name: 'PageNumber', type: () => String, nullable: true}) pageNumber?: string,
+  ) {
+    const product = await this.productService.searchShoes(
+        { searchTerm, pageSize, pageNumber });
+    const data = product?.docs.map((product) =>
+        this.productHelper.presentProduct(product),
+    );
+    if (product !== null) {
+      return {
+        code: HttpStatus.OK,
+        message: `${product?.totalDocs ?? 0} результат найден`,
+        data,
+        totalDocs: product?.totalDocs ?? 0,
+        hasPrevPage: product?.hasPrevPage ?? false,
+        hasNextPage: product?.hasNextPage ?? false,
+        totalPages: product?.totalPages ?? 0,
+        prevPage: product?.prevPage ?? 0,
+        nextPage: product?.nextPage ?? 0,
+        pageNumber: product?.page ?? 0,
+        pageSize: product?.limit ?? 0,
+      };
+    }
+    return {
+      code: HttpStatus.NOT_FOUND,
+      message: 'результатов не найдено',
+    };
+  }
+
+  @Query(() => ProductRes)
   async filterProduct(
     @Args({ name: 'filter', type: () => ProductFilterReq })
     filter?: ProductFilterReq,

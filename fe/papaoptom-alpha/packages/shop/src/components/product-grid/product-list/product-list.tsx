@@ -21,7 +21,8 @@ import NoResultFound from "components/no-result/no-result";
 import { FormattedMessage } from "react-intl";
 import { Button } from "components/button/loadmore-button";
 import { GET_PRODUCTS } from "graphql/query/products.query";
-import { GET_SHOES } from "graphql/query/shoes.query";
+import {GET_SHOES, SEARCH_SHOES} from "graphql/query/shoes.query";
+import {useAppState} from "../../../contexts/app/app.provider";
 
 const ErrorMessage = dynamic(
   () => import("components/error-message/error-message")
@@ -52,13 +53,26 @@ export const Products: React.FC<ProductsProps> = ({
   type,
 }) => {
   const router = useRouter();
+  const searchTerm = useAppState('searchTerm');
 
-  const queryResult = useQuery(GET_SHOES, {
+  let queryResult = useQuery(GET_SHOES, {
     variables: {
       pageSize: fetchLimit,
       pageNumber: 1,
     },
   });
+
+  if (searchTerm) {
+    queryResult = useQuery(SEARCH_SHOES, {
+      variables: {
+        pageSize: fetchLimit,
+        pageNumber: 1,
+        searchTerm: searchTerm
+      }
+    })
+  }
+
+  console.log("Search term::", searchTerm);
   // console.log(queryResult);
   const { data, error, loading, fetchMore, networkStatus } = queryResult;
   const loadingMore = networkStatus === NetworkStatus.fetchMore;
