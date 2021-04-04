@@ -17,6 +17,7 @@ import { FormattedMessage } from "react-intl";
 import { CartIcon } from "assets/icons/CartIcon";
 import { useModal } from "contexts/modal/use-modal";
 import { useRouter } from "next/router";
+import Link from "next/link";
 const QuickViewMobile = dynamic(() => import("features/quick-view/quick-view-mobile"));
 
 type ProductCardProps = {
@@ -116,16 +117,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
     );
   };
 
+  const handlePreviewModal = () => {
+    showModal();
+  }
+
   return (
-    <ProductCardWrapper onClick={handleQuickViewModal} className="product-card">
-      <ProductImageWrapper>
+    // <ProductCardWrapper onClick={handleQuickViewModal} className="product-card">
+    <ProductCardWrapper className="product-card">
+      {/* <ProductImageWrapper onClick={handleQuickViewModal}> */}
+      <ProductImageWrapper onClick={handlePreviewModal}>
         <Image url={image} className="product-image" style={{ position: "relative" }} alt={title} />
         {discountInPercent ? <DiscountPercent>{discountInPercent}%</DiscountPercent> : null}
       </ProductImageWrapper>
       <ProductInfo>
-        <h3 className="product-title">{title}</h3>
+        <h3 className="product-title">
+          <Link href="/">{title}</Link>
+        </h3>
+        <div className="product-size">p.{sizeChart}</div>
         <div className="product-size">
-          p.{sizeChart} / {pairsInBox} шт
+          {pairsInBox} <FormattedMessage id="numberOfItemsInBox" defaultMessage="pairs in a box" />
         </div>
         <div className="product-meta">
           <div className="productPriceWrapper">

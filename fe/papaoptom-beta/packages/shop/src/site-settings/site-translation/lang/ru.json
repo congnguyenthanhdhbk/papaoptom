@@ -1,4 +1,5 @@
 {
   "priceOfPair": "Цена за пару",
-  "priceOfBox": "Цена за ящик"
+  "priceOfBox": "Цена за ящик",
+  "numberOfItemsInBox": "Пар в ящике"
 }

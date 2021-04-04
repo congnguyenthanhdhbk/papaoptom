@@ -189,5 +189,6 @@
   "fromText": "From",
 
   "priceOfPair": "Price of a pair",
-  "priceOfBox": "Price of a box"
+  "priceOfBox": "Price of a box",
+  "numberOfItemsInBox": "pairs in a box"
 }

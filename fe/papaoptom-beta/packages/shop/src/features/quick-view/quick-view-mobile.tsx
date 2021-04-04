@@ -1,7 +1,7 @@
-import React from 'react';
-import Router from 'next/router';
+import React from "react";
+import Router from "next/router";
 // import { closeModal } from '@redq/reuse-modal';
-import { Button } from 'components/button/button';
+import { Button } from "components/button/button";
 import {
   QuickViewWrapper,
   ProductDetailsWrapper,
@@ -23,17 +23,17 @@ import {
   MetaSingle,
   MetaItem,
   ModalClose,
-} from './quick-view.style';
-import { CloseIcon } from 'assets/icons/CloseIcon';
-import { CartIcon } from 'assets/icons/CartIcon';
-import { CURRENCY } from 'utils/constant';
+} from "./quick-view.style";
+import { CloseIcon } from "assets/icons/CloseIcon";
+import { CartIcon } from "assets/icons/CartIcon";
+import { CURRENCY } from "utils/constant";
 
-import ReadMore from 'components/truncate/truncate';
-import CarouselWithCustomDots from 'components/multi-carousel/multi-carousel';
-import { useLocale } from 'contexts/language/language.provider';
-import { useCart } from 'contexts/cart/use-cart';
-import { Counter } from 'components/counter/counter';
-import { FormattedMessage } from 'react-intl';
+import ReadMore from "components/truncate/truncate";
+import CarouselWithCustomDots from "components/multi-carousel/multi-carousel";
+import { useLocale } from "contexts/language/language.provider";
+import { useCart } from "contexts/cart/use-cart";
+import { Counter } from "components/counter/counter";
+import { FormattedMessage } from "react-intl";
 
 type QuickViewProps = {
   modalProps: any;
@@ -48,19 +48,10 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
   hideModal,
   deviceType,
 }) => {
+  console.log(modalProps);
+
   const { addItem, removeItem, isInCart, getItem } = useCart();
-  const {
-    id,
-    type,
-    title,
-    unit,
-    price,
-    discountInPercent,
-    salePrice,
-    description,
-    gallery,
-    categories,
-  } = modalProps;
+  const { id, type, title, unit, price, discountInPercent, salePrice, description, gallery, categories } = modalProps;
 
   const { isRtl } = useLocale();
 
@@ -86,17 +77,15 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
       {/* <ModalClose onClick={onModalClose}>
         <CloseIcon />
       </ModalClose> */}
-      <QuickViewWrapper className='quick-view-mobile-wrapper'>
-        <ProductDetailsWrapper className='product-card' dir='ltr'>
+      <QuickViewWrapper className="quick-view-mobile-wrapper">
+        <ProductDetailsWrapper className="product-card" dir="ltr">
           {!isRtl && (
             <ProductPreview>
               <CarouselWithCustomDots items={gallery} deviceType={deviceType} />
-              {!!discountInPercent && (
-                <DiscountPercent>{discountInPercent}%</DiscountPercent>
-              )}
+              {!!discountInPercent && <DiscountPercent>{discountInPercent}%</DiscountPercent>}
             </ProductPreview>
           )}
-          <ProductInfoWrapper dir={isRtl ? 'rtl' : 'ltr'}>
+          <ProductInfoWrapper dir={isRtl ? "rtl" : "ltr"}>
             <ProductInfo>
               <ProductTitlePriceWrapper>
                 <ProductTitle>{title}</ProductTitle>
@@ -111,14 +100,11 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                 <MetaSingle>
                   {categories
                     ? categories.map((item: any) => (
-                        <MetaItem
-                          onClick={() => onCategoryClick(item.slug)}
-                          key={item.id}
-                        >
+                        <MetaItem onClick={() => onCategoryClick(item.slug)} key={item.id}>
                           {item.title}
                         </MetaItem>
                       ))
-                    : ''}
+                    : ""}
                 </MetaSingle>
               </ProductMeta>
 
@@ -139,18 +125,10 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
 
                 <ProductCartBtn>
                   {!isInCart(id) ? (
-                    <Button
-                      className='cart-button'
-                      variant='secondary'
-                      borderRadius={100}
-                      onClick={handleAddClick}
-                    >
+                    <Button className="cart-button" variant="secondary" borderRadius={100} onClick={handleAddClick}>
                       <CartIcon mr={2} />
                       <ButtonText>
-                        <FormattedMessage
-                          id='addCartButton'
-                          defaultMessage='Cart'
-                        />
+                        <FormattedMessage id="addCartButton" defaultMessage="Cart" />
                       </ButtonText>
                     </Button>
                   ) : (
@@ -168,9 +146,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
           {isRtl && (
             <ProductPreview>
               <CarouselWithCustomDots items={gallery} deviceType={deviceType} />
-              {!!discountInPercent && (
-                <DiscountPercent>{discountInPercent}%</DiscountPercent>
-              )}
+              {!!discountInPercent && <DiscountPercent>{discountInPercent}%</DiscountPercent>}
             </ProductPreview>
           )}
         </ProductDetailsWrapper>

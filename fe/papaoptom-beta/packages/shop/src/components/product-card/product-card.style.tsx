@@ -20,7 +20,7 @@ export const ProductCardWrapper = styled.div(
     position: "relative",
     fontFamily: "inherit",
     borderRadius: "base",
-    cursor: "pointer",
+    // cursor: "pointer",
 
     ".card-counter": {
       "@media (max-width: 767px)": {
@@ -35,23 +35,47 @@ export const ProductCardWrapper = styled.div(
   }),
 );
 
-export const ProductImageWrapper = styled.div`
-  height: 240px;
-  padding: 5px;
-  position: relative;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    display: inline-block;
-  }
-  @media (max-width: 640px) {
-    height: 145px;
-  }
-`;
+// export const ProductImageWrapper = styled.div`
+//   height: 240px;
+//   padding: 5px;
+//   position: relative;
+//   text-align: center;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: "pointer";
+
+//   img {
+//     max-width: 100%;
+//     max-height: 100%;
+//     display: inline-block;
+//   }
+//   @media (max-width: 640px) {
+//     height: 145px;
+//   }
+// `;
+
+export const ProductImageWrapper = styled.div(
+  css({
+    height: "240px",
+    padding: "5px",
+    position: "relative",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    img: {
+      maxWidth: "100%",
+      maxHeight: "100%",
+      display: "inline-block",
+    },
+
+    "@media (max-width: 640px)": {
+      height: "145px",
+    },
+  }),
+);
 
 export const SaleTag = styled.span`
   font-family: ${themeGet("fonts.body", "sans-serif")};
@@ -175,57 +199,6 @@ export const ProductInfo = styled.div`
           color: ${themeGet("colors.yellow.hover", "#FBB979")};
           font-style: italic;
           text-decoration: line-through;
-        }
-      }
-
-      .product-pair-price {
-        .label {
-          font-family: ${themeGet("fonts.body", "sans-serif")};
-          font-size: ${themeGet("fontSizes.base", "12")}px;
-          font-weight: ${themeGet("fontWeights.bold", "500")};
-          color: ${themeGet("colors.primary.regular", "#009E7F")};
-          @media (max-width: 767px) {
-            font-size: calc(${themeGet("fontSizes.base", "12")}px - 1px);
-          }
-        }
-
-        .value {
-          font-family: ${themeGet("fonts.body", "sans-serif")};
-          font-size: ${themeGet("fontSizes.base", "15")}px;
-          font-weight: ${themeGet("fontWeights.bold", "700")};
-          color: ${themeGet("colors.primary.regular", "#009E7F")};
-          @media (max-width: 767px) {
-            font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
-          }
-        }
-      }
-
-      .product-box-price {
-        font-family: ${themeGet("fonts.body", "sans-serif")};
-        font-size: ${themeGet("fontSizes.base", "15")}px;
-        font-weight: ${themeGet("fontWeights.bold", "700")};
-        color: ${themeGet("colors.primary.regular", "#009E7F")};
-        @media (max-width: 767px) {
-          font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
-        }
-
-        .sale-price {
-          font-family: ${themeGet("fonts.body", "sans-serif")};
-          font-size: ${themeGet("fontSizes.sm", "13")}px;
-          font-weight: ${themeGet("fontWeights.regular", "400")};
-          color: ${themeGet("colors.yellow.hover", "#FBB979")};
-          font-style: italic;
-          text-decoration: line-through;
-        }
-
-        .price {
-          font-family: ${themeGet("fonts.body", "sans-serif")};
-          font-size: ${themeGet("fontSizes.base", "15")}px;
-          font-weight: ${themeGet("fontWeights.bold", "700")};
-          color: ${themeGet("colors.primary.regular", "#009E7F")};
-          @media (max-width: 767px) {
-            font-size: calc(${themeGet("fontSizes.base", "15")}px - 1px);
-          }
         }
       }
     }
