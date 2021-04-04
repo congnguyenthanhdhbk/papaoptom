@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import {Args, Int, Query, Resolver} from '@nestjs/graphql';
 import { ProductFilterReq } from '../../dto/req/ProductFilterReq';
 import { ProductRes } from '../../dto/res/ProductRes';
 import { HttpStatus } from '@nestjs/common';
@@ -56,8 +56,8 @@ export class ProductResolver {
   @Query(() => ProductRes)
   async searchShoes(
       @Args({ name: 'searchTerm', type: () => String, nullable: true}) searchTerm?: string,
-      @Args({ name: 'pageSize', type: () => String, nullable: true}) pageSize?: string,
-      @Args({ name: 'PageNumber', type: () => String, nullable: true}) pageNumber?: string,
+      @Args({ name: 'pageSize', type: () => Int, nullable: true}) pageSize?: number,
+      @Args({ name: 'PageNumber', type: () => Int, nullable: true}) pageNumber?: number,
   ) {
     const product = await this.productService.searchShoes(
         { searchTerm, pageSize, pageNumber });
