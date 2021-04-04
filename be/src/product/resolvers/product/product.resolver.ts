@@ -6,15 +6,24 @@ import {ProductService} from '../../services/product.service';
 import * as _ from 'lodash';
 import {ProductDetailRes} from '../../dto/res/ProductDetailRes';
 import {ProductHelper} from '../../helpers/ProductHelper';
+import {CategoriesRes} from "../../dto/res/CategoriesRes";
+import {InjectModel} from "@nestjs/mongoose";
+import {Model} from "mongoose";
+import {Categories} from "../../interfaces/Categories";
 
 @Resolver()
 export class ProductResolver {
   constructor(
     private readonly productService: ProductService,
     private readonly productHelper: ProductHelper,
+    @InjectModel("Categories") private readonly categoriesModel: Model<Categories>
   ) {}
 
-
+  @Query(() => [CategoriesRes])
+  async categories(@Args({ name: "type", type: () => String, nullable: true}) type?: string) {
+    const categories = await  this.categoriesModel.find({});
+    return categories;
+  }
   @Query(() => ProductDetailRes)
   async getProduct(@Args({ name: 'slug', type: () => String }) slug: string) {
     if (!slug) {

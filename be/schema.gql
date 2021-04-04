@@ -139,6 +139,20 @@ type ProductDetailRes {
   data: ProductFilterRes
 }
 
+type CategoriesChildrenRes {
+  id: String
+  title: String
+  slug: String
+}
+
+type CategoriesRes {
+  id: String
+  title: String
+  slug: String
+  icon: String
+  children: [CategoriesChildrenRes!]
+}
+
 type OrderRes {
   code: Int
   message: String
@@ -147,8 +161,9 @@ type OrderRes {
 
 type Query {
   me(id: String): CustomerDtoRes!
+  categories(type: String): [CategoriesRes!]!
   getProduct(slug: String!): ProductDetailRes!
-  searchShoes(PageNumber: Int, pageSize: Int, searchTerm: String): ProductRes!
+  searchShoes(pageNumber: Int, pageSize: Int, searchTerm: String): ProductRes!
   filterProduct(filter: ProductFilterReq!): ProductRes!
 }
 
