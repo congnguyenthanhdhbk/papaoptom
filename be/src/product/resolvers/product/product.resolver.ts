@@ -58,7 +58,7 @@ export class ProductResolver {
   async searchShoes(
       @Args({ name: 'searchTerm', type: () => String, nullable: true}) searchTerm?: string,
       @Args({ name: 'pageSize', type: () => Int, nullable: true}) pageSize?: number,
-      @Args({ name: 'PageNumber', type: () => Int, nullable: true}) pageNumber?: number,
+      @Args({ name: 'pageNumber', type: () => Int, nullable: true}) pageNumber?: number,
   ) {
     const product = await this.productService.searchShoes(
         { searchTerm, pageSize, pageNumber });
