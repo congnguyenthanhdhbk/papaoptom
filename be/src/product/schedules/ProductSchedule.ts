@@ -35,7 +35,7 @@ export class ProductSchedule {
   @Cron("*/10 * * * * *")
   async fetchCharacteristics(): Promise<void> {
       const checkExists = await this.categoriesModel.find({});
-      if (_.isEmty(checkExists)) {
+      if (_.isEmpty(checkExists)) {
           const forsageCharacteristics = await axios
               .get(`${process.env.FORSAGE_URI}/get_refbook_characteristics?token=${process.env.FORSAGE_TOKEN}`);
           if (_.isEqual(HttpStatus.OK, forsageCharacteristics?.status)) {
