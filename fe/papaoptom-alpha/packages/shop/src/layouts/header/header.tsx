@@ -1,16 +1,17 @@
 import React from 'react';
-import Router, { useRouter } from 'next/router';
-import { openModal } from '@redq/reuse-modal';
-import { AuthContext } from 'contexts/auth/auth.context';
+import Router, {useRouter} from 'next/router';
+import {openModal} from '@redq/reuse-modal';
+import {AuthContext} from 'contexts/auth/auth.context';
 import AuthenticationForm from 'features/authentication-form';
-import { RightMenu } from './menu/right-menu/right-menu';
-import { LeftMenu } from './menu/left-menu/left-menu';
-import HeaderWrapper from './header.style';
+import {RightMenu} from './menu/right-menu/right-menu';
+import {LeftMenu} from './menu/left-menu/left-menu';
+import HeaderWrapper, {CategoryHeaderWrapper} from './header.style';
 // import LogoImage from 'assets/images/logo.svg';
 import LogoImage from 'assets/images/logo.png';
 import UserImage from 'assets/images/user.jpg';
-import { isCategoryPage } from '../is-home-page';
+import {isCategoryPage} from '../is-home-page';
 import Search from 'features/search/search';
+
 type Props = {
   className?: string;
 };
@@ -51,16 +52,31 @@ const Header: React.FC<Props> = ({ className }) => {
   };
   const showSearch = isCategoryPage(query.type);
   return (
-    <HeaderWrapper className={className} id="layout-header">
-      <LeftMenu logo={LogoImage} />
-      {showSearch && <Search minimal={true} className="headerSearch" />}
-      <RightMenu
-        isAuthenticated={isAuthenticated}
-        onJoin={handleJoin}
-        onLogout={handleLogout}
-        avatar={UserImage}
-      />
-    </HeaderWrapper>
+      <>
+        <HeaderWrapper className={className} id="layout-header">
+          <LeftMenu logo={LogoImage} />
+          {showSearch && <Search minimal={true} className="headerSearch" />}
+          <RightMenu
+              isAuthenticated={isAuthenticated}
+              onJoin={handleJoin}
+              onLogout={handleLogout}
+              avatar={UserImage}
+          />
+        </HeaderWrapper>
+        <CategoryHeaderWrapper>
+          <ul>
+            <li><a>НОВИНКИ</a></li>
+            <li><a>ДЕТСКАЯ ОБУВЬ</a></li>
+            <li><a>ЖЕНСКАЯ ОБУВЬ</a></li>
+            <li><a>МУЖСКАЯ ОБУВЬ</a></li>
+            <li><a>АКСЕССУАРЫ</a></li>
+            <li><a>КОЖАННЫЕ ИЗДЕЛИЯ</a></li>
+            <li><a>ОДЕЖДА</a></li>
+            <li><a>РАСПРОДАЖА</a></li>
+            <li><a>БРЕНДЫ</a></li>
+          </ul>
+        </CategoryHeaderWrapper>
+      </>
   );
 };
 

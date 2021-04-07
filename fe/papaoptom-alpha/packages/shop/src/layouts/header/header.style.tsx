@@ -38,6 +38,40 @@ export const SearchWrapper = styled.div`
   }
 `;
 
+export const CategoryHeaderWrapper = styled.div `
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
+  height: 5%;
+  background-color: ${themeGet('colors.green', '#000000')};
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    li {
+      float: left;
+      padding-left: 0.5em;
+      color: white;
+      a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+        font-size: 0.8em;
+        &:hover {
+            color: ${themeGet('colors.primary.regular', '#F3F3F3')};
+        }
+      }
+    }
+  }
+`
+
 const HeaderWrapper = styled.header`
   /* padding: 30px 60px; */
   padding: 20px 30px;
@@ -49,7 +83,7 @@ const HeaderWrapper = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: ${themeGet('colors.green', '#009E7F')};
+  background-color: ${themeGet('colors.green', '#000000')};
   box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
   transition: all 0.3s ease;
   &.home {
@@ -91,7 +125,7 @@ const HeaderWrapper = styled.header`
   }
 
   &.sticky {
-    background-color: ${themeGet('colors.green', '#009E7F')};
+    background-color: ${themeGet('colors.green', '#000000')};
     position: fixed;
     box-shadow: ${themeGet('shadows.header', '0 1px 2px rgba(0, 0, 0, 0.06)')};
     padding-top: 20px;

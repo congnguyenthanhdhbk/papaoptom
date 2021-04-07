@@ -100,7 +100,7 @@ export const LANGUAGE_MENU = [
     id: 'ru',
     defaultMessage: 'Russia',
     icon: "RUFlag"
-  }
+  },
   // {
   //   id: 'de',
   //   defaultMessage: 'German',

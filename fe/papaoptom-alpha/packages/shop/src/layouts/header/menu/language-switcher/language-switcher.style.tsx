@@ -23,7 +23,7 @@ export const SelectedItem = styled.button`
   height: 38px;
   display: flex;
   align-items: center;
-  background-color: ${themeGet('colors.primary.regular', '#009e7f')};
+  background-color: #000000;
   border: 1px solid ${themeGet('colors.gray.500', '#f1f1f1')};
   padding-top: 0;
   padding-bottom: 0;
