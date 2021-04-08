@@ -63,7 +63,7 @@ const Header: React.FC<Props> = ({ className }) => {
               avatar={UserImage}
           />
         </HeaderWrapper>
-        <CategoryHeaderWrapper>
+        {showSearch && <CategoryHeaderWrapper>
           <ul>
             <li><a>НОВИНКИ</a></li>
             <li><a>ДЕТСКАЯ ОБУВЬ</a></li>
@@ -75,7 +75,7 @@ const Header: React.FC<Props> = ({ className }) => {
             <li><a>РАСПРОДАЖА</a></li>
             <li><a>БРЕНДЫ</a></li>
           </ul>
-        </CategoryHeaderWrapper>
+        </CategoryHeaderWrapper>}
       </>
   );
 };
